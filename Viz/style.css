@@ -8,3 +8,29 @@
     stroke: #ff0000;
     stroke-width: 10.5px;
 }
+
+.wrapper {
+    display: flex;
+    max-height: 900px;
+}
+
+.side-panel {
+    max-width: 33%;
+    vertical-align: top;
+    display: inline-block;
+    padding-right: 5px;
+}
+
+.svg-container {
+    display: inline-block;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content {
+    display: inline-block;
+}
+.justified {
+    display: inline-block;
+    text-align: justify;
+    text-justify: inter-word;
+}
