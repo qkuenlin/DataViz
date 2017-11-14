@@ -1,0 +1,23 @@
+[] MySQL Database
+	() Import Data
+	() Functions to fetch Data
+
+[] Data Structure (js object)
+	() Movie
+	() Actors
+	() Crew
+	() ...
+
+[] Data Processing
+	() Linking objects together
+	() Clustering
+
+[] Vizualisation
+	() UI
+	() Plot linked graph
+	() Left panel with info on selected node
+
+[] Interaction
+	() Click on node:
+		- Hide not relevant nodes
+		- Show information on left panel
