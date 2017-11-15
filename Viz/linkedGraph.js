@@ -9,31 +9,15 @@ var backgroundLayer = svg.append('g');
 var dataVizLayer = svg.append('g');
 var UILayer = svg.append('g');
 
-var ChangeDataButton = UILayer.append("rect")
-.attr("width", 120)
-.attr("height", 50)
-.on("click", function () { SwitchData(); });
-
-SwitchData("movies.json");
-function SwitchData() {
-    var currentData = 0;
-    if (currentData == 0) {
-        currentData = 1;
-        read("movies2.json");
-    }
-    else {
-        currentData = 0;
-        read("movies.json");
-    }
-
-    function read(file) {
-        d3.json(file, function (error, g) {
-            if (error) throw error;
-            graph = g;
-            draw();
-        })
-    };
-}
+read("movies.json");
+function read(file) {
+    d3.json(file, function (error, g) {
+        if (error) throw error;
+        graph = g;
+        hideSidePanel();
+        draw();
+    })
+};
 
 
 d3.select(window).on("resize", function() {
@@ -164,3 +148,11 @@ function hideSidePanel() {
     var sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
 }
+
+// dropdown selection
+d3.select('#opts')
+.on('change', function() {
+    var selectValue = d3.select('#opts').property('value')
+    console.log(selectValue);
+    read(selectValue);
+});
