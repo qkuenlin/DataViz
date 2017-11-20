@@ -7,7 +7,7 @@ if __name__ == '__main__':
     conn = sqlite3.connect('db.sqlite')
 
     # lecture du fichier sous for de dico
-    with open('crew.csv', "r", encoding="utf-8") as csvfile:
+    with open('Data/crew.csv', "r", encoding="utf-8") as csvfile:
         crew = csv.DictReader(csvfile, delimiter=',', quotechar='"')
         # pour chaque ligne
         for row in crew:
@@ -25,7 +25,7 @@ if __name__ == '__main__':
                     cursor = conn.cursor()
                     sql = "INSERT INTO Person (id, Name, gender) VALUES (?,?,?)"
                     cursor.execute(sql, (row["id"], row["name"], row["gender"]))
-                conn.commit()
+                # conn.commit()
 
             # On test si le job existe deja
             with conn:
@@ -40,7 +40,7 @@ if __name__ == '__main__':
                     sql = "INSERT INTO Job (job) VALUES (?)"
                     cursor.execute(sql, (row["job"],))
                     job_id = cursor.lastrowid
-                conn.commit()
+                # conn.commit()
             else:
                 job_id = result[0][0] #recup l'id du job
 
@@ -68,14 +68,14 @@ if __name__ == '__main__':
                     if len(result) == 0:
                         with conn:
                             cursor = conn.cursor()
-                            sql = "INSERT INTO movie (id, title, release_date) VALUES (?,?,?)"
+                            sql = "INSERT INTO Movie (id, title, release_date) VALUES (?,?,?)"
                             cursor.execute(sql, (movie, "test", "test"))
-                        conn.commit()
+                        # conn.commit()
                     # creation de l'entree dans L_person_movie
                     with conn:
                         cursor = conn.cursor()
                         sql = "INSERT INTO L_person_movie (id_person, id_movie, id_job, department) VALUES (?,?,?,?)"
                         cursor.execute(sql, (row["id"], movie, job_id, row["department"]))
-                    conn.commit()
+    conn.commit()
 
 

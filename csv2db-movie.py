@@ -6,76 +6,72 @@ if __name__ == '__main__':
     # connection à la db
     conn = sqlite3.connect('db.sqlite')
 
+    with open("Data/genre.csv", "r", encoding="utf-8") as csvfile:
+        genre_dico = csv.DictReader(csvfile, delimiter=",", quotechar='"')
+        genre_dico = {int(l["id"]):l["name"] for l in genre_dico}
+    print(genre_dico)
+
+
     # lecture du fichier sous for de dico
-    with open('crew.csv', "r", encoding="utf-8") as csvfile:
-        crew = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+    with open('Data/movie.csv', "r") as csvfile:
+
+        movie = csv.DictReader(csvfile, delimiter=',', quotechar='"')
         # pour chaque ligne
-        for row in crew:
-            # On test si la personne existe deja
+        for row in movie:
             with conn:
                 cursor = conn.cursor()
-                # Create a new record
-                # dans SQL: raw = formatted et submitted = raw transmise
-                sql = "SELECT id FROM Person WHERE id=(?)"
+                sql = "SELECT * FROM Movie WHERE id=(?)"
                 cursor.execute(sql, (row["id"],))
                 result = cursor.fetchall()
-            # Si existe pas on la crée
-            if len(result)==0:
+            if len(result) == 0:
                 with conn:
                     cursor = conn.cursor()
-                    sql = "INSERT INTO Person (id, Name, gender) VALUES (?,?,?)"
-                    cursor.execute(sql, (row["id"], row["name"], row["gender"]))
-                conn.commit()
+                    try:
+                        float(row["vote_average"])
+                    except:
+                        row["vote_average"] = row["vote_count"]
+                        row["vote_count"] = row["Unnamed: 20"]
+                    sql = "INSERT INTO Movie (id, title, release_date, homepage, keywords, original_language,\
+ original_title, overview, populatiry, production_companies, production_countries, revenue, runtime,\
+  spoken_language, status, tagline, vote_average, vote_count) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                    cursor.execute(sql, (row["id"], row["title"], row["release_date"], row["homepage"], \
+                                         row["keywords"],row["original_language"],row["original_title"], \
+                                         row["overview"], int(float(row["popularity"])), row["production_companies"],\
+                                         row["production_countries"], int(row["revenue"]),\
+                                         int(float(row["runtime"])) if row["runtime"] != '' else 0,\
+                                         row["spoken_languages"], row["status"], row["tagline"],\
+                                         float(row["vote_average"]), int(float(row["vote_count"]))))
 
-            # On test si le job existe deja
-            with conn:
-                cursor = conn.cursor()
-                sql = "SELECT id FROM Job WHERE job=(?)"
-                cursor.execute(sql, (row["job"],))
-                result = cursor.fetchall()
-            # creation si existe pas
-            if len(result)==0:
+            row["genres"] = [ int(g) for g in row["genres"].strip("[").strip("]").split(",") if g!= '']
+            for genre in row["genres"]:
+                # On test si le genre existe deja
                 with conn:
                     cursor = conn.cursor()
-                    sql = "INSERT INTO Job (job) VALUES (?)"
-                    cursor.execute(sql, (row["job"],))
-                    job_id = cursor.lastrowid
-                conn.commit()
-            else:
-                job_id = result[0][0] #recup l'id du job
-
-            # Recup la liste des film qui est sous forme de chaine de carac
-            row["movie_id"] = list(map(int,row["movie_id"].strip("[").strip("]").split(",")))
-            # pour chaque film dans la liste
-            for movie in row["movie_id"]:
-                # On test si deja une entree dans L_person_movie existe deja
-                with conn:
-                    cursor = conn.cursor()
-                    sql = "SELECT * FROM L_person_movie WHERE id_person = (?) AND id_movie=(?) AND id_job=(?)"
-                    cursor.execute(sql, (row["id"], movie, job_id))
+                    sql = "SELECT * FROM Genre WHERE id=(?)"
+                    cursor.execute(sql, (genre,))
                     result = cursor.fetchall()
-                # si existe pas...
+                # creation si existe pas
                 if len(result)==0:
-                    # Test si film existe deja
                     with conn:
                         cursor = conn.cursor()
-                        # Create a new record
-                        # dans SQL: raw = formatted et submitted = raw transmise
-                        sql = "SELECT id FROM movie WHERE id=(?)"
-                        cursor.execute(sql, (movie,))
-                        result = cursor.fetchall()
-                    # creation du film
-                    if len(result) == 0:
-                        with conn:
-                            cursor = conn.cursor()
-                            sql = "INSERT INTO movie (id, title, release_date) VALUES (?,?,?)"
-                            cursor.execute(sql, (movie, "test", "test"))
-                        conn.commit()
-                    # creation de l'entree dans L_person_movie
+                        sql = "INSERT INTO Genre (id,genre) VALUES (?,?)"
+                        cursor.execute(sql, (genre, genre_dico[genre]))
+                    conn.commit()
+
+                # Ajout du lien
+                with conn:
+                    cursor = conn.cursor()
+                    # Create a new record
+                    # dans SQL: raw = formatted et submitted = raw transmise
+                    sql = "SELECT * FROM L_movie_genre WHERE id_movie=(?) AND id_genre=(?)"
+                    cursor.execute(sql, (row["id"],genre))
+                    result = cursor.fetchall()
+                # Si existe pas on la crée
+                if len(result)==0:
                     with conn:
                         cursor = conn.cursor()
-                        sql = "INSERT INTO L_person_movie (id_person, id_movie, id_job, department) VALUES (?,?,?,?)"
-                        cursor.execute(sql, (row["id"], movie, job_id, row["department"]))
+                        sql = "INSERT INTO L_movie_genre (id_movie, id_genre) VALUES (?,?)"
+                        cursor.execute(sql, (row["id"], genre))
                     conn.commit()
 
 
