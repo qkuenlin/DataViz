@@ -1,23 +1,36 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 
-<meta charset="utf-8" />
+<head>
+    <meta charset="utf-8" />
+    <title>Ultimate Movie Data Viz</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="style.css" />
-<div class="wrapper">
-    <div class="side-panel">
+</head>
+
+
+<body>
+    <header>
+        <h1>Ultimate Movie Data Viz</h1>
+    </header>
+    <div class="wrapper">
+        <div class="side-panel">
+        </div>
+        <div class="svg-container">
+            <select id="opts">
+                <option value="movies.json" selected="selected">movies</option>
+                <option value="movies2.json">movies2</option>
+                <!-- and so on... -->
+            </select>
+            <svg class="svg-content" width="960" height="600" viewbox="0 0 960 600" preserveAspectRatio="xMinYMin meet"></svg>
+        </div>
     </div>
-    <div class="svg-container">
-        <select id = "opts">
-            <option value="movies.json" selected="selected">movies</option>
-            <option value="movies2.json">movies2</option>
-            <!-- and so on... -->
-        </select>
-        <svg class="svg-content" width="960" height="600" viewbox="0 0 960 600" preserveAspectRatio="xMinYMin meet"></svg>
-    </div>
-</div>
 
+    <script src="linkedGraph.js"></script>
 
+    <footer>
+        <p>Data set from <a href="https://www.kaggle.com/tmdb/tmdb-movie-metadata">Kaggle</a></p>
+    </footer>
+</body>
 
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="linkedGraph.js"></script>

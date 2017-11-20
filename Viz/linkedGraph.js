@@ -10,6 +10,7 @@ var dataVizLayer = svg.append('g');
 var UILayer = svg.append('g');
 
 read("movies.json");
+
 function read(file) {
     d3.json(file, function (error, g) {
         if (error) throw error;
@@ -33,17 +34,17 @@ function draw() {
     backgroundLayer.append("rect")
     .attr("width", width)
     .attr("height", height)
-    .attr("opacity", "0")
+    .attr("class", "background")
     .on("click", function () { resetView(); });
 
     var link = dataVizLayer.append("g")
+    .attr("class", "links show")
     .selectAll("link")
     .data(graph.links)
     .enter().append("line")
-    .attr("stroke", "#696969")
-    .attr("stroke-width", 1);
 
     var node = dataVizLayer.append("g")
+    .attr("class", "nodes show")
     .selectAll("circle")
     .data(graph.nodes)
     .enter().append("circle")
@@ -78,14 +79,13 @@ function draw() {
         .attr("cx", function (d) { return d.x; })
         .attr("cy", function (d) { return d.y; });
     }
-    function resetView() {
-        link.attr("stroke", "#696969")
-        .attr("stroke-width", 1)
-        .attr("stroke-opacity", 1);
 
-        node.attr("r", 5)
+    function resetView() {
+        link.attr("class", "links show");
+
+        node.attr("class", "nodes show")
+        .attr("r", 5)
         .attr("fill", function (d) { return color(d.group); })
-        .attr("opacity", 1);
 
         hideSidePanel();
     }
@@ -93,25 +93,20 @@ function draw() {
     function click(d, s) {
         showSidePanel(d);
 
-        node.attr("opacity", function (n) {
-            if (d.id != n.id) return 0.3;
-        });
+        node.filter(function(n) { return d.id != n.id })
+            .attr("class",  "nodes hide");
 
-
-        link.attr("stroke", function (x) {
+        link.attr("class", function (x) {
             if (x.source.id == d.id || x.target.id == d.id) {
-                node.attr("opacity", function (n) {
-                    if (x.source.id == n.id || x.target.id == n.id) return 1.0;
-                    else return "opacity";
-                });
-                return "red";
+
+                node.filter(function (n) {
+                    return (x.source.id == n.id || x.target.id == n.id);
+                }).attr("class", "nodes show");
+
+                return "links show";
             }
-            else return "#696969";
-        })
-        .attr("stroke-opacity", function (x) {
-            if (x.source.id == d.id || x.target.id == d.id) { return 1; }
-            else return 0.3;
-        })
+            else return "links hide";
+        });
     }
 
     function dragstarted(d) {
@@ -135,7 +130,7 @@ function draw() {
 function showSidePanel(d) {
     var sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
-    var src = "https://img.maximummedia.ie/her_ie/eyJkYXRhIjoie1widXJsXCI6XCJodHRwOlxcXC9cXFwvbWVkaWEtaGVyLm1heGltdW1tZWRpYS5pZS5zMy5hbWF6b25hd3MuY29tXFxcL3dwLWNvbnRlbnRcXFwvdXBsb2Fkc1xcXC8yMDE2XFxcLzA2XFxcLzIwMTAyNDM0XFxcL1JpY2tBc3RsZXkucG5nXCIsXCJ3aWR0aFwiOjY0NyxcImhlaWdodFwiOjM0MCxcImRlZmF1bHRcIjpcImh0dHBzOlxcXC9cXFwvd3d3Lmhlci5pZVxcXC9hc3NldHNcXFwvaW1hZ2VzXFxcL2hlclxcXC9uby1pbWFnZS5wbmc_dj00XCJ9IiwiaGFzaCI6ImMwMGFmYTY0MjVjZmVkZWE4MGE3ZWJkNjZkYjYyZWFlMmVmYzJkNGQifQ==/rickastley.png"
+    var src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
     sidepanel.append("input").attr("type", "button")
     .attr("value", "X").attr("onclick", "hideSidePanel()");
     sidepanel.append("div")
