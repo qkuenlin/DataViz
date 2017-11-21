@@ -1,13 +1,13 @@
-var width = parseInt(d3.select(".wrapper").style("width"));
-var height = parseInt(d3.select(".wrapper").style("height"));
-var color = d3.scaleOrdinal(d3.schemeCategory20);
+let width = parseInt(d3.select(".wrapper").style("width"));
+let height = parseInt(d3.select(".wrapper").style("height"));
+let color = d3.scaleOrdinal(d3.schemeCategory20);
 
-var graph;
+let graph;
 
-var svg = d3.select("svg");
-var backgroundLayer = svg.append('g');
-var dataVizLayer = svg.append('g');
-var UILayer = svg.append('g');
+let svg = d3.select("svg");
+let backgroundLayer = svg.append('g');
+let dataVizLayer = svg.append('g');
+let UILayer = svg.append('g');
 
 read("movies.json");
 
@@ -19,7 +19,6 @@ function read(file) {
         draw();
     })
 };
-
 
 d3.select(window).on("resize", function() {
     draw();
@@ -37,13 +36,13 @@ function draw() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
-    var link = dataVizLayer.append("g")
+    let link = dataVizLayer.append("g")
     .attr("class", "links show")
     .selectAll("link")
     .data(graph.links)
     .enter().append("line")
 
-    var node = dataVizLayer.append("g")
+    let node = dataVizLayer.append("g")
     .attr("class", "nodes show")
     .selectAll("circle")
     .data(graph.nodes)
@@ -59,7 +58,7 @@ function draw() {
     node.append("title")
     .text(function (d) { return d.id; });
 
-    var simulation = d3.forceSimulation()
+    let simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function (d) { return d.id; }))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height /2));
@@ -128,9 +127,9 @@ function draw() {
 }
 
 function showSidePanel(d) {
-    var sidepanel = d3.select(".side-panel");
+    let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
-    var src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
+    let src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
     sidepanel.append("input").attr("type", "button")
     .attr("value", "X").attr("onclick", "hideSidePanel()");
     sidepanel.append("div")
@@ -140,14 +139,14 @@ function showSidePanel(d) {
 }
 
 function hideSidePanel() {
-    var sidepanel = d3.select(".side-panel");
+    let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
 }
 
 // dropdown selection
 d3.select('#opts')
 .on('change', function() {
-    var selectValue = d3.select('#opts').property('value')
+    let selectValue = d3.select('#opts').property('value')
     console.log(selectValue);
     read(selectValue);
 });

@@ -1,24 +1,45 @@
-[] SQLLite Database
-	() Create
-	() Import Data
-	() Functions to fetch Data
-
 [] Data Structure (js object)
 	() Movie
 	() Actors
 	() Crew
+	() ...
+	() Companies link
+
+[T] Filter DB
+	() single entry actor/crew
 	() ...
 
 [] Data Processing
 	() Linking objects together
 	() Clustering
 
-[] Vizualisation
+[T] Code book
+
+[Q] Vizualisation
 	() UI
 	() Plot linked graph
 	() Left panel with info on selected node
 
-[] Interaction
-	() Click on node:
-		- Hide not relevant nodes
-		- Show information on left panel
+[V] sqlite3 https://www.npmjs.com/package/sqlite3
+
+[Q] Option bar
+	() pie chart genre
+	() general chart (Hierarchical Edge Bundling)
+	()
+
+[V] side-panel
+	general info :
+		() Info sur la DB
+		() Quoi selectionné ?
+		() courbe film par année
+	film specific :
+		() Title
+		() Overview
+		() Popularity
+		() Production companies
+		() Budget
+		() Revenue
+		() runtime
+		() tagline
+		() vote average + count
+		() Crew
