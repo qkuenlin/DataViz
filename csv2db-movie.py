@@ -1,7 +1,7 @@
 import csv
 import sqlite3
 
-
+#TODO mettre le budget
 if __name__ == '__main__':
     # connection à la db
     conn = sqlite3.connect('db.sqlite')
