@@ -29,6 +29,7 @@
 }
 
 .side-panel {
+    width: 33%;
     max-width: 33%;
     vertical-align: top;
     display: inline-block;
@@ -44,9 +45,12 @@
     display: inline-block;
 }
 .justified {
-    display: inline-block;
     text-align: justify;
     text-justify: inter-word;
+}
+
+.bar {
+  fill: steelblue;
 }
 
 header {
