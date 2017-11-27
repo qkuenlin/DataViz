@@ -55,13 +55,13 @@ function UISetup() {
     /*
     let dropDown = document.getElementById("DepartementOptions");
     JobDepartments.forEach(function (d) {
-        let el = document.createElement("option");
-        el.textContent = d;
-        el.value = d;
+    let el = document.createElement("option");
+    el.textContent = d;
+    el.value = d;
 
-        dropDown.appendChild(el);
-    });
-    */
+    dropDown.appendChild(el);
+});
+*/
 }
 
 function filterAll() {
@@ -264,7 +264,7 @@ function displayDBInfo() {
 
     g.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x).tickValues(x.domain().filter(function (d, i) { return !(i % 3) })));
+    .call(d3.axisBottom(x).tickValues(x.domain().filter(function (d, i) { return !(i % 4) })));
 
     g.append("g")
     .call(d3.axisLeft(y))
@@ -433,50 +433,50 @@ function draw() {
 }
 */
 
-    function resetView() {
-        link.attr("class", "links default");
+function resetView() {
+    link.attr("class", "links default");
 
-        node.attr("class", "nodes default")
-        .attr("r", 4)
-        .attr("fill", function (d) { return color(d.vote_average); })
-        displayDBInfo();
-    }
+    node.attr("class", "nodes default")
+    .attr("r", 4)
+    .attr("fill", function (d) { return color(d.vote_average); })
+    displayDBInfo();
+}
 
 function click(d) {
     showMovieInfo(d);
 
-        node.filter(function (n) { return d.id_movie != n.id_movie })
-        .attr("class", "nodes hide");
+    node.filter(function (n) { return d.id_movie != n.id_movie })
+    .attr("class", "nodes hide");
 
-        link.attr("class", function (x) {
-            if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
+    link.attr("class", function (x) {
+        if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
 
-                node.filter(function (n) {
-                    return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
-                }).attr("class", "nodes show");
+            node.filter(function (n) {
+                return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
+            }).attr("class", "nodes show");
 
-                return "links show";
-            }
-            else return "links hide";
-        });
-    }
+            return "links show";
+        }
+        else return "links hide";
+    });
+}
 
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
+function dragstarted(d) {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+}
 
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
+function dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+}
 
-    function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
+function dragended(d) {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+}
 }
 
 function showMovieInfo(d) {

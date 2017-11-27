@@ -1,5 +1,5 @@
 .links line{
-        stroke: #ffffff;
+    stroke: #ffffff;
 }
 
 .nodes circle{
@@ -8,7 +8,7 @@
 }
 
 .default{
-    stroke-width: 0.04px;
+    stroke-width: 0.005px;
     stroke-opacity : 0.6;
 }
 
@@ -19,9 +19,9 @@
 }
 
 .hide {
-    stroke-width: 0.04px;
+    stroke-width: 0.05px;
     stroke-opacity : 0.4;
-    opacity : 0.4;
+    opacity : 0.2;
 }
 
 .background {
@@ -31,7 +31,7 @@
 
 .wrapper {
     display: flex;
-    max-height: 950px;
+    max-height: 900px;
 }
 
 .textinfo {
@@ -62,7 +62,6 @@
     text-justify: inter-word;
 }
 
-<<<<<<< HEAD
 table {
     width: 100%;
     border-collapse: collapse;
@@ -72,7 +71,7 @@ table, th, td {
     border: 1px solid black;
     padding: 5px;
     vertical-align: top;
-=======
+}
 .RangeSlider {
     flex-grow: 1;
     margin-left: 20px;
@@ -95,7 +94,6 @@ table, th, td {
 .DropDownText {
     text-align: left;
     height: 25px;
->>>>>>> 41f59a36d100b969cfa556109a4d2dff0dcc774a
 }
 
 header {
@@ -117,7 +115,7 @@ footer{
 }
 
 #filterButton {
-    float:left 
+    float:left
 }
 
 span.minussign {
