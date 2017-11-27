@@ -34,7 +34,7 @@ let people_movies_links;
 
 //load all json, set loaded to true. If add new json, need to do another callback layer
 function loadFiles() {
-    d3.json("../movie2.json", function(error, data) {
+    d3.json("../movie.json", function(error, data) {
         if (error) throw error;
         movies = data;
 
