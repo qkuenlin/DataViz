@@ -1,6 +1,17 @@
 let width = parseInt(d3.select(".wrapper").style("width"));
 let height = parseInt(d3.select(".wrapper").style("height"));
-let color = d3.scaleLinear().domain([0, 5, 10]).range(["red", "bleu", "green"]);
+let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "yellow", "bleu", "green"]);
+
+let diameter = height - 50,
+    radius = diameter / 2,
+    innerRadius = radius - 120;
+
+let cluster = d3.cluster().size([360, innerRadius]);
+let line = d3.radialLine()
+                .curve(d3.curveBundle.beta(0.85))
+                .radius(function (d) { return d.y; })
+                .angle(function (d) { return d.x / 180 * Math.PI; });
+
 
 let svg = d3.select("svg");
 let backgroundLayer = svg.append('g');
@@ -26,10 +37,20 @@ function loadFiles() {
     d3.json("../movie.json", function(error, data) {
         if (error) throw error;
         movies = data;
+
+        let scale = d3.scaleLinear().domain([0, movies.length]).range([0, 2 * Math.PI]);
+
+        movies.forEach(function (d, i) {
+            let theta = scale(i);
+            d.x = radius * Math.sin(theta) + width / 3;
+            d.y = radius * Math.cos(theta) + height / 2;
+        });
+
         d3.json("../people.json", function(error, data) {
             if (error) throw error;
             people = data;
-            d3.json("../lien.json", function(error ,data) {
+            d3.json("../lien.json", function (error, data) {
+                if (error) throw error;
                 people_movies_links = data;
                 loaded = true;
                 draw();
@@ -172,17 +193,31 @@ function displayDBInfo() {
 function getCrewAndMovieLinks(movie) {
     let crew = [];
     let related_movies = [];
-    for(let link in people_movies_links) {
-        if(movie.id_movie == link.id_movie) {
+    people_movies_links.forEach( function(link){
+        if (movie.id_movie == link.id_movie) {
             crew.push(link.id_person);
         }
-    }
-    for(let link in people_movies_links) {
-        if(link.id_movie != movie.id_movie && crew.includes(link.id_person)) {
+    });
+    people_movies_links.forEach(function (link) {
+        if (link.id_movie != movie.id_movie && crew.includes(link.id_person)) {
             related_movies.push(link.id_movie);
         }
-    }
+    });
     return {crew: crew, links: related_movies};
+}
+
+function createLinks() {
+    let links = [];
+    movies.forEach(function (movie) {
+        let crewAndMovieLinks = getCrewAndMovieLinks(movie);
+
+        crewAndMovieLinks.links.forEach(function (m_id) {
+            let m = movies.find(d => d.id_movie == m_id);
+            let link = { source: movie, target: m, value: 1 };
+            links.push(link);
+        });
+    });
+    return links;
 }
 
 loadFiles()
@@ -206,18 +241,27 @@ function draw() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
-    // let link = dataVizLayer.append("g")
-    // .attr("class", "links show")
-    // .selectAll("link")
-    // .data(graph.links)
-    // .enter().append("line")
+    let links = createLinks();
+
+    let link = dataVizLayer.append("g")
+    .attr("class", "links default")
+    .selectAll("link")
+    .data(links)
+    .enter().append("line")
+    //.attr("d", line)
+    .attr("x1", function (d) { return d.source.x; })
+    .attr("y1", function (d) { return d.source.y; })
+    .attr("x2", function (d) { return d.target.x; })
+    .attr("y2", function (d) { return d.target.y; });
 
     let node = dataVizLayer.append("g")
-    .attr("class", "nodes show")
+    .attr("class", "nodes default")
     .selectAll("circle")
     .data(movies)
     .enter().append("circle")
-    .attr("r", 5)
+    .attr("r", 4)
+    .attr("cx", function (d) { return d.x; })
+    .attr("cy", function (d) { return d.y; })
     .attr("fill", function (d) { return color(d.vote_average); })
     .on("click", function (d) { click(d, this); })
     // .call(d3.drag()
@@ -225,55 +269,57 @@ function draw() {
     // .on("drag", dragged)
     // .on("end", dragended));
 
-    // node.append("title")
-    // .text(function (d) { return d.id; });
+    node.append("title")
+    .text(function (d) { return d.title; });
 
-    // let simulation = d3.forceSimulation()
-    // .force("link", d3.forceLink().id(function (d) { return d.id; }))
-    // .force("charge", d3.forceManyBody())
-    // .force("center", d3.forceCenter(width / 2, height /2));
-    //
-    // simulation.nodes(graph.nodes).on("tick", ticked);
-    //
-    // simulation.force("link").links(graph.links);
-    //
-    // function ticked() {
-    //     link
-    //     .attr("x1", function (d) { return d.source.x; })
-    //     .attr("y1", function (d) { return d.source.y; })
-    //     .attr("x2", function (d) { return d.target.x; })
-    //     .attr("y2", function (d) { return d.target.y; });
-    //
-    //     node
-    //     .attr("cx", function (d) { return d.x; })
-    //     .attr("cy", function (d) { return d.y; });
-    // }
+    /*
+    let simulation = d3.forceSimulation()
+     .force("link", d3.forceLink().id(function (d) { return d.id; }))
+     .force("charge", d3.forceManyBody())
+     .force("center", d3.forceCenter(width / 2, height /2));
+
+     simulation.nodes(movies).on("tick", ticked);
+
+     simulation.force("link").links(links);
+
+     function ticked() {
+         link
+         .attr("x1", function (d) { return d.source.x; })
+         .attr("y1", function (d) { return d.source.y; })
+         .attr("x2", function (d) { return d.target.x; })
+         .attr("y2", function (d) { return d.target.y; });
+
+         node
+         .attr("cx", function (d) { return d.x; })
+         .attr("cy", function (d) { return d.y; });
+     }
+     */
 
     function resetView() {
-        //link.attr("class", "links show");
+        link.attr("class", "links default");
 
-        node.attr("class", "nodes show")
-        .attr("r", 5)
-        .attr("fill", function (d) { return color(d.group); })
+        node.attr("class", "nodes default")
+        .attr("r", 4)
+        .attr("fill", function (d) { return color(d.vote_average); })
     }
 
     function click(d, s) {
         showSidePanel(d);
 
-        node.filter(function(n) { return d.id != n.id })
-        .attr("class",  "nodes hide");
+        node.filter(function (n) { return d.id_movie != n.id_movie })
+            .attr("class",  "nodes hide");
 
-        // link.attr("class", function (x) {
-        //     if (x.source.id == d.id || x.target.id == d.id) {
-        //
-        //         node.filter(function (n) {
-        //             return (x.source.id == n.id || x.target.id == n.id);
-        //         }).attr("class", "nodes show");
-        //
-        //         return "links show";
-        //     }
-        //     else return "links hide";
-        // });
+         link.attr("class", function (x) {
+             if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
+
+                 node.filter(function (n) {
+                     return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
+                 }).attr("class", "nodes show");
+
+                 return "links show";
+             }
+             else return "links hide";
+         });
     }
 
     function dragstarted(d) {
