@@ -109,7 +109,6 @@ function getDBStats() {
     }
 
     movie_freq.sort(function(a,b) {return (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0);} );
-    console.log(movie_freq);
 
     return {
         max_vote: max_vote,
@@ -132,27 +131,47 @@ function date2str(date) {
 
 function minutes2String(seconds)
 {
-   var value = seconds;
+    var value = seconds;
 
-   var units = {
-       "year": 365*24*60,
-       "month": 30*24*60,
-       "day": 24*60,
-       "hour": 60,
-       "minute": 1
-   }
+    var units = {
+        "year": 365*24*60,
+        "month": 30*24*60,
+        "day": 24*60,
+        "hour": 60,
+        "minute": 1
+    }
 
-   var result = []
+    var result = []
 
-   for(var name in units) {
-     var p =  Math.floor(value/units[name]);
-     if(p == 1) result.push(" " + p + " " + name);
-     if(p >= 2) result.push(" " + p + " " + name + "s");
-     value %= units[name]
-   }
+    for(var name in units) {
+        var p =  Math.floor(value/units[name]);
+        if(p == 1) result.push(" " + p + " " + name);
+        if(p >= 2) result.push(" " + p + " " + name + "s");
+        value %= units[name]
+    }
 
-   return result;
+    return result;
 
+}
+
+function crewByID(id) {
+    let ret = null
+    people.forEach(function(p) {
+        if(p.id_person == id) {
+            ret = p;
+        }
+    });
+    return ret;
+}
+
+function movieByID(id) {
+    let ret = null;
+    movies.forEach(function(m) {
+        if(m.id_movie == id) {
+            ret = m;
+        }
+    });
+    return ret;
 }
 
 //display DB info inside side panel
@@ -162,11 +181,11 @@ function displayDBInfo() {
     sidepanel.selectAll("*").remove();
     sidepanel.append("hr");
     let div = sidepanel.append("div").classed("textInfo", true)
-    div.append("h1").text("Welcom to the Ultimate Movie Data Viz");
+    div.append("h1").text("Welcome to the Ultimate Movie Data Viz");
     div.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
     div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
     div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length + ".")
-    div.append("p").classed("justified", true).text("The DB contains ranking based on " + stats.vote_count + "votes.");
+    div.append("p").classed("justified", true).text("The DB contains ranking based on " + stats.vote_count + " votes.");
     div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote.title + " with a score of " + stats.max_vote.vote_average + "/10.")
     div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev.title + " with a revenue of " + (stats.max_rev.revenue).toLocaleString() + "$.");
     div.append("p").classed("justified", true).text("The movie with the highest budget is " + stats.max_budget.title + " with a budget of  " + (stats.max_budget.Budget).toLocaleString() + "$.");
@@ -193,7 +212,6 @@ function displayDBInfo() {
     y = d3.scaleLinear().range([height, 0]);
 
     x.domain(stats.movie_freq.map(function(d) { return d.year; }));
-    console.log(x.domain());
     y.domain([0, d3.max(stats.movie_freq, function(d) { return d.count; })]);
 
     g.append("g")
@@ -224,18 +242,22 @@ function displayDBInfo() {
 
 //returns all the crew ids and all the movies that share someone.
 function getCrewAndMovieLinks(movie) {
-    let crew = [];
-    let related_movies = [];
+    let crew = new Set();
+    let related_movies = new Set();
     people_movies_links.forEach( function(link){
         if (movie.id_movie == link.id_movie) {
-            crew.push(link.id_person);
+            crew.add(link.id_person);
         }
     });
     people_movies_links.forEach(function (link) {
-        if (link.id_movie != movie.id_movie && crew.includes(link.id_person)) {
-            related_movies.push(link.id_movie);
+        if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
+            related_movies.add(link.id_movie);
         }
     });
+    crew = Array.from(crew);
+    related_movies = Array.from(related_movies);
+    crew.sort(function(a,b) {return a-b;});
+    related_movies.sort(function(a,b){return a-b;});
     return {crew: crew, links: related_movies};
 }
 
@@ -296,7 +318,7 @@ function draw() {
     .attr("cx", function (d) { return d.x; })
     .attr("cy", function (d) { return d.y; })
     .attr("fill", function (d) { return color(d.vote_average); })
-    .on("click", function (d) { click(d, this); })
+    .on("click", function (d) { click(d); })
     // .call(d3.drag()
     // .on("start", dragstarted)
     // .on("drag", dragged)
@@ -337,7 +359,7 @@ function resetView() {
     displayDBInfo();
 }
 
-function click(d, s) {
+function click(d) {
     showMovieInfo(d);
 
     node.filter(function (n) { return d.id_movie != n.id_movie })
@@ -375,19 +397,59 @@ function dragended(d) {
 }
 
 function showMovieInfo(d) {
+    function addRow(table, row1, row2) {
+        let newRow = table.append("tr");
+        newRow.append("td").text(row1);
+        newRow.append("td").text(row2);
+    }
+
+    function addCrewLine(c) {
+        let l = crewTable.append("tr").append("td");
+        let crew = crewByID(c);
+        l.text(crew.name);
+        l.on("click", function() {
+            alert(crew.name);
+        });
+    }
+    function addMovieLine(c) {
+        let l = movieTable.append("tr").append("td");
+        let m = movieByID(c);
+        l.text(m.title);
+        l.on("click", function() {
+            alert(m.title);
+        });
+    }
+
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
-    let src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
-    sidepanel.append("div")
-    sidepanel.append("img").attr("src", src).attr("width", Math.max(parseInt(d3.select(".side-panel").style("width")),width*0.3));
-    sidepanel.append("h1").text(d.id);
-    sidepanel.append("span").classed('justified', true).text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac nibh ut ligula faucibus tempus. Nunc maximus a nisl eu ultricies. Phasellus quam sapien, vestibulum a purus ac, ullamcorper eleifend nulla. Nullam vel felis finibus, porta est ac, dapibus urna. Nulla dapibus rhoncus est, ut euismod odio maximus et. Suspendisse ac odio quis arcu egestas posuere ut a elit. Morbi posuere maximus accumsan. Aenean nunc massa, volutpat nec maximus sit amet, egestas eget orci. Donec vehicula blandit erat, ac venenatis massa.");
+    let div = sidepanel.append("div");
+    div.append("h1").text(d.title);
+    div.append("h2").text(d.tagline);
+    let table = div.append("table");
+    addRow(table, "Released date", d.release_date);
+    addRow(table, "Runtime", ""+d.runtime+" min");
+    addRow(table, "Vote average", ""+d.vote_average+"/10");
+    addRow(table, "Vote count", ""+d.vote_count);
+    addRow(table, "Budget", ""+d.Budget.toLocaleString()+"$");
+    addRow(table, "Revenue", ""+d.revenue.toLocaleString()+"$");
+    div.style("height", parseInt(d3.select(".side-panel").style("height"))/3 + 'px');
+    div.style("overflow-y", "scroll");
+    sidepanel.append("hr");
+    div = sidepanel.append("div");
+    table = div.append("table");
+    let headerRow = table.append("tr");
+    headerRow.append("th").text("Crew");
+    headerRow.append("th").text("Related movies");
+    let crewMovie = getCrewAndMovieLinks(d);
+    let row = table.append("tr");
+    let crewTable = row.append("td").append("table");
+    let movieTable = row.append("td").append("table");
+    crewMovie.crew.forEach(function(c) {
+        addCrewLine(c);
+    });
+    crewMovie.links.forEach(function(l) {
+        addMovieLine(l);
+    });
+    div.style("height", parseInt(d3.select(".side-panel").style("height"))*2/3 + 'px');
+    div.style("overflow-y", "scroll");
 }
-
-// dropdown selection
-d3.select('#opts')
-.on('change', function() {
-    let selectValue = d3.select('#opts').property('value')
-    console.log(selectValue);
-    read(selectValue);
-});
