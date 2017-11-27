@@ -214,7 +214,7 @@ function crewByID(id) {
 
 function movieByID(id) {
     let ret = null;
-    movies.forEach(function(m) {
+    all_movies.forEach(function(m) {
         if(m.id_movie == id) {
             ret = m;
         }
@@ -319,12 +319,12 @@ function filterLinksPerDepartement(dept) {
 function getCrewAndMovieLinks(movie) {
     let crew = new Set();
     let related_movies = new Set();
-    all_people_movies_links.forEach( function(link){
+    filtered_people_movies_links.forEach( function(link){
         if (movie.id_movie == link.id_movie) {
             crew.add(link.id_person);
         }
     });
-    all_people_movies_links.forEach(function (link) {
+    filtered_people_movies_links.forEach(function (link) {
         if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
             related_movies.add(link.id_movie);
         }
