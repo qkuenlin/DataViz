@@ -200,6 +200,7 @@ function minutes2String(seconds) {
     }
 
     return result;
+}
 
 function crewByID(id) {
     let ret = null
@@ -229,9 +230,9 @@ function displayDBInfo() {
     sidepanel.append("hr");
     let div = sidepanel.append("div").classed("textInfo", true)
     div.append("h1").text("Welcome to the Ultimate Movie Data Viz");
-    div.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
+    div.append("p").classed('justified', true).text("This DB contains information on " + all_movies.length.toString() + " movies.");
     div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
-    div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length + ".")
+    div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + all_people_movies_links.length + ".")
     div.append("p").classed("justified", true).text("The DB contains ranking based on " + stats.vote_count + " votes.");
     div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote.title + " with a score of " + stats.max_vote.vote_average + "/10.")
     div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev.title + " with a revenue of " + (stats.max_rev.revenue).toLocaleString() + "$.");
@@ -318,12 +319,12 @@ function filterLinksPerDepartement(dept) {
 function getCrewAndMovieLinks(movie) {
     let crew = new Set();
     let related_movies = new Set();
-    people_movies_links.forEach( function(link){
+    all_people_movies_links.forEach( function(link){
         if (movie.id_movie == link.id_movie) {
             crew.add(link.id_person);
         }
     });
-    people_movies_links.forEach(function (link) {
+    all_people_movies_links.forEach(function (link) {
         if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
             related_movies.add(link.id_movie);
         }
