@@ -8,7 +8,7 @@
 }
 
 .default{
-    stroke-width: 0.005px;
+    stroke-width: 0.04px;
     stroke-opacity : 0.6;
 }
 
@@ -19,9 +19,9 @@
 }
 
 .hide {
-    stroke-width: 0.05px;
+    stroke-width: 0.04px;
     stroke-opacity : 0.4;
-    opacity : 0.2;
+    opacity : 0.4;
 }
 
 .background {
@@ -31,7 +31,7 @@
 
 .wrapper {
     display: flex;
-    max-height: 900px;
+    max-height: 950px;
 }
 
 .textinfo {
@@ -62,8 +62,54 @@
     text-justify: inter-word;
 }
 
+.RangeSlider {
+    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sliderText {
+    text-align: center;
+    height: 25px;
+}
+
+.dropdown {
+    height: 25px;
+    min-width: 200px;
+}
+
+.DropDownMenu {
+}
+
+.DropDownText {
+    text-align: left;
+    height: 25px;
+}
+
 header {
 }
 
 footer{
+}
+
+#filters {
+    display: flex;
+    height: 60px;
+    margin-bottom: 20px;
+    font-family: Tahoma;
+    font-size: 12px;
+}
+
+#DepartementOptions {
+    width: 100px;
+}
+
+#filterButton {
+    float:left 
+}
+
+span.minussign {
+    font-size: 12px;
+    font-family: Tahoma;
+    padding: 0px 10px;
 }
