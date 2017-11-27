@@ -18,15 +18,6 @@ let backgroundLayer = svg.append('g');
 let dataVizLayer = svg.append('g');
 let UILayer = svg.append('g');
 
-function loadJSON(filename, bool) {
-    d3.json(filename, function(error, data) {
-        if (error) throw error;
-        console.log(filename + " loaded succesfully");
-        console.log(data);
-        bool = true;
-        return data;
-    });
-}
 let loaded = false;
 let movies;
 let people;
