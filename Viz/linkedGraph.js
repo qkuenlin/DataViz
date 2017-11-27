@@ -34,7 +34,7 @@ let people_movies_links;
 
 //load all json, set loaded to true. If add new json, need to do another callback layer
 function loadFiles() {
-    d3.json("../movie.json", function(error, data) {
+    d3.json("../movie2.json", function(error, data) {
         if (error) throw error;
         movies = data;
 
@@ -301,10 +301,11 @@ function draw() {
         node.attr("class", "nodes default")
         .attr("r", 4)
         .attr("fill", function (d) { return color(d.vote_average); })
+        displayDBInfo();
     }
 
     function click(d, s) {
-        showSidePanel(d);
+        showMovieInfo(d);
 
         node.filter(function (n) { return d.id_movie != n.id_movie })
             .attr("class",  "nodes hide");
@@ -340,7 +341,7 @@ function draw() {
     }
 }
 
-function showSidePanel(d) {
+function showMovieInfo(d) {
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
     let src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
