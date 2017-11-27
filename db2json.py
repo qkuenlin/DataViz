@@ -7,8 +7,8 @@ if __name__ == '__main__':
     cursor = conn.cursor()
 
     sql = "SELECT id_person, Name, id_movie, title, release_date,\
-  keywords, overview, populatiry, production_companies,\
-  revenue, tagline, vote_average, id_job, job, department, rôle \
+  keywords, overview, populatiry, production_companies, runtime,\
+  revenue, Budget, tagline, vote_average, vote_count, id_job, job, department, rôle \
   FROM L_person_movie as lpm\
     JOIN Person as p ON lpm.id_person=p.id\
     JOIN Movie as m ON lpm.id_movie= m.id\
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
     print(len(l_lien))
 
-    with open("movie.json", "w") as f:
+    with open("movie2.json", "w") as f:
         json.dump(l_movie, f, indent=4)
     with open("people.json", "w") as f:
         json.dump(l_person, f, indent=4)
