@@ -1,11 +1,16 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 
 <head>
     <meta charset="utf-8" />
     <title>Ultimate Movie Data Viz</title>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="slider/codebase/fonts/font_roboto/roboto.css" />
+    <link rel="stylesheet" type="text/css" href="slider/codebase/dhtmlxslider.css" />
+    <script src="slider/codebase/dhtmlxslider.js"></script>
+
+
+
     <script src="d3.min.js"></script>
 </head>
 <body>
@@ -16,12 +21,69 @@
         <div class="side-panel">
         </div>
         <div class="svg-container">
-            <select id="opts">
-                <option value="movies.json" selected="selected">movies</option>
-                <option value="movies2.json">movies2</option>
-                <!-- and so on... -->
-            </select>
-            <svg class="svg-content" width="960" height="600" viewbox="0 0 960 600" preserveAspectRatio="xMinYMin meet"></svg>
+            <div id="filters">
+                <table width="200" cellspacing="0" cellpadding="0" border="0" class="DropDownMenu">
+
+                    <tr>
+                        <td class="DropDownText">Link by Department</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="dropdown" id="DepartementOptions">
+                                <option value="All" selected="selected">All</option>
+                                <option value="Cast">Actor</option>
+                                <option value="Art">Art</option>
+                                <option value="Camera">Camera</option>
+                                <option value="Costume & Make-Up">Costume & Make-Up</option>
+                                <option value="Directing">Directing</option>
+                                <option value="Editing">Editing</option>
+                                <option value="Lighting">Lighting</option>
+                                <option value="Production">Production</option>
+                                <option value="Sound">Sound</option>
+                                <option value="Visual Effects">Visual Effects</option>
+                                <option value="Writing">Writing</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="200" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
+                    <tr>
+                        <td class="sliderText">Year</td>
+                    </tr>
+                    <tr>
+                        <td><div id="sliderYear"></div></td>
+                    </tr>
+                    <tr class="sliderText">
+                        <td>
+                            <span id="sliderYearLink"></span>
+                            <span class="minussign">-</span>
+                            <span id="sliderYearLink2"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="100" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
+                    <tr>
+                        <td class="sliderText">Reviews</td>
+                    </tr>
+                    <tr>
+                        <td><div id="sliderReview"></div></td>
+                    </tr>
+                    <tr class="sliderText">
+                        <td>
+                            <span id="sliderReviewLink"></span>
+                            <span class="minussign">-</span>
+                            <span id="sliderReviewLink2"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <button id="filterButton" type="button" onclick="filterAll()">Filter</button>
+            </div>
+
+            <svg class="svg-content" width="960" height="700" viewbox="0 0 960 700" preserveAspectRatio="xMinYMin meet"></svg>
         </div>
     </div>
 

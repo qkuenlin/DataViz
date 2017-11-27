@@ -1,5 +1,5 @@
 .links line{
-        stroke: #ffffff;
+    stroke: #ffffff;
 }
 
 .nodes circle{
@@ -34,6 +34,13 @@
     max-height: 900px;
 }
 
+.textinfo {
+}
+
+.bar {
+    fill: steelblue;
+}
+
 .side-panel {
     width: 33%;
     max-width: 33%;
@@ -55,12 +62,67 @@
     text-justify: inter-word;
 }
 
-.bar {
-  fill: steelblue;
+table {
+    border-collapse: collapse;
+}
+
+.large {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 5px;
+    vertical-align: top;
+}
+.RangeSlider {
+    flex-grow: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.sliderText {
+    text-align: center;
+    height: 25px;
+}
+
+.dropdown {
+    height: 25px;
+    min-width: 200px;
+}
+
+.DropDownMenu {
+}
+
+.DropDownText {
+    text-align: left;
+    height: 25px;
 }
 
 header {
 }
 
 footer{
+}
+
+#filters {
+    display: flex;
+    height: 60px;
+    margin-bottom: 20px;
+    font-family: Tahoma;
+    font-size: 12px;
+}
+
+#DepartementOptions {
+    width: 100px;
+}
+
+#filterButton {
+    float:left
+}
+
+span.minussign {
+    font-size: 12px;
+    font-family: Tahoma;
+    padding: 0px 10px;
 }
