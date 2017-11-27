@@ -71,14 +71,23 @@ function getDBStats() {
             oldest = date;
         }
 
-        if(date.getYear() in movie_freq) {
-            movie_freq[date.getYear()]++;
-        } else {
-            movie_freq[date.getYear()] = 1;
+        let found = false;
+        for(let j=0; j < movie_freq.length; j++) {
+            if(movie_freq[j].year == date.getYear()+1900) {
+                movie_freq[j].count++;
+                found = true;
+            }
+        }
+        if(!found) {
+            movie_freq.push({year: date.getYear()+1900, count: 1})
         }
 
         tot_rev += m.revenue;
     }
+
+    movie_freq.sort(function(a,b) {return (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0);} );
+    console.log(movie_freq);
+
     return {
         max_vote: max_vote,
         max_vote_title: max_vote_title,
@@ -93,36 +102,70 @@ function getDBStats() {
     };
 }
 
+function date2str(date) {
+    return "" + (date.getYear()+1900) + "/" + date.getMonth().toLocaleString(undefined, {minimumIntegerDigits: 2}) +"/"+ date.getDay().toLocaleString(undefined, {minimumIntegerDigits: 2});
+}
+
+
 //display DB info inside side panel
 function displayDBInfo() {
+    let stats = getDBStats();
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
-    sidepanel.append("div")
-    sidepanel.append("h1").text("Welcom to the Ultimate Movie Data Viz");
-    sidepanel.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
-    sidepanel.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
-    sidepanel.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length.toString() + ".")
-    let stats = getDBStats();
-    sidepanel.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote_title + " with a score of " + stats.max_vote + "/10.")
-    sidepanel.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev_title + " with a revenue of " + stats.max_rev + "$.");
-    sidepanel.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest_title + ", released in " + stats.oldest.toDateString() + ".");
-    sidepanel.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest_title + ", released in " + stats.youngest.toDateString() + ".");
-
+    sidepanel.append("hr");
+    let div = sidepanel.append("div").classed("textInfo", true)
+    div.append("h1").text("Welcom to the Ultimate Movie Data Viz");
+    div.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
+    div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
+    div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length + ".")
+    div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote_title + " with a score of " + stats.max_vote + "/10.")
+    div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev_title + " with a revenue of " + (stats.max_rev).toLocaleString() + "$.");
+    div.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest_title + ", released in " + date2str(stats.oldest) + ".");
+    div.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest_title + ", released in " + date2str(stats.youngest) + ".");
+    div.style("height", parseInt(d3.select(".side-panel").style("height"))/2 + 'px');
+    div.style("overflow-y", "scroll");
+    sidepanel.append("hr");
     let svg_width = parseInt(d3.select(".side-panel").style("width"));
-    let svg = sidepanel.append("svg").attr("width", svg_width),
-        margin = {top: 20, right: 20, bottom: 30, left: 50},
-        width = +svg.attr("width") - margin.left - margin.right,
-        height = +svg.attr("height") - margin.top - margin.bottom,
-        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    let svg_height = parseInt(d3.select(".side-panel").style("height")) -
+    parseInt(d3.select(".textInfo").style("height"));
+
+    let svg = sidepanel.append("svg").attr("width", svg_width).attr("height", svg_height);
+    let margin = {top: 5, right: 5, bottom: 20, left: 50};
+    let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    let width = svg.attr("width") - margin.left - margin.right;
+    let height = svg.attr("height")- margin.top - margin.bottom;
+
+    let x = d3.scaleBand().range([0, width]).paddingInner(0.05),
+    y = d3.scaleLinear().range([height, 0]);
+
+    x.domain(stats.movie_freq.map(function(d) { return d.year; }));
+    console.log(x.domain());
+    y.domain([0, d3.max(stats.movie_freq, function(d) { return d.count; })]);
+
+    g.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickValues(x.domain().filter(function(d,i){ return !(i%3)})));
+
+    g.append("g")
+    .call(d3.axisLeft(y))
+    g.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Film per year");
+
+
 
     g.selectAll(".bar")
-        .data(stats.movie_freq)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", function(d) {return d;})
-        .attr("y", function(d) {return stats.movie_freq[d];})
-        .attr("width", 2)
-        .attr("height", function(d){return height - stats.movie_freq[d];});
+    .data(stats.movie_freq)
+    .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) {return x(d.year);})
+    .attr("y", function(d) {return y(d.count);})
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.count); });
 }
 
 //returns all the crew ids and all the movies that share someone.
@@ -218,7 +261,7 @@ function draw() {
         showSidePanel(d);
 
         node.filter(function(n) { return d.id != n.id })
-            .attr("class",  "nodes hide");
+        .attr("class",  "nodes hide");
 
         // link.attr("class", function (x) {
         //     if (x.source.id == d.id || x.target.id == d.id) {

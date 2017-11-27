@@ -28,6 +28,13 @@
     max-height: 900px;
 }
 
+.textinfo {
+}
+
+.bar {
+    fill: steelblue;
+}
+
 .side-panel {
     width: 33%;
     max-width: 33%;
@@ -47,10 +54,6 @@
 .justified {
     text-align: justify;
     text-justify: inter-word;
-}
-
-.bar {
-  fill: steelblue;
 }
 
 header {
