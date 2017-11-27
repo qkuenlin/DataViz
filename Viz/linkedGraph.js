@@ -508,7 +508,7 @@ function showMovieInfo(d) {
     let div = sidepanel.append("div");
     div.append("h1").text(d.title);
     div.append("h2").text(d.tagline);
-    let table = div.append("table");
+    let table = div.append("table").classed("large", true);
     addRow(table, "Released date", d.release_date);
     addRow(table, "Runtime", ""+d.runtime+" min");
     addRow(table, "Vote average", ""+d.vote_average+"/10");
@@ -519,14 +519,14 @@ function showMovieInfo(d) {
     div.style("overflow-y", "scroll");
     sidepanel.append("hr");
     div = sidepanel.append("div");
-    table = div.append("table");
+    table = div.append("table").classed("large", true);;
     let headerRow = table.append("tr");
     headerRow.append("th").text("Crew");
     headerRow.append("th").text("Related movies");
     let crewMovie = getCrewAndMovieLinks(d);
     let row = table.append("tr");
-    let crewTable = row.append("td").append("table");
-    let movieTable = row.append("td").append("table");
+    let crewTable = row.append("td").append("table").classed("large", true);;
+    let movieTable = row.append("td").append("table").classed("large", true);;
     crewMovie.crew.forEach(function(c) {
         addCrewLine(c);
     });

@@ -63,8 +63,11 @@
 }
 
 table {
-    width: 100%;
     border-collapse: collapse;
+}
+
+.large {
+    width: 100%;
 }
 
 table, th, td {
