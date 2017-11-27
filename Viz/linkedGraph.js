@@ -3,14 +3,14 @@ let height = parseInt(d3.select(".wrapper").style("height"));
 let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "yellow", "bleu", "green"]);
 
 let diameter = height - 50,
-    radius = diameter / 2,
-    innerRadius = radius - 120;
+radius = diameter / 2,
+innerRadius = radius - 120;
 
 let cluster = d3.cluster().size([360, innerRadius]);
 let line = d3.radialLine()
-                .curve(d3.curveBundle.beta(0.85))
-                .radius(function (d) { return d.y; })
-                .angle(function (d) { return d.x / 180 * Math.PI; });
+.curve(d3.curveBundle.beta(0.85))
+.radius(function (d) { return d.y; })
+.angle(function (d) { return d.x / 180 * Math.PI; });
 
 
 let svg = d3.select("svg");
@@ -53,34 +53,43 @@ function loadFiles() {
 
 //return stats like highest vote_average, num of votes, ...
 function getDBStats() {
-    let max_vote = 0;
-    let max_vote_title = ""
-    let max_rev = 0;
-    let max_rev_title = "";
+    let max_vote = movies[0];
+    let max_rev = movies[0];
+    let max_budget = movies[0];
+    let longuest = movies[0];
+    let oldest_date = new Date(movies[0].release_date);
+    let oldest = movies[0];
+    let youngest = movies[0];
+    let youngest_date = new Date(movies[0].release_date);
+    let movie_freq = [];
+    let vote_count = 0;
     let tot_rev = 0;
-    let oldest = new Date(movies[0].release_date);
-    let oldest_title = movies[0].title;
-    let youngest_title = movies[0].title;
-    let youngest = new Date(movies[0].release_date);
-    let movie_freq = []
+    let tot_runtime = 0;
     for(let i = 0; i < movies.length; i++) {
         let m = movies[i];
-        if (m.vote_average > max_vote) {
-            max_vote = m.vote_average;
-            max_vote_title = m.title;
+        if (m.vote_average > max_vote.vote_average) {
+            max_vote = m
         }
-        if (m.revenue > max_rev) {
-            max_rev = m.revenue;
-            max_rev_title = m.title;
+        if (m.revenue > max_rev.revenue) {
+            max_rev = m;
         }
+
+        if(m.Budget > max_budget.Budget) {
+            max_budget = m;
+        }
+
+        if(m.runtime > longuest.runtime) {
+            longuest = m;
+        }
+
         let date = new Date(m.release_date);
-        if(date.getDate() > youngest.getDate()) {
-            youngest_title = m.title;
-            youngest = date;
+        if(date > youngest_date) {
+            youngest = m;
+            youngest_date = date;
         }
-        if(date.getDate() < oldest.getDate()) {
-            oldest_title = m.title;
-            oldest = date;
+        if(date < oldest_date) {
+            oldest = m;
+            oldest_date = date;
         }
 
         let found = false;
@@ -94,7 +103,9 @@ function getDBStats() {
             movie_freq.push({year: date.getYear()+1900, count: 1})
         }
 
+        tot_runtime += m.runtime;
         tot_rev += m.revenue;
+        vote_count += m.vote_count;
     }
 
     movie_freq.sort(function(a,b) {return (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0);} );
@@ -102,14 +113,14 @@ function getDBStats() {
 
     return {
         max_vote: max_vote,
-        max_vote_title: max_vote_title,
         max_rev: max_rev,
-        max_rev_title: max_rev_title,
+        max_budget: max_budget,
+        longuest: longuest,
         tot_rev: tot_rev,
+        vote_count: vote_count,
+        tot_runtime: tot_runtime,
         oldest: oldest,
-        oldest_title: oldest_title,
         youngest: youngest,
-        youngest_title: youngest_title,
         movie_freq: movie_freq
     };
 }
@@ -118,6 +129,31 @@ function date2str(date) {
     return "" + (date.getYear()+1900) + "/" + date.getMonth().toLocaleString(undefined, {minimumIntegerDigits: 2}) +"/"+ date.getDay().toLocaleString(undefined, {minimumIntegerDigits: 2});
 }
 
+
+function minutes2String(seconds)
+{
+   var value = seconds;
+
+   var units = {
+       "year": 365*24*60,
+       "month": 30*24*60,
+       "day": 24*60,
+       "hour": 60,
+       "minute": 1
+   }
+
+   var result = []
+
+   for(var name in units) {
+     var p =  Math.floor(value/units[name]);
+     if(p == 1) result.push(" " + p + " " + name);
+     if(p >= 2) result.push(" " + p + " " + name + "s");
+     value %= units[name]
+   }
+
+   return result;
+
+}
 
 //display DB info inside side panel
 function displayDBInfo() {
@@ -130,10 +166,16 @@ function displayDBInfo() {
     div.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
     div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
     div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length + ".")
-    div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote_title + " with a score of " + stats.max_vote + "/10.")
-    div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev_title + " with a revenue of " + (stats.max_rev).toLocaleString() + "$.");
-    div.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest_title + ", released in " + date2str(stats.oldest) + ".");
-    div.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest_title + ", released in " + date2str(stats.youngest) + ".");
+    div.append("p").classed("justified", true).text("The DB contains ranking based on " + stats.vote_count + "votes.");
+    div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote.title + " with a score of " + stats.max_vote.vote_average + "/10.")
+    div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev.title + " with a revenue of " + (stats.max_rev.revenue).toLocaleString() + "$.");
+    div.append("p").classed("justified", true).text("The movie with the highest budget is " + stats.max_budget.title + " with a budget of  " + (stats.max_budget.Budget).toLocaleString() + "$.");
+    div.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest.title + ", released on " + stats.oldest.release_date + ".");
+    div.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest.title + ", released on " + stats.youngest.release_date + ".");
+    div.append("p").classed("justified", true).text("The longuest movie is " + stats.longuest.title + ", with a runtime of " + stats.longuest.runtime + " minutes.");
+    div.append("p").classed("justified", true).text("The total revenue of the movies in the DB is of " + (stats.tot_rev).toLocaleString() + "$.");
+    div.append("p").classed("justified", true).text("The total length of the movies in the DB is " + (stats.tot_runtime).toLocaleString() + " minutes, which is " + minutes2String(stats.tot_runtime)+ ".");
+
     div.style("height", parseInt(d3.select(".side-panel").style("height"))/2 + 'px');
     div.style("overflow-y", "scroll");
     sidepanel.append("hr");
@@ -265,71 +307,71 @@ function draw() {
 
     /*
     let simulation = d3.forceSimulation()
-     .force("link", d3.forceLink().id(function (d) { return d.id; }))
-     .force("charge", d3.forceManyBody())
-     .force("center", d3.forceCenter(width / 2, height /2));
+    .force("link", d3.forceLink().id(function (d) { return d.id; }))
+    .force("charge", d3.forceManyBody())
+    .force("center", d3.forceCenter(width / 2, height /2));
 
-     simulation.nodes(movies).on("tick", ticked);
+    simulation.nodes(movies).on("tick", ticked);
 
-     simulation.force("link").links(links);
+    simulation.force("link").links(links);
 
-     function ticked() {
-         link
-         .attr("x1", function (d) { return d.source.x; })
-         .attr("y1", function (d) { return d.source.y; })
-         .attr("x2", function (d) { return d.target.x; })
-         .attr("y2", function (d) { return d.target.y; });
+    function ticked() {
+    link
+    .attr("x1", function (d) { return d.source.x; })
+    .attr("y1", function (d) { return d.source.y; })
+    .attr("x2", function (d) { return d.target.x; })
+    .attr("y2", function (d) { return d.target.y; });
 
-         node
-         .attr("cx", function (d) { return d.x; })
-         .attr("cy", function (d) { return d.y; });
-     }
-     */
+    node
+    .attr("cx", function (d) { return d.x; })
+    .attr("cy", function (d) { return d.y; });
+}
+*/
 
-    function resetView() {
-        link.attr("class", "links default");
+function resetView() {
+    link.attr("class", "links default");
 
-        node.attr("class", "nodes default")
-        .attr("r", 4)
-        .attr("fill", function (d) { return color(d.vote_average); })
-        displayDBInfo();
-    }
+    node.attr("class", "nodes default")
+    .attr("r", 4)
+    .attr("fill", function (d) { return color(d.vote_average); })
+    displayDBInfo();
+}
 
-    function click(d, s) {
-        showMovieInfo(d);
+function click(d, s) {
+    showMovieInfo(d);
 
-        node.filter(function (n) { return d.id_movie != n.id_movie })
-            .attr("class",  "nodes hide");
+    node.filter(function (n) { return d.id_movie != n.id_movie })
+    .attr("class",  "nodes hide");
 
-         link.attr("class", function (x) {
-             if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
+    link.attr("class", function (x) {
+        if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
 
-                 node.filter(function (n) {
-                     return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
-                 }).attr("class", "nodes show");
+            node.filter(function (n) {
+                return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
+            }).attr("class", "nodes show");
 
-                 return "links show";
-             }
-             else return "links hide";
-         });
-    }
+            return "links show";
+        }
+        else return "links hide";
+    });
+}
 
-    function dragstarted(d) {
-        if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
+function dragstarted(d) {
+    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+}
 
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
+function dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+}
 
-    function dragended(d) {
-        if (!d3.event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
+function dragended(d) {
+    if (!d3.event.active) simulation.alphaTarget(0);
+    d.fx = null;
+    d.fy = null;
+}
 }
 
 function showMovieInfo(d) {
