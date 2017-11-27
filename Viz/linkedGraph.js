@@ -1,30 +1,192 @@
 let width = parseInt(d3.select(".wrapper").style("width"));
 let height = parseInt(d3.select(".wrapper").style("height"));
-let color = d3.scaleOrdinal(d3.schemeCategory20);
+let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "yellow", "bleu", "green"]);
 
-let graph;
+let diameter = height - 50,
+    radius = diameter / 2,
+    innerRadius = radius - 120;
+
+let cluster = d3.cluster().size([360, innerRadius]);
+let line = d3.radialLine()
+                .curve(d3.curveBundle.beta(0.85))
+                .radius(function (d) { return d.y; })
+                .angle(function (d) { return d.x / 180 * Math.PI; });
+
 
 let svg = d3.select("svg");
 let backgroundLayer = svg.append('g');
 let dataVizLayer = svg.append('g');
 let UILayer = svg.append('g');
 
-read("movies.json");
-
-function read(file) {
-    d3.json(file, function (error, g) {
+function loadJSON(filename, bool) {
+    d3.json(filename, function(error, data) {
         if (error) throw error;
-        graph = g;
-        hideSidePanel();
-        draw();
-    })
-};
+        console.log(filename + " loaded succesfully");
+        console.log(data);
+        bool = true;
+        return data;
+    });
+}
+let loaded = false;
+let movies;
+let people;
+let people_movies_links;
+
+//load all json, set loaded to true. If add new json, need to do another callback layer
+function loadFiles() {
+    d3.json("../movie.json", function(error, data) {
+        if (error) throw error;
+        movies = data;
+
+        let scale = d3.scaleLinear().domain([0, movies.length]).range([0, 2 * Math.PI]);
+
+        movies.forEach(function (d, i) {
+            let theta = scale(i);
+            d.x = radius * Math.sin(theta) + width / 3;
+            d.y = radius * Math.cos(theta) + height / 2;
+        });
+
+        d3.json("../people.json", function(error, data) {
+            if (error) throw error;
+            people = data;
+            d3.json("../lien.json", function (error, data) {
+                if (error) throw error;
+                people_movies_links = data;
+                loaded = true;
+                draw();
+                displayDBInfo();
+            })
+        });
+    });
+}
+
+//return stats like highest vote_average, num of votes, ...
+function getDBStats() {
+    let max_vote = 0;
+    let max_vote_title = ""
+    let max_rev = 0;
+    let max_rev_title = "";
+    let tot_rev = 0;
+    let oldest = new Date(movies[0].release_date);
+    let oldest_title = movies[0].title;
+    let youngest_title = movies[0].title;
+    let youngest = new Date(movies[0].release_date);
+    let movie_freq = []
+    for(let i = 0; i < movies.length; i++) {
+        let m = movies[i];
+        if (m.vote_average > max_vote) {
+            max_vote = m.vote_average;
+            max_vote_title = m.title;
+        }
+        if (m.revenue > max_rev) {
+            max_rev = m.revenue;
+            max_rev_title = m.title;
+        }
+        let date = new Date(m.release_date);
+        if(date.getDate() > youngest.getDate()) {
+            youngest_title = m.title;
+            youngest = date;
+        }
+        if(date.getDate() < oldest.getDate()) {
+            oldest_title = m.title;
+            oldest = date;
+        }
+
+        if(date.getYear() in movie_freq) {
+            movie_freq[date.getYear()]++;
+        } else {
+            movie_freq[date.getYear()] = 1;
+        }
+
+        tot_rev += m.revenue;
+    }
+    return {
+        max_vote: max_vote,
+        max_vote_title: max_vote_title,
+        max_rev: max_rev,
+        max_rev_title: max_rev_title,
+        tot_rev: tot_rev,
+        oldest: oldest,
+        oldest_title: oldest_title,
+        youngest: youngest,
+        youngest_title: youngest_title,
+        movie_freq: movie_freq
+    };
+}
+
+//display DB info inside side panel
+function displayDBInfo() {
+    let sidepanel = d3.select(".side-panel");
+    sidepanel.selectAll("*").remove();
+    sidepanel.append("div")
+    sidepanel.append("h1").text("Welcom to the Ultimate Movie Data Viz");
+    sidepanel.append("p").classed('justified', true).text("This DB contains information on " + movies.length.toString() + " movies.");
+    sidepanel.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
+    sidepanel.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + people_movies_links.length.toString() + ".")
+    let stats = getDBStats();
+    sidepanel.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote_title + " with a score of " + stats.max_vote + "/10.")
+    sidepanel.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev_title + " with a revenue of " + stats.max_rev + "$.");
+    sidepanel.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest_title + ", released in " + stats.oldest.toDateString() + ".");
+    sidepanel.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest_title + ", released in " + stats.youngest.toDateString() + ".");
+
+    let svg_width = parseInt(d3.select(".side-panel").style("width"));
+    let svg = sidepanel.append("svg").attr("width", svg_width),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    g.selectAll(".bar")
+        .data(stats.movie_freq)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) {return d;})
+        .attr("y", function(d) {return stats.movie_freq[d];})
+        .attr("width", 2)
+        .attr("height", function(d){return height - stats.movie_freq[d];});
+}
+
+//returns all the crew ids and all the movies that share someone.
+function getCrewAndMovieLinks(movie) {
+    let crew = [];
+    let related_movies = [];
+    people_movies_links.forEach( function(link){
+        if (movie.id_movie == link.id_movie) {
+            crew.push(link.id_person);
+        }
+    });
+    people_movies_links.forEach(function (link) {
+        if (link.id_movie != movie.id_movie && crew.includes(link.id_person)) {
+            related_movies.push(link.id_movie);
+        }
+    });
+    return {crew: crew, links: related_movies};
+}
+
+function createLinks() {
+    let links = [];
+    movies.forEach(function (movie) {
+        let crewAndMovieLinks = getCrewAndMovieLinks(movie);
+
+        crewAndMovieLinks.links.forEach(function (m_id) {
+            let m = movies.find(d => d.id_movie == m_id);
+            let link = { source: movie, target: m, value: 1 };
+            links.push(link);
+        });
+    });
+    return links;
+}
+
+loadFiles()
 
 d3.select(window).on("resize", function() {
     draw();
 })
 
 function draw() {
+    if(!loaded) {
+        return;
+    }
     width = parseInt(d3.select(".wrapper").style("width"))- parseInt(d3.select(".side-panel").style("width"));
     backgroundLayer.selectAll("*").remove();
     dataVizLayer.selectAll("*").remove();
@@ -36,76 +198,85 @@ function draw() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
+    let links = createLinks();
+
     let link = dataVizLayer.append("g")
-    .attr("class", "links show")
+    .attr("class", "links default")
     .selectAll("link")
-    .data(graph.links)
+    .data(links)
     .enter().append("line")
+    //.attr("d", line)
+    .attr("x1", function (d) { return d.source.x; })
+    .attr("y1", function (d) { return d.source.y; })
+    .attr("x2", function (d) { return d.target.x; })
+    .attr("y2", function (d) { return d.target.y; });
 
     let node = dataVizLayer.append("g")
-    .attr("class", "nodes show")
+    .attr("class", "nodes default")
     .selectAll("circle")
-    .data(graph.nodes)
+    .data(movies)
     .enter().append("circle")
-    .attr("r", 5)
-    .attr("fill", function (d) { return color(d.group); })
+    .attr("r", 4)
+    .attr("cx", function (d) { return d.x; })
+    .attr("cy", function (d) { return d.y; })
+    .attr("fill", function (d) { return color(d.vote_average); })
     .on("click", function (d) { click(d, this); })
-    .call(d3.drag()
-    .on("start", dragstarted)
-    .on("drag", dragged)
-    .on("end", dragended));
+    // .call(d3.drag()
+    // .on("start", dragstarted)
+    // .on("drag", dragged)
+    // .on("end", dragended));
 
     node.append("title")
-    .text(function (d) { return d.id; });
+    .text(function (d) { return d.title; });
 
+    /*
     let simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function (d) { return d.id; }))
-    .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height /2));
-
-    simulation.nodes(graph.nodes).on("tick", ticked);
-
-    simulation.force("link").links(graph.links);
-
-    function ticked() {
-        link
-        .attr("x1", function (d) { return d.source.x; })
-        .attr("y1", function (d) { return d.source.y; })
-        .attr("x2", function (d) { return d.target.x; })
-        .attr("y2", function (d) { return d.target.y; });
-
-        node
-        .attr("cx", function (d) { return d.x; })
-        .attr("cy", function (d) { return d.y; });
-    }
+     .force("link", d3.forceLink().id(function (d) { return d.id; }))
+     .force("charge", d3.forceManyBody())
+     .force("center", d3.forceCenter(width / 2, height /2));
+    
+     simulation.nodes(movies).on("tick", ticked);
+    
+     simulation.force("link").links(links);
+    
+     function ticked() {
+         link
+         .attr("x1", function (d) { return d.source.x; })
+         .attr("y1", function (d) { return d.source.y; })
+         .attr("x2", function (d) { return d.target.x; })
+         .attr("y2", function (d) { return d.target.y; });
+    
+         node
+         .attr("cx", function (d) { return d.x; })
+         .attr("cy", function (d) { return d.y; });
+     }
+     */
 
     function resetView() {
-        link.attr("class", "links show");
+        link.attr("class", "links default");
 
-        node.attr("class", "nodes show")
-        .attr("r", 5)
-        .attr("fill", function (d) { return color(d.group); })
-
-        hideSidePanel();
+        node.attr("class", "nodes default")
+        .attr("r", 4)
+        .attr("fill", function (d) { return color(d.vote_average); })
     }
 
     function click(d, s) {
         showSidePanel(d);
 
-        node.filter(function(n) { return d.id != n.id })
+        node.filter(function (n) { return d.id_movie != n.id_movie })
             .attr("class",  "nodes hide");
 
-        link.attr("class", function (x) {
-            if (x.source.id == d.id || x.target.id == d.id) {
-
-                node.filter(function (n) {
-                    return (x.source.id == n.id || x.target.id == n.id);
-                }).attr("class", "nodes show");
-
-                return "links show";
-            }
-            else return "links hide";
-        });
+         link.attr("class", function (x) {
+             if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
+        
+                 node.filter(function (n) {
+                     return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
+                 }).attr("class", "nodes show");
+        
+                 return "links show";
+             }
+             else return "links hide";
+         });
     }
 
     function dragstarted(d) {
@@ -130,17 +301,10 @@ function showSidePanel(d) {
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
     let src = "http://2.bp.blogspot.com/-baqmxAt8YHg/UMRuNx6uNdI/AAAAAAAAD1s/TzmvfnYyP8E/s1600/rick-astely.gif"
-    sidepanel.append("input").attr("type", "button")
-    .attr("value", "X").attr("onclick", "hideSidePanel()");
     sidepanel.append("div")
     sidepanel.append("img").attr("src", src).attr("width", Math.max(parseInt(d3.select(".side-panel").style("width")),width*0.3));
     sidepanel.append("h1").text(d.id);
     sidepanel.append("span").classed('justified', true).text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac nibh ut ligula faucibus tempus. Nunc maximus a nisl eu ultricies. Phasellus quam sapien, vestibulum a purus ac, ullamcorper eleifend nulla. Nullam vel felis finibus, porta est ac, dapibus urna. Nulla dapibus rhoncus est, ut euismod odio maximus et. Suspendisse ac odio quis arcu egestas posuere ut a elit. Morbi posuere maximus accumsan. Aenean nunc massa, volutpat nec maximus sit amet, egestas eget orci. Donec vehicula blandit erat, ac venenatis massa.");
-}
-
-function hideSidePanel() {
-    let sidepanel = d3.select(".side-panel");
-    sidepanel.selectAll("*").remove();
 }
 
 // dropdown selection
