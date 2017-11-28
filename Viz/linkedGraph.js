@@ -1,6 +1,6 @@
 let width = parseInt(d3.select(".svg-content").style("width"));
 let height = parseInt(d3.select(".svg-content").style("height"));
-let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "yellow", "bleu", "green"]);
+let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "orange", "yellow", "green"]);
 
 let diameter = height,
 radius = diameter / 2,
@@ -16,14 +16,14 @@ let line = d3.radialLine()
 
 let svg = d3.select("svg");
 let backgroundLayer = svg.append('g');
-let dataVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
+let CircularVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
+let MovieVizLayer = svg.append('g');
 let UILayer = svg.append('g');
 
 let loaded = false;
 let all_movies;
 let people;
 let all_people_movies_links;
-let filtered_people_movies_links;
 
 let filtered_movies;
 
@@ -33,8 +33,14 @@ let sliderReview;
 let JobDepartments = [];
 
 let currentViz = 0;
-let mapMovieCrew = {};
-let mapCrewMovie = {};
+let mapMovieCrew = new Map();
+let mapCrewMovie = new Map();
+let mapMovie = new Map();
+let mapMovie_filtered = new Map();
+
+let mapCrewMovie_filtered = new Map();
+
+let movieVizSet = new Set();
 
 function UISetup() {
     sliderYear = new dhtmlXSlider({
@@ -70,11 +76,11 @@ function UISetup() {
 }
 
 function filterAll() {
-    filterYears(sliderYear.getValue());
-    filterReviews(sliderReview.getValue())
-    linksForFilteredMovies();
-    filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'))
-    drawCircularViz();
+    mapMovie_filtered = filterReviews(sliderReview.getValue(), filterYears(sliderYear.getValue(), mapMovie));
+    mapCrewMovie_filtered = filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'), linksForFilteredMovies());
+
+    if (currentViz == 2) drawMovieViz(movieVizSet);
+    else drawCircularViz();
 }
 
 //load all json, set loaded to true. If add new json, need to do another callback layer
@@ -82,6 +88,9 @@ function loadFiles() {
     d3.json("../movie.json", function (error, data) {
         if (error) throw error;
         all_movies = data;
+        all_movies.forEach(function (d) {
+            mapMovie.set(d.id_movie, d);
+        })
 
         d3.json("../people.json", function (error, data) {
             if (error) throw error;
@@ -90,7 +99,7 @@ function loadFiles() {
                 if (error) throw error;
                 all_people_movies_links = data;
                 loaded = true;
-                createCrewMap();
+                createLinkMap();
                 //GetAllDepartmentsAndJobs();
                 UISetup();
                 displayDBInfo();
@@ -219,13 +228,7 @@ function crewByID(id) {
 }
 
 function movieByID(id) {
-    let ret = null;
-    all_movies.forEach(function (m) {
-        if (m.id_movie == id) {
-            ret = m;
-        }
-    });
-    return ret;
+    return mapMovie.get(id);
 }
 
 //display DB info inside side panel
@@ -292,49 +295,94 @@ function displayDBInfo() {
     .attr("height", function (d) { return height - y(d.count); });
 }
 
-function filterYears(range) {
+function filterYears(range, _map) {
+    let newMap = new Map();
+
+    _map.forEach(function (value, key, map) {
+        let year = new Date(value.release_date).getYear() + 1900;
+
+        if (year >= range[0] && year <= range[1]) {
+            newMap.set(key, value);
+        }
+    });
+
     filtered_movies = all_movies.filter(function (d) {
         let year = new Date(d.release_date).getYear() + 1900;
         return year >= range[0] && year <= range[1];
     });
+
+    return newMap;
 }
 
-function filterReviews(range) {
+function filterReviews(range, _map) {
+    let newMap = new Map();
+
+    _map.forEach(function (value, key, map) {
+        if (value.vote_average >= range[0] && value.vote_average <= range[1]) {
+            newMap.set(key, value);
+        }
+    });
+
     filtered_movies = filtered_movies.filter(function (d) {
         return d.vote_average >= range[0] && d.vote_average <= range[1];
     });
+
+    return newMap;
 }
 
 function linksForFilteredMovies() {
-    filtered_people_movies_links = all_people_movies_links.filter(function (link) {
-        return filtered_movies.some(function (movie) {
-            return movie.id_movie == link.id_movie;
+    let newMap = new Map();
+    mapCrewMovie.forEach(function (value, key, map) {
+        let newSet = new Set();
+        value.forEach(function (d) {
+            if (mapMovie_filtered.get(d.id_movie)) newSet.add(d);
         })
+
+        if (newSet.size > 0) newMap.set(key, newSet)
     });
+
+    return newMap;
 }
 
-function filterLinksPerDepartement(dept) {
+function filterLinksPerDepartement(dept, _map) {
+
     if (dept != "All") {
-        filtered_people_movies_links = filtered_people_movies_links.filter(function (link) {
-            return link.department == dept;
+        let newMap = new Map();
+
+        _map.forEach(function (value, key, map) {
+            let newSet = new Set();
+
+            value.forEach(function (d) {
+                if (d.department == dept) newSet.add(d);
+            })
+
+            if (newSet.size > 0) newMap.set(key, newSet)
         });
+
+        return newMap;
+
     }
+    else {
+        return _map;
+    }
+
 }
 
 //returns all the crew ids and all the movies that share someone.
 function getCrewAndMovieLinks(movie) {
-    let crew = new Set();
+    let crew = mapMovieCrew.get(movie.id_movie);
     let related_movies = new Set();
-    filtered_people_movies_links.forEach(function (link) {
-        if (movie.id_movie == link.id_movie) {
-            crew.add(link.id_person);
+
+    crew.forEach(function (c) {
+        crewData = mapCrewMovie_filtered.get(c);
+
+        if (crewData) {
+            mapCrewMovie_filtered.get(c).forEach(function (m) {
+                related_movies.add(m.id_movie);
+            });
         }
     });
-    filtered_people_movies_links.forEach(function (link) {
-        if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
-            related_movies.add(link.id_movie);
-        }
-    });
+
     crew = Array.from(crew);
     related_movies = Array.from(related_movies);
     crew.sort(function (a, b) { return a - b; });
@@ -342,34 +390,74 @@ function getCrewAndMovieLinks(movie) {
     return { crew: crew, links: related_movies };
 }
 
-function createCrewMap(){
-    all_people_movies_links.forEach(function(d){
-        let n = mapCrewMovie[d.id_person];
-        if(!n){
-            n = mapCrewMovie[d.id_person] = new Set();
-        }        
+function createLinkMap() {
+    all_people_movies_links.forEach(function (d) {
+        let n = mapCrewMovie.get(d.id_person);
+        if (!n) {
+            mapCrewMovie.set(d.id_person, new Set());
+            n = mapCrewMovie.get(d.id_person);
+        }
         n.add({ id_movie: d.id_movie, department: d.department, job: d.job });
 
-        let m = mapMovieCrew[d.id_movie];
+        let m = mapMovieCrew.get(d.id_movie);
         if (!m) {
-            m = mapMovieCrew[d.id_movie] = new Set();
+            mapMovieCrew.set(d.id_movie, new Set());
+            m = mapMovieCrew.get(d.id_movie);
         }
         m.add(d.id_person);
     })
 }
 
-function createLinks() {
+
+
+function getLinks(nodes) {
+    var map = [],
+        imports = [];
+
+    nodes.forEach(function (d) {
+        map[d.data.id_movie] = d;
+    });
+
+    nodes.forEach(function (d) {
+        getCrewAndMovieLinks(d.data).links.forEach(function (i) {
+            imports.push(map[d.data.id_movie].path(map[i]));
+        });
+    });
+
+    return imports;
+}
+
+function createGraph(movies) {
     let links = [];
-    filtered_movies.forEach(function (movie) {
+    let movieSet = new Set();
+    movies.forEach(function (movie) {
+        movieSet.add(movie);
         let crewAndMovieLinks = getCrewAndMovieLinks(movie);
 
         crewAndMovieLinks.links.forEach(function (m_id) {
-            let m = filtered_movies.find(d => d.id_movie == m_id);
+            let m = mapMovie.get(m_id);
             let link = { source: movie, target: m, value: 1 };
             links.push(link);
+            movieSet.add(m);
         });
     });
-    return links;
+    /*
+    movieSet.forEach(function (movie) {
+        let crewAndMovieLinks = getCrewAndMovieLinks(movie);
+
+        crewAndMovieLinks.links.forEach(function (m_id) {
+            let m = mapMovie.get(m_id);
+            if (movieSet.has(m)) {
+                let link = { source: movie, target: m, value: 1 };
+                links.push(link);
+                movieSet.add(m);
+            }
+        });
+    });
+    */
+    movieSet = Array.from(movieSet);
+
+    return { links: links, nodes: movieSet };
 }
 
 loadFiles()
@@ -386,8 +474,9 @@ function drawCircularViz() {
     currentViz = 1;
 
     width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
-    backgroundLayer.selectAll("*").remove();
-    dataVizLayer.selectAll("*").remove();
+    CircularVizLayer.selectAll("*").remove();
+    MovieVizLayer.selectAll("*").remove();
+
     svg.attr("width", width)
 
     backgroundLayer.append("rect")
@@ -396,14 +485,12 @@ function drawCircularViz() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
-    let scale = d3.scaleLinear().domain([0, filtered_movies.length]).range([0, 2 * Math.PI]);
-
     let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
     cluster(root);
 
-    let link = dataVizLayer.append("g").selectAll("link"),
-    node = dataVizLayer.append("g").selectAll("nodes");
+    let link = CircularVizLayer.append("g").selectAll("link"),
+    node = CircularVizLayer.append("g").selectAll("nodes");
 
     link = link
    .data(getLinks(root.leaves()))
@@ -442,7 +529,8 @@ function drawCircularViz() {
     function click(n) {
         d = n.data;
         showMovieInfo(d);
-
+        drawMovieViz(new Set().add(d));
+        /*
         node.filter(function (i) { return d.id_movie != i.data.id_movie })
         .attr("class", "node");
 
@@ -457,6 +545,7 @@ function drawCircularViz() {
             }
             else return "link";
         });
+        */
     }
 
     function mouseovered(d) {
@@ -481,7 +570,101 @@ function drawCircularViz() {
 }
 
 function drawMovieViz(_movies) {
-    filtered_movies = Get_movies;
+    if (!loaded) {
+        return;
+    }
+
+    currentViz = 2;
+    movieVizSet = _movies
+
+    width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
+    CircularVizLayer.selectAll("*").remove();
+    MovieVizLayer.selectAll("*").remove();
+    svg.attr("width", width)
+
+    backgroundLayer.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("class", "background")
+    .on("click", function () { resetView(); });
+
+    let simulation = d3.forceSimulation()
+    .force("collision", d3.forceCollide(15))
+    .force("link", d3.forceLink())
+    .force("charge", d3.forceManyBody().strength(-50))
+    .force("center", d3.forceCenter(width / 2, height / 2));
+
+    let graph = createGraph(_movies);
+
+    let link = MovieVizLayer.append("g")
+        .attr("class", "link--movieViz")
+        .selectAll("line")
+        .data(graph.links)
+        .enter().append("line");
+
+    let node = MovieVizLayer.append("g")
+        .attr("class", "node")
+        .selectAll("circle")
+        .data(graph.nodes)
+            .enter().append("circle")
+            .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
+            .attr("fill", function (d) { return color(d.vote_average); })
+            .on("click", function (d) { click(d); });
+
+    node.append("title").text(function (d) { return d.title });
+
+
+    simulation.nodes(graph.nodes).on("tick", ticked);
+    simulation.force("link").links(graph.links);
+
+    function ticked() {
+        link
+            .attr("x1", function (d) { return d.source.x; })
+            .attr("y1", function (d) { return d.source.y; })
+            .attr("x2", function (d) { return d.target.x; })
+            .attr("y2", function (d) { return d.target.y; });
+
+        node
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; });
+    }
+
+    function click(d) {
+        if (_movies.has(d)) {
+
+            _movies.delete(d);
+            if (_movies.size == 0) {
+                drawCircularViz();
+                return;
+            }
+            else {
+                drawMovieViz(_movies);
+            }
+        }
+        else {
+            showMovieInfo(d);
+            _movies.add(d)
+            drawMovieViz(_movies);
+        }
+
+        /*
+        node.filter(function (i) { return d.id_movie != i.data.id_movie })
+        .attr("class", "node");
+
+        link.attr("class", function (x) {
+            if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
+
+                node.filter(function (i) {
+                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
+                }).attr("class", "node");
+
+                return "link";
+            }
+            else return "link";
+        });
+        */
+    }
+
 }
 
 function packageHierarchy(movies) {
@@ -520,23 +703,6 @@ function packageHierarchy(movies) {
     });
 
     return d3.hierarchy(map[""]);
-}
-
-function getLinks(nodes) {
-    var map = [],
-        imports = [];
-
-    nodes.forEach(function (d) {
-        map[d.data.id_movie] = d;
-    });
-
-    nodes.forEach(function (d) {
-        getCrewAndMovieLinks(d.data).links.forEach(function (i) {
-            imports.push(map[d.data.id_movie].path(map[i]));
-        });
-    });
-
-    return imports;
 }
 
 function showMovieInfo(d) {
