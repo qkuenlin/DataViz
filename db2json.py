@@ -52,6 +52,7 @@ if __name__ == '__main__':
 
             if r["id_movie"] not in l_mid:
                 r.pop("id_person")
+                r.pop("Name")
                 r.pop("department")
                 r.pop("job")
                 r.pop("id_job")
@@ -77,7 +78,7 @@ if __name__ == '__main__':
 
     print(len(l_lien))
 
-    with open("movie2.json", "w") as f:
+    with open("movie.json", "w") as f:
         json.dump(l_movie, f, indent=4)
     with open("people.json", "w") as f:
         json.dump(l_person, f, indent=4)
