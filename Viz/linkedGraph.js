@@ -713,18 +713,38 @@ function getLinksForMovie(movie) {
     let linksCrewMovie = [];
     crew.forEach(function (c) {
         crewData = mapCrewMovie_filtered.get(c);
+        let add = false;
         if (crewData) {
             mapCrewMovie_filtered.get(c).forEach(function (m) {
-                related_movies.add(m.id_movie);
-                let link = m;
-                link.id_person = c;
-                linksCrewMovie.push(link)
+                if(m.id_movie != movie.id_movie) {
+                    add = true;
+                    related_movies.add(m.id_movie);
+                    let link = m;
+                    link.id_person = c;
+                    linksCrewMovie.push(link);
+                }
             });
+            if(!add) {
+                crew.delete(c);
+            }
+        } else {
+            crew.delete(c);
         }
     });
     return {crew: Array.from(crew), movies: Array.from(related_movies), links: linksCrewMovie};
 }
 
+let departmentColorMap = new Map();
+console.log(departmentColorMap);
+function departmentColor(departmentName) {
+    let color = departmentColorMap.get(departmentName);
+    if(!color) {
+        let colors = d3.scaleOrdinal(d3.schemeCategory20).domain(d3.range(0, 19));
+        color = colors(departmentColorMap.size);
+        departmentColorMap.set(departmentName, color);
+    }
+    return color;
+}
 
 function showMovieInfo(d) {
     function addRow(table, row1, row2) {
@@ -780,9 +800,13 @@ function showMovieInfo(d) {
     });
     let graphLinks = [];
     links.forEach(function(link) {
-        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: 1};
+        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: link.department};
         graphLinks.push(l);
     });
+
+    let tooltipDiv = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
     let svgcontainer = div.append("svg")
     .attr("class", "background")
@@ -800,15 +824,25 @@ function showMovieInfo(d) {
     .attr("height", height)
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
     let drawnLinks = svg.append("g")
-    .attr("class", "link--movieViz")
+    .attr("class", "side-links")
     .selectAll("link")
     .data(graphLinks)
     .enter().append("line")
+    .attr("stroke", function(d) { return departmentColor(d.value)})
     .attr("x1", function (d) { return d.source.x; })
     .attr("y1", function (d) { return d.source.y; })
     .attr("x2", function (d) { return d.target.x; })
-    .attr("y2", function (d) { return d.target.y; });
+    .attr("y2", function (d) { return d.target.y; })
+    .on("mouseover", function(d) {
+        tooltipDiv.transition()
+         .duration(200)
+         .style("opacity", .9);
+       tooltipDiv .html(d.value)
+         .style("left", (d3.event.pageX + 10) + "px")
+         .style("top", (d3.event.pageY - 10) + "px");
+    });
 
     let crewNames = svg.append("g")
     .selectAll("text")
