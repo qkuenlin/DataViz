@@ -735,7 +735,7 @@ function getLinksForMovie(movie) {
 }
 
 let departmentColorMap = new Map();
-console.log(departmentColorMap);
+
 function departmentColor(departmentName) {
     let color = departmentColorMap.get(departmentName);
     if(!color) {
