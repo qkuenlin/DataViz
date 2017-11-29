@@ -32,15 +32,16 @@ let sliderReview;
 
 let JobDepartments = [];
 
-let currentViz = 0;
-let mapMovieCrew = new Map();
-let mapCrewMovie = new Map();
-let mapMovie = new Map();
-let mapMovie_filtered = new Map();
+let currentViz = 0; //Current central Viz; 0: no viz, 1: circular, 2: movie graph
 
-let mapCrewMovie_filtered = new Map();
+let mapMovieCrew = new Map(); // Map from id_movie to Set of id_crew
+let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, department, job)
+let mapMovie = new Map(); // Map from id_movie to movie object
+let mapMovie_filtered = new Map(); // fitlered version of mapMovie
 
-let movieVizSet = new Set();
+let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
+
+let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
 function UISetup() {
     sliderYear = new dhtmlXSlider({
