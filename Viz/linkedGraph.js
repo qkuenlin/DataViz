@@ -1,28 +1,29 @@
 let width = parseInt(d3.select(".svg-content").style("width"));
 let height = parseInt(d3.select(".svg-content").style("height"));
-let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "yellow", "bleu", "green"]);
+let color = d3.scaleLinear().domain([0, 3, 6, 10]).range(["red", "orange", "yellow", "green"]);
 
-let diameter = height - 40,
+let diameter = height,
 radius = diameter / 2,
-innerRadius = radius - 120;
+innerRadius = radius - 40;
 
 let cluster = d3.cluster().size([360, innerRadius]);
+
 let line = d3.radialLine()
-.curve(d3.curveBundle.beta(0.85))
-.radius(function (d) { return d.y; })
-.angle(function (d) { return d.x / 180 * Math.PI; });
+    .curve(d3.curveBundle.beta(0.85))
+    .radius(function (d) { return d.y; })
+    .angle(function (d) { return d.x / 180 * Math.PI; });
 
 
 let svg = d3.select("svg");
 let backgroundLayer = svg.append('g');
-let dataVizLayer = svg.append('g');
+let CircularVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
+let MovieVizLayer = svg.append('g');
 let UILayer = svg.append('g');
 
 let loaded = false;
 let all_movies;
 let people;
 let all_people_movies_links;
-let filtered_people_movies_links;
 
 let filtered_movies;
 
@@ -30,6 +31,16 @@ let sliderYear;
 let sliderReview;
 
 let JobDepartments = [];
+
+let currentViz = 0;
+let mapMovieCrew = new Map();
+let mapCrewMovie = new Map();
+let mapMovie = new Map();
+let mapMovie_filtered = new Map();
+
+let mapCrewMovie_filtered = new Map();
+
+let movieVizSet = new Set();
 
 function UISetup() {
     sliderYear = new dhtmlXSlider({
@@ -65,11 +76,11 @@ function UISetup() {
 }
 
 function filterAll() {
-    filterYears(sliderYear.getValue());
-    filterReviews(sliderReview.getValue())
-    linksForFilteredMovies();
-    filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'))
-    draw();
+    mapMovie_filtered = filterReviews(sliderReview.getValue(), filterYears(sliderYear.getValue(), mapMovie));
+    mapCrewMovie_filtered = filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'), linksForFilteredMovies());
+
+    if (currentViz == 2) drawMovieViz(movieVizSet);
+    else drawCircularViz();
 }
 
 //load all json, set loaded to true. If add new json, need to do another callback layer
@@ -77,6 +88,9 @@ function loadFiles() {
     d3.json("../movie.json", function (error, data) {
         if (error) throw error;
         all_movies = data;
+        all_movies.forEach(function (d) {
+            mapMovie.set(d.id_movie, d);
+        })
 
         d3.json("../people.json", function (error, data) {
             if (error) throw error;
@@ -85,6 +99,7 @@ function loadFiles() {
                 if (error) throw error;
                 all_people_movies_links = data;
                 loaded = true;
+                createLinkMap();
                 //GetAllDepartmentsAndJobs();
                 UISetup();
                 displayDBInfo();
@@ -158,7 +173,7 @@ function getDBStats() {
         vote_count += m.vote_count;
     }
 
-    movie_freq.sort(function(a,b) {return (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0);} );
+    movie_freq.sort(function (a, b) { return (a.year > b.year) ? 1 : ((b.year > a.year) ? -1 : 0); });
 
     return {
         max_vote: max_vote,
@@ -204,8 +219,8 @@ function minutes2String(seconds) {
 
 function crewByID(id) {
     let ret = null
-    people.forEach(function(p) {
-        if(p.id_person == id) {
+    people.forEach(function (p) {
+        if (p.id_person == id) {
             ret = p;
         }
     });
@@ -213,13 +228,7 @@ function crewByID(id) {
 }
 
 function movieByID(id) {
-    let ret = null;
-    all_movies.forEach(function(m) {
-        if(m.id_movie == id) {
-            ret = m;
-        }
-    });
-    return ret;
+    return mapMovie.get(id);
 }
 
 //display DB info inside side panel
@@ -259,8 +268,8 @@ function displayDBInfo() {
     let x = d3.scaleBand().range([0, width]).paddingInner(0.05),
     y = d3.scaleLinear().range([height, 0]);
 
-    x.domain(stats.movie_freq.map(function(d) { return d.year; }));
-    y.domain([0, d3.max(stats.movie_freq, function(d) { return d.count; })]);
+    x.domain(stats.movie_freq.map(function (d) { return d.year; }));
+    y.domain([0, d3.max(stats.movie_freq, function (d) { return d.count; })]);
 
     g.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -286,83 +295,188 @@ function displayDBInfo() {
     .attr("height", function (d) { return height - y(d.count); });
 }
 
-function filterYears(range) {
+function filterYears(range, _map) {
+    let newMap = new Map();
+
+    _map.forEach(function (value, key, map) {
+        let year = new Date(value.release_date).getYear() + 1900;
+
+        if (year >= range[0] && year <= range[1]) {
+            newMap.set(key, value);
+        }
+    });
+
     filtered_movies = all_movies.filter(function (d) {
         let year = new Date(d.release_date).getYear() + 1900;
         return year >= range[0] && year <= range[1];
     });
+
+    return newMap;
 }
 
-function filterReviews(range) {
+function filterReviews(range, _map) {
+    let newMap = new Map();
+
+    _map.forEach(function (value, key, map) {
+        if (value.vote_average >= range[0] && value.vote_average <= range[1]) {
+            newMap.set(key, value);
+        }
+    });
+
     filtered_movies = filtered_movies.filter(function (d) {
         return d.vote_average >= range[0] && d.vote_average <= range[1];
     });
+
+    return newMap;
 }
 
 function linksForFilteredMovies() {
-    filtered_people_movies_links = all_people_movies_links.filter(function (link) {
-        return filtered_movies.some(function (movie) {
-            return movie.id_movie == link.id_movie;
+    let newMap = new Map();
+    mapCrewMovie.forEach(function (value, key, map) {
+        let newSet = new Set();
+        value.forEach(function (d) {
+            if (mapMovie_filtered.get(d.id_movie)) newSet.add(d);
         })
+
+        if (newSet.size > 0) newMap.set(key, newSet)
     });
+
+    return newMap;
 }
 
-function filterLinksPerDepartement(dept) {
+function filterLinksPerDepartement(dept, _map) {
+
     if (dept != "All") {
-        filtered_people_movies_links = filtered_people_movies_links.filter(function (link) {
-            return link.department == dept;
+        let newMap = new Map();
+
+        _map.forEach(function (value, key, map) {
+            let newSet = new Set();
+
+            value.forEach(function (d) {
+                if (d.department == dept) newSet.add(d);
+            })
+
+            if (newSet.size > 0) newMap.set(key, newSet)
         });
+
+        return newMap;
+
     }
+    else {
+        return _map;
+    }
+
 }
 
 //returns all the crew ids and all the movies that share someone.
 function getCrewAndMovieLinks(movie) {
-    let crew = new Set();
+    let crew = mapMovieCrew.get(movie.id_movie);
     let related_movies = new Set();
-    filtered_people_movies_links.forEach( function(link){
-        if (movie.id_movie == link.id_movie) {
-            crew.add(link.id_person);
+
+    crew.forEach(function (c) {
+        crewData = mapCrewMovie_filtered.get(c);
+
+        if (crewData) {
+            mapCrewMovie_filtered.get(c).forEach(function (m) {
+                related_movies.add(m.id_movie);
+            });
         }
     });
-    filtered_people_movies_links.forEach(function (link) {
-        if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
-            related_movies.add(link.id_movie);
-        }
-    });
+
     crew = Array.from(crew);
     related_movies = Array.from(related_movies);
-    crew.sort(function(a,b) {return a-b;});
-    related_movies.sort(function(a,b){return a-b;});
-    return {crew: crew, links: related_movies};
+    crew.sort(function (a, b) { return a - b; });
+    related_movies.sort(function (a, b) { return a - b; });
+    return { crew: crew, links: related_movies };
 }
 
-function createLinks() {
+function createLinkMap() {
+    all_people_movies_links.forEach(function (d) {
+        let n = mapCrewMovie.get(d.id_person);
+        if (!n) {
+            mapCrewMovie.set(d.id_person, new Set());
+            n = mapCrewMovie.get(d.id_person);
+        }
+        n.add({ id_movie: d.id_movie, department: d.department, job: d.job });
+
+        let m = mapMovieCrew.get(d.id_movie);
+        if (!m) {
+            mapMovieCrew.set(d.id_movie, new Set());
+            m = mapMovieCrew.get(d.id_movie);
+        }
+        m.add(d.id_person);
+    })
+}
+
+
+
+function getLinks(nodes) {
+    var map = [],
+        imports = [];
+
+    nodes.forEach(function (d) {
+        map[d.data.id_movie] = d;
+    });
+
+    nodes.forEach(function (d) {
+        getCrewAndMovieLinks(d.data).links.forEach(function (i) {
+            imports.push(map[d.data.id_movie].path(map[i]));
+        });
+    });
+
+    return imports;
+}
+
+function createGraph(movies) {
     let links = [];
-    filtered_movies.forEach(function (movie) {
+    let movieSet = new Set();
+    movies.forEach(function (movie) {
+        movieSet.add(movie);
         let crewAndMovieLinks = getCrewAndMovieLinks(movie);
 
         crewAndMovieLinks.links.forEach(function (m_id) {
-            let m = filtered_movies.find(d => d.id_movie == m_id);
+            let m = mapMovie.get(m_id);
             let link = { source: movie, target: m, value: 1 };
             links.push(link);
+            movieSet.add(m);
         });
     });
-    return links;
+    /*
+    movieSet.forEach(function (movie) {
+        let crewAndMovieLinks = getCrewAndMovieLinks(movie);
+
+        crewAndMovieLinks.links.forEach(function (m_id) {
+            let m = mapMovie.get(m_id);
+            if (movieSet.has(m)) {
+                let link = { source: movie, target: m, value: 1 };
+                links.push(link);
+                movieSet.add(m);
+            }
+        });
+    });
+    */
+    movieSet = Array.from(movieSet);
+
+    return { links: links, nodes: movieSet };
 }
 
 loadFiles()
 
 d3.select(window).on("resize", function () {
-    draw();
+    drawCircularViz();
 })
 
-function draw() {
+function drawCircularViz() {
     if (!loaded) {
         return;
     }
+
+    currentViz = 1;
+
     width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
-    backgroundLayer.selectAll("*").remove();
-    dataVizLayer.selectAll("*").remove();
+    CircularVizLayer.selectAll("*").remove();
+    MovieVizLayer.selectAll("*").remove();
+
     svg.attr("width", width)
 
     backgroundLayer.append("rect")
@@ -371,129 +485,240 @@ function draw() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
+    let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
-    let links = createLinks();
-    let scale = d3.scaleLinear().domain([0, filtered_movies.length]).range([0, 2 * Math.PI]);
+    cluster(root);
 
-    filtered_movies.forEach(function (d, i) {
-        let theta = scale(i);
-        d.x = radius * Math.sin(theta) + width / 2;
-        d.y = radius * Math.cos(theta) + height / 2;
-    });
+    let link = CircularVizLayer.append("g").selectAll("link"),
+    node = CircularVizLayer.append("g").selectAll("nodes");
 
-    let link = dataVizLayer.append("g")
-    .attr("class", "links default")
-    .selectAll("link")
-    .data(links)
-    .enter().append("line")
-    //.attr("d", line)
-    .attr("x1", function (d) { return d.source.x; })
-    .attr("y1", function (d) { return d.source.y; })
-    .attr("x2", function (d) { return d.target.x; })
-    .attr("y2", function (d) { return d.target.y; });
+    link = link
+   .data(getLinks(root.leaves()))
+   .enter().append("path")
+    .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
+    .attr("class", "link")
+    .attr("d", line);
 
-    let node = dataVizLayer.append("g")
-    .attr("class", "nodes default")
-    .selectAll("circle")
-    .data(filtered_movies)
+    node = node
+    .data(root.leaves())
     .enter().append("circle")
+    .attr("class", "node")
     .attr("r", 4)
-    .attr("cx", function (d) { return d.x; })
-    .attr("cy", function (d) { return d.y; })
-    .attr("fill", function (d) { return color(d.vote_average); })
+    .attr("fill", function (d) { return color(d.data.vote_average); })
     .on("click", function (d) { click(d); })
-    // .call(d3.drag()
-    // .on("start", dragstarted)
-    // .on("drag", dragged)
-    // .on("end", dragended));
+    .on("mouseover", mouseovered)
+    .on("mouseout", mouseouted)
+    .attr("dy", "0.31em")
+    .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+    .attr("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
+    .text(function (d) { return d.data.name; })
+
 
     node.append("title")
-    .text(function (d) { return d.title; });
+    .text(function (d) { return d.data.title; });
 
-    /*
+    function resetView() {
+        link.attr("class", "link");
+
+        node.attr("class", "node")
+        .attr("r", 4)
+        .attr("fill", function (d) { return color(d.data.vote_average); })
+        displayDBInfo();
+    }
+
+    function click(n) {
+        d = n.data;
+        showMovieInfo(d);
+        drawMovieViz(new Set().add(d));
+        /*
+        node.filter(function (i) { return d.id_movie != i.data.id_movie })
+        .attr("class", "node");
+
+        link.attr("class", function (x) {
+            if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
+
+                node.filter(function (i) {
+                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
+                }).attr("class", "node");
+
+                return "link";
+            }
+            else return "link";
+        });
+        */
+    }
+
+    function mouseovered(d) {
+        node.each(function (n) { n.target = n.source = false; });
+
+        link.classed("link--highlight", function (l) {
+            if (l.target === d) return l.source.source = true;
+            else if (l.source === d) return l.target.target = true;
+        })
+        .filter(function (l) {
+            return !(l.target === d || l.source === d);
+        }).classed("link--fade", true);
+
+        node.classed("node--highlight", function (n) { return n.target || n.sources; })
+        .classed("node--fade", function (n) { return !(n.target || n.sources); });
+    }
+
+    function mouseouted(d) {
+        link.classed("link--highlight", false).classed("link--fade", false);
+        node.classed("node--highlight", false).classed("node--fade", false);
+    }
+}
+
+function drawMovieViz(_movies) {
+    if (!loaded) {
+        return;
+    }
+
+    currentViz = 2;
+    movieVizSet = _movies
+
+    width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
+    CircularVizLayer.selectAll("*").remove();
+    MovieVizLayer.selectAll("*").remove();
+    svg.attr("width", width)
+
+    backgroundLayer.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("class", "background")
+    .on("click", function () { resetView(); });
+
     let simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function (d) { return d.id; }))
-    .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height /2));
+    .force("collision", d3.forceCollide(15))
+    .force("link", d3.forceLink())
+    .force("charge", d3.forceManyBody().strength(-50))
+    .force("center", d3.forceCenter(width / 2, height / 2));
 
-    simulation.nodes(movies).on("tick", ticked);
+    let graph = createGraph(_movies);
 
-    simulation.force("link").links(links);
+    let link = MovieVizLayer.append("g")
+        .attr("class", "link--movieViz")
+        .selectAll("line")
+        .data(graph.links)
+        .enter().append("line");
+
+    let node = MovieVizLayer.append("g")
+        .attr("class", "node")
+        .selectAll("circle")
+        .data(graph.nodes)
+            .enter().append("circle")
+            .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
+            .attr("fill", function (d) { return color(d.vote_average); })
+            .on("click", function (d) { click(d); });
+
+    node.append("title").text(function (d) { return d.title });
+
+
+    simulation.nodes(graph.nodes).on("tick", ticked);
+    simulation.force("link").links(graph.links);
 
     function ticked() {
-    link
-    .attr("x1", function (d) { return d.source.x; })
-    .attr("y1", function (d) { return d.source.y; })
-    .attr("x2", function (d) { return d.target.x; })
-    .attr("y2", function (d) { return d.target.y; });
+        link
+            .attr("x1", function (d) { return d.source.x; })
+            .attr("y1", function (d) { return d.source.y; })
+            .attr("x2", function (d) { return d.target.x; })
+            .attr("y2", function (d) { return d.target.y; });
 
-    node
-    .attr("cx", function (d) { return d.x; })
-    .attr("cy", function (d) { return d.y; });
-}
-*/
+        node
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function (d) { return d.y; });
+    }
 
-function resetView() {
-    link.attr("class", "links default");
+    function click(d) {
+        if (_movies.has(d)) {
 
-    node.attr("class", "nodes default")
-    .attr("r", 4)
-    .attr("fill", function (d) { return color(d.vote_average); })
-    displayDBInfo();
-}
-
-function click(d) {
-    showMovieInfo(d);
-
-    node.filter(function (n) { return d.id_movie != n.id_movie })
-    .attr("class", "nodes hide");
-
-    link.attr("class", function (x) {
-        if (x.source.id_movie == d.id_movie || x.target.id_movie == d.id_movie) {
-
-            node.filter(function (n) {
-                return (x.source.id_movie == n.id_movie || x.target.id_movie == n.id_movie);
-            }).attr("class", "nodes show");
-
-            return "links show";
+            _movies.delete(d);
+            if (_movies.size == 0) {
+                drawCircularViz();
+                return;
+            }
+            else {
+                drawMovieViz(_movies);
+            }
         }
-        else return "links hide";
+        else {
+            showMovieInfo(d);
+            _movies.add(d)
+            drawMovieViz(_movies);
+        }
+
+        /*
+        node.filter(function (i) { return d.id_movie != i.data.id_movie })
+        .attr("class", "node");
+
+        link.attr("class", function (x) {
+            if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
+
+                node.filter(function (i) {
+                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
+                }).attr("class", "node");
+
+                return "link";
+            }
+            else return "link";
+        });
+        */
+    }
+
+}
+
+function packageHierarchy(movies) {
+    let map = {};
+    let root = { name: "", children: [] };
+    map[""] = root;
+
+    movies.forEach(function (d) {
+
+        let prod = d.production_companies;
+        let i = prod.indexOf(",");
+
+        if (i != -1) {
+            prod = prod.substring(prod.indexOf("[") + 1, i);
+        }
+        else {
+            prod = prod.substring(prod.indexOf("[") + 1, prod.indexOf("]"));
+        }
+
+        let parent = map[prod];
+
+        if (!parent) {
+            parent = map[prod] = { name: prod, children: [] };
+            parent.parent = root;
+            parent.key = prod;
+
+            root.children.push(parent);
+        }
+
+        let newNode = d;
+        newNode.parent = parent;
+        newNode.key = d.title;
+        parent.children.push(newNode);
+
+        map[d.id_movie] = newNode;
     });
-}
 
-function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-}
-
-function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-}
-
-function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-}
+    return d3.hierarchy(map[""]);
 }
 
 
 function getLinksForMovie(movie) {
-    let crew = new Set();
+    let crew = mapMovieCrew.get(movie.id_movie);
     let related_movies = new Set();
-    let linksCrewMovie = []
-
-    filtered_people_movies_links.forEach( function(link){
-        if (movie.id_movie == link.id_movie) {
-            crew.add(link.id_person);
-        }
-    });
-    filtered_people_movies_links.forEach(function (link) {
-        if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
-            related_movies.add(link.id_movie);
-            linksCrewMovie.push(link);
+    let linksCrewMovie = [];
+    crew.forEach(function (c) {
+        crewData = mapCrewMovie_filtered.get(c);
+        if (crewData) {
+            mapCrewMovie_filtered.get(c).forEach(function (m) {
+                related_movies.add(m.id_movie);
+                let link = m;
+                link.id_person = c;
+                linksCrewMovie.push(link)
+            });
         }
     });
     return {crew: Array.from(crew), movies: Array.from(related_movies), links: linksCrewMovie};
@@ -511,7 +736,7 @@ function showMovieInfo(d) {
         let l = crewTable.append("tr").append("td");
         let crew = crewByID(c);
         l.text(crew.name);
-        l.on("click", function() {
+        l.on("click", function () {
             alert(crew.name);
         });
     }
@@ -519,7 +744,7 @@ function showMovieInfo(d) {
         let l = movieTable.append("tr").append("td");
         let m = movieByID(c);
         l.text(m.title);
-        l.on("click", function() {
+        l.on("click", function () {
             alert(m.title);
         });
     }
@@ -531,12 +756,12 @@ function showMovieInfo(d) {
     div.append("h2").text(d.tagline);
     let table = div.append("table").classed("large", true);
     addRow(table, "Released date", d.release_date);
-    addRow(table, "Runtime", ""+d.runtime+" min");
-    addRow(table, "Vote average", ""+d.vote_average+"/10");
-    addRow(table, "Vote count", ""+d.vote_count);
-    addRow(table, "Budget", ""+d.Budget.toLocaleString()+"$");
-    addRow(table, "Revenue", ""+d.revenue.toLocaleString()+"$");
-    div.style("height", parseInt(d3.select(".side-panel").style("height"))/3 + 'px');
+    addRow(table, "Runtime", "" + d.runtime + " min");
+    addRow(table, "Vote average", "" + d.vote_average + "/10");
+    addRow(table, "Vote count", "" + d.vote_count);
+    addRow(table, "Budget", "" + d.Budget.toLocaleString() + "$");
+    addRow(table, "Revenue", "" + d.revenue.toLocaleString() + "$");
+    div.style("height", parseInt(d3.select(".side-panel").style("height")) / 3 + 'px');
     div.style("overflow-y", "scroll");
     sidepanel.append("hr");
     div = sidepanel.append("div");
@@ -575,11 +800,9 @@ function showMovieInfo(d) {
     crewIDs.forEach(function(d, i) {
         crew.push({id: d, x: crewX, y: crewScale(i)});
     });
-    console.log(crew);
     moviesIDs.forEach(function(d, i) {
         movies.push({id: d, x: movieX, y: movieScale(i)});
     });
-
     let graphLinks = [];
     links.forEach(function(link) {
         let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: 1};
@@ -591,7 +814,6 @@ function showMovieInfo(d) {
     .selectAll("link")
     .data(graphLinks)
     .enter().append("line")
-    //.attr("d", line)
     .attr("x1", function (d) { return d.source.x; })
     .attr("y1", function (d) { return d.source.y; })
     .attr("x2", function (d) { return d.target.x; })
@@ -619,20 +841,4 @@ function showMovieInfo(d) {
 
     div.style("overflow-y", "scroll");
 
-    // table = div.append("table").classed("large", true);;
-    // let headerRow = table.append("tr");
-    // headerRow.append("th").text("Crew");
-    // headerRow.append("th").text("Related movies");
-    // let crewMovie = getCrewAndMovieLinks(d);
-    // let row = table.append("tr");
-    // let crewTable = row.append("td").append("table").classed("large", true);;
-    // let movieTable = row.append("td").append("table").classed("large", true);;
-    // crewMovie.crew.forEach(function(c) {
-    //     addCrewLine(c);
-    // });
-    // crewMovie.links.forEach(function(l) {
-    //     addMovieLine(l);
-    // });
-    // div.style("height", parseInt(d3.select(".side-panel").style("height"))*2/3 + 'px');
-    // div.style("overflow-y", "scroll");
 }

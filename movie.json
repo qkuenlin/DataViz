@@ -1,6 +1,5 @@
 [
     {
-        "Name": "Doug J. Meerdink",
         "id_movie": 9654,
         "title": "The Italian Job",
         "release_date": "2003-05-30",
@@ -16,7 +15,6 @@
         "vote_count": 1919
     },
     {
-        "Name": "Doug J. Meerdink",
         "id_movie": 95,
         "title": "Armageddon",
         "release_date": "1998-07-01",
@@ -32,7 +30,6 @@
         "vote_count": 2482
     },
     {
-        "Name": "Doug J. Meerdink",
         "id_movie": 686,
         "title": "Contact",
         "release_date": "1997-07-11",
@@ -48,7 +45,6 @@
         "vote_count": 1308
     },
     {
-        "Name": "Joe Bleakley",
         "id_movie": 254,
         "title": "King Kong",
         "release_date": "2005-12-14",
@@ -64,7 +60,6 @@
         "vote_count": 2337
     },
     {
-        "Name": "Joe Bleakley",
         "id_movie": 120,
         "title": "The Lord of the Rings: The Fellowship of the Ring",
         "release_date": "2001-12-18",
@@ -80,7 +75,6 @@
         "vote_count": 8705
     },
     {
-        "Name": "Joe Bleakley",
         "id_movie": 122,
         "title": "The Lord of the Rings: The Return of the King",
         "release_date": "2003-12-01",
@@ -96,7 +90,6 @@
         "vote_count": 8064
     },
     {
-        "Name": "Joe Bleakley",
         "id_movie": 121,
         "title": "The Lord of the Rings: The Two Towers",
         "release_date": "2002-12-18",
@@ -112,7 +105,6 @@
         "vote_count": 7487
     },
     {
-        "Name": "Donald B. Woodruff",
         "id_movie": 22,
         "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
         "release_date": "2003-07-09",
@@ -128,7 +120,6 @@
         "vote_count": 6985
     },
     {
-        "Name": "Donald B. Woodruff",
         "id_movie": 1824,
         "title": "50 First Dates",
         "release_date": "2004-02-13",
@@ -144,7 +135,6 @@
         "vote_count": 2105
     },
     {
-        "Name": "Leslie Bloom",
         "id_movie": 1572,
         "title": "Die Hard: With a Vengeance",
         "release_date": "1995-05-19",
@@ -160,7 +150,6 @@
         "vote_count": 2066
     },
     {
-        "Name": "Leslie Bloom",
         "id_movie": 769,
         "title": "GoodFellas",
         "release_date": "1990-09-12",
@@ -176,7 +165,6 @@
         "vote_count": 3128
     },
     {
-        "Name": "Leslie Tomkins",
         "id_movie": 694,
         "title": "The Shining",
         "release_date": "1980-05-22",
@@ -192,7 +180,6 @@
         "vote_count": 3757
     },
     {
-        "Name": "Leslie Tomkins",
         "id_movie": 118,
         "title": "Charlie and the Chocolate Factory",
         "release_date": "2005-07-13",
@@ -208,7 +195,6 @@
         "vote_count": 3624
     },
     {
-        "Name": "Leslie Tomkins",
         "id_movie": 652,
         "title": "Troy",
         "release_date": "2004-05-13",
@@ -224,7 +210,6 @@
         "vote_count": 2759
     },
     {
-        "Name": "Leslie Tomkins",
         "id_movie": 150689,
         "title": "Cinderella",
         "release_date": "2015-03-12",
@@ -240,7 +225,6 @@
         "vote_count": 2374
     },
     {
-        "Name": "Kerrie Brown",
         "id_movie": 2454,
         "title": "The Chronicles of Narnia: Prince Caspian",
         "release_date": "2008-05-15",
@@ -256,7 +240,6 @@
         "vote_count": 1630
     },
     {
-        "Name": "Kerrie Brown",
         "id_movie": 411,
         "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
         "release_date": "2005-12-07",
@@ -272,7 +255,6 @@
         "vote_count": 2629
     },
     {
-        "Name": "Kerrie Brown",
         "id_movie": 955,
         "title": "Mission: Impossible II",
         "release_date": "2000-05-24",
@@ -288,7 +270,6 @@
         "vote_count": 1928
     },
     {
-        "Name": "Catherine Martin",
         "id_movie": 824,
         "title": "Moulin Rouge!",
         "release_date": "2001-03-09",
@@ -304,7 +285,6 @@
         "vote_count": 1300
     },
     {
-        "Name": "Doug Hardwick",
         "id_movie": 68737,
         "title": "Seventh Son",
         "release_date": "2014-12-12",
@@ -320,7 +300,6 @@
         "vote_count": 957
     },
     {
-        "Name": "Doug Hardwick",
         "id_movie": 119450,
         "title": "Dawn of the Planet of the Apes",
         "release_date": "2014-06-26",
@@ -336,7 +315,6 @@
         "vote_count": 4410
     },
     {
-        "Name": "Doug Hardwick",
         "id_movie": 50620,
         "title": "The Twilight Saga: Breaking Dawn - Part 2",
         "release_date": "2012-11-13",
@@ -352,7 +330,6 @@
         "vote_count": 2553
     },
     {
-        "Name": "Yohei Taneda",
         "id_movie": 273248,
         "title": "The Hateful Eight",
         "release_date": "2015-12-25",
@@ -368,7 +345,6 @@
         "vote_count": 4274
     },
     {
-        "Name": "Yohei Taneda",
         "id_movie": 24,
         "title": "Kill Bill: Vol. 1",
         "release_date": "2003-10-10",
@@ -384,7 +360,6 @@
         "vote_count": 4949
     },
     {
-        "Name": "Yohei Taneda",
         "id_movie": 393,
         "title": "Kill Bill: Vol. 2",
         "release_date": "2004-04-16",
@@ -400,7 +375,6 @@
         "vote_count": 3948
     },
     {
-        "Name": "Troy Sizemore",
         "id_movie": 534,
         "title": "Terminator Salvation",
         "release_date": "2009-05-20",
@@ -416,7 +390,6 @@
         "vote_count": 2463
     },
     {
-        "Name": "Troy Sizemore",
         "id_movie": 209112,
         "title": "Batman v Superman: Dawn of Justice",
         "release_date": "2016-03-23",
@@ -432,7 +405,6 @@
         "vote_count": 7004
     },
     {
-        "Name": "Shepherd Frankel",
         "id_movie": 296,
         "title": "Terminator 3: Rise of the Machines",
         "release_date": "2003-07-02",
@@ -448,7 +420,6 @@
         "vote_count": 2143
     },
     {
-        "Name": "Shepherd Frankel",
         "id_movie": 102899,
         "title": "Ant-Man",
         "release_date": "2015-07-14",
@@ -464,7 +435,6 @@
         "vote_count": 5880
     },
     {
-        "Name": "Shepherd Frankel",
         "id_movie": 51540,
         "title": "Horrible Bosses",
         "release_date": "2011-07-08",
@@ -480,7 +450,6 @@
         "vote_count": 2277
     },
     {
-        "Name": "Beat Frutiger",
         "id_movie": 100402,
         "title": "Captain America: The Winter Soldier",
         "release_date": "2014-03-20",
@@ -496,7 +465,6 @@
         "vote_count": 5764
     },
     {
-        "Name": "Beat Frutiger",
         "id_movie": 43074,
         "title": "Ghostbusters",
         "release_date": "2016-07-14",
@@ -512,7 +480,6 @@
         "vote_count": 2142
     },
     {
-        "Name": "Peter Russell",
         "id_movie": 1893,
         "title": "Star Wars: Episode I - The Phantom Menace",
         "release_date": "1999-05-19",
@@ -528,7 +495,6 @@
         "vote_count": 4432
     },
     {
-        "Name": "Peter Russell",
         "id_movie": 98,
         "title": "Gladiator",
         "release_date": "2000-05-01",
@@ -544,7 +510,6 @@
         "vote_count": 5439
     },
     {
-        "Name": "Peter Russell",
         "id_movie": 109424,
         "title": "Captain Phillips",
         "release_date": "2013-10-10",
@@ -560,7 +525,6 @@
         "vote_count": 2454
     },
     {
-        "Name": "Harley Jessup",
         "id_movie": 2062,
         "title": "Ratatouille",
         "release_date": "2007-06-22",
@@ -576,7 +540,6 @@
         "vote_count": 4369
     },
     {
-        "Name": "Harley Jessup",
         "id_movie": 585,
         "title": "Monsters, Inc.",
         "release_date": "2001-11-01",
@@ -592,7 +555,6 @@
         "vote_count": 5996
     },
     {
-        "Name": "Sophie Vincelette",
         "id_movie": 863,
         "title": "Toy Story 2",
         "release_date": "1999-10-30",
@@ -608,7 +570,6 @@
         "vote_count": 3806
     },
     {
-        "Name": "Ricky Nierva",
         "id_movie": 12,
         "title": "Finding Nemo",
         "release_date": "2003-05-30",
@@ -624,7 +585,6 @@
         "vote_count": 6122
     },
     {
-        "Name": "Ricky Nierva",
         "id_movie": 62211,
         "title": "Monsters University",
         "release_date": "2013-06-20",
@@ -640,7 +600,6 @@
         "vote_count": 3528
     },
     {
-        "Name": "Ricky Nierva",
         "id_movie": 14160,
         "title": "Up",
         "release_date": "2009-05-13",
@@ -656,7 +615,6 @@
         "vote_count": 6870
     },
     {
-        "Name": "Bryn Imagire",
         "id_movie": 9806,
         "title": "The Incredibles",
         "release_date": "2004-11-05",
@@ -672,7 +630,6 @@
         "vote_count": 5152
     },
     {
-        "Name": "Jason Deamer",
         "id_movie": 10681,
         "title": "WALL\u00b7E",
         "release_date": "2008-06-22",
@@ -688,7 +645,6 @@
         "vote_count": 6296
     },
     {
-        "Name": "Norm DeCarlo",
         "id_movie": 862,
         "title": "Toy Story",
         "release_date": "1995-10-30",
@@ -704,7 +660,6 @@
         "vote_count": 5269
     },
     {
-        "Name": "Robert Fechtman",
         "id_movie": 101299,
         "title": "The Hunger Games: Catching Fire",
         "release_date": "2013-11-15",
@@ -720,7 +675,6 @@
         "vote_count": 6495
     },
     {
-        "Name": "Robert Fechtman",
         "id_movie": 70160,
         "title": "The Hunger Games",
         "release_date": "2012-03-12",
@@ -736,7 +690,6 @@
         "vote_count": 9455
     },
     {
-        "Name": "Robert Fechtman",
         "id_movie": 44912,
         "title": "Green Lantern",
         "release_date": "2011-06-16",
@@ -752,7 +705,6 @@
         "vote_count": 2487
     },
     {
-        "Name": "Robert Fechtman",
         "id_movie": 131631,
         "title": "The Hunger Games: Mockingjay - Part 1",
         "release_date": "2014-11-18",
@@ -768,7 +720,6 @@
         "vote_count": 5584
     },
     {
-        "Name": "Richard L. Johnson",
         "id_movie": 37165,
         "title": "The Truman Show",
         "release_date": "1998-06-04",
@@ -784,7 +735,6 @@
         "vote_count": 4537
     },
     {
-        "Name": "Richard L. Johnson",
         "id_movie": 24428,
         "title": "The Avengers",
         "release_date": "2012-04-25",
@@ -800,7 +750,6 @@
         "vote_count": 11776
     },
     {
-        "Name": "Richard L. Johnson",
         "id_movie": 102382,
         "title": "The Amazing Spider-Man 2",
         "release_date": "2014-04-16",
@@ -816,7 +765,6 @@
         "vote_count": 4179
     },
     {
-        "Name": "Richard L. Johnson",
         "id_movie": 68726,
         "title": "Pacific Rim",
         "release_date": "2013-07-11",
@@ -832,7 +780,6 @@
         "vote_count": 4794
     },
     {
-        "Name": "Ira Gilford",
         "id_movie": 18,
         "title": "The Fifth Element",
         "release_date": "1997-05-07",
@@ -848,7 +795,6 @@
         "vote_count": 3885
     },
     {
-        "Name": "Peter Lamont",
         "id_movie": 597,
         "title": "Titanic",
         "release_date": "1997-11-18",
@@ -864,7 +810,6 @@
         "vote_count": 7562
     },
     {
-        "Name": "Peter Lamont",
         "id_movie": 36557,
         "title": "Casino Royale",
         "release_date": "2006-11-14",
@@ -880,7 +825,6 @@
         "vote_count": 3855
     },
     {
-        "Name": "Peter Lamont",
         "id_movie": 710,
         "title": "GoldenEye",
         "release_date": "1995-11-16",
@@ -896,7 +840,6 @@
         "vote_count": 1174
     },
     {
-        "Name": "Peter Lamont",
         "id_movie": 679,
         "title": "Aliens",
         "release_date": "1986-07-18",
@@ -912,7 +855,6 @@
         "vote_count": 3220
     },
     {
-        "Name": "Thomas J. Wright",
         "id_movie": 578,
         "title": "Jaws",
         "release_date": "1975-06-18",
@@ -928,7 +870,6 @@
         "vote_count": 2542
     },
     {
-        "Name": "Oliver Scholl",
         "id_movie": 297761,
         "title": "Suicide Squad",
         "release_date": "2016-08-02",
@@ -944,7 +885,6 @@
         "vote_count": 7458
     },
     {
-        "Name": "Oliver Scholl",
         "id_movie": 137113,
         "title": "Edge of Tomorrow",
         "release_date": "2014-05-27",
@@ -960,7 +900,6 @@
         "vote_count": 4858
     },
     {
-        "Name": "Oliver Scholl",
         "id_movie": 602,
         "title": "Independence Day",
         "release_date": "1996-06-25",
@@ -976,7 +915,6 @@
         "vote_count": 3260
     },
     {
-        "Name": "Jim Erickson",
         "id_movie": 13183,
         "title": "Watchmen",
         "release_date": "2009-03-05",
@@ -992,7 +930,6 @@
         "vote_count": 2811
     },
     {
-        "Name": "Gino Acevedo",
         "id_movie": 607,
         "title": "Men in Black",
         "release_date": "1997-07-02",
@@ -1008,7 +945,6 @@
         "vote_count": 4412
     },
     {
-        "Name": "Isabelle Guay",
         "id_movie": 594,
         "title": "The Terminal",
         "release_date": "2004-06-17",
@@ -1024,7 +960,6 @@
         "vote_count": 1910
     },
     {
-        "Name": "Isabelle Guay",
         "id_movie": 1271,
         "title": "300",
         "release_date": "2006-12-09",
@@ -1040,7 +975,6 @@
         "vote_count": 4997
     },
     {
-        "Name": "Francesca Lo Schiavo",
         "id_movie": 11324,
         "title": "Shutter Island",
         "release_date": "2010-02-18",
@@ -1056,7 +990,6 @@
         "vote_count": 6336
     },
     {
-        "Name": "Francesca Lo Schiavo",
         "id_movie": 628,
         "title": "Interview with the Vampire",
         "release_date": "1994-11-11",
@@ -1072,7 +1005,6 @@
         "vote_count": 1516
     },
     {
-        "Name": "Michele Laliberte",
         "id_movie": 4922,
         "title": "The Curious Case of Benjamin Button",
         "release_date": "2008-11-24",
@@ -1088,7 +1020,6 @@
         "vote_count": 3292
     },
     {
-        "Name": "Michele Laliberte",
         "id_movie": 127585,
         "title": "X-Men: Days of Future Past",
         "release_date": "2014-05-15",
@@ -1104,7 +1035,6 @@
         "vote_count": 6032
     },
     {
-        "Name": "Jules Cook",
         "id_movie": 605,
         "title": "The Matrix Revolutions",
         "release_date": "2003-11-05",
@@ -1120,7 +1050,6 @@
         "vote_count": 3096
     },
     {
-        "Name": "Jules Cook",
         "id_movie": 604,
         "title": "The Matrix Reloaded",
         "release_date": "2003-05-15",
@@ -1136,7 +1065,6 @@
         "vote_count": 3443
     },
     {
-        "Name": "Jules Cook",
         "id_movie": 603,
         "title": "The Matrix",
         "release_date": "1999-03-30",
@@ -1152,7 +1080,6 @@
         "vote_count": 8907
     },
     {
-        "Name": "Jules Cook",
         "id_movie": 198184,
         "title": "Chappie",
         "release_date": "2015-03-04",
@@ -1168,7 +1095,6 @@
         "vote_count": 3062
     },
     {
-        "Name": "Sean Haworth",
         "id_movie": 19995,
         "title": "Avatar",
         "release_date": "2009-12-10",
@@ -1184,7 +1110,6 @@
         "vote_count": 11800
     },
     {
-        "Name": "Sean Haworth",
         "id_movie": 608,
         "title": "Men in Black II",
         "release_date": "2002-07-03",
@@ -1200,7 +1125,6 @@
         "vote_count": 3114
     },
     {
-        "Name": "Sean Haworth",
         "id_movie": 869,
         "title": "Planet of the Apes",
         "release_date": "2001-07-25",
@@ -1216,7 +1140,6 @@
         "vote_count": 1243
     },
     {
-        "Name": "Sean Haworth",
         "id_movie": 293660,
         "title": "Deadpool",
         "release_date": "2016-02-09",
@@ -1232,7 +1155,6 @@
         "vote_count": 10995
     },
     {
-        "Name": "Julian Ashby",
         "id_movie": 76338,
         "title": "Thor: The Dark World",
         "release_date": "2013-10-29",
@@ -1248,7 +1170,6 @@
         "vote_count": 4755
     },
     {
-        "Name": "Julian Ashby",
         "id_movie": 299687,
         "title": "The 5th Wave",
         "release_date": "2016-01-14",
@@ -1264,7 +1185,6 @@
         "vote_count": 1945
     },
     {
-        "Name": "Jon Billington",
         "id_movie": 228967,
         "title": "The Interview",
         "release_date": "2014-12-25",
@@ -1280,7 +1200,6 @@
         "vote_count": 2304
     },
     {
-        "Name": "Jon Billington",
         "id_movie": 72190,
         "title": "World War Z",
         "release_date": "2013-06-20",
@@ -1296,7 +1215,6 @@
         "vote_count": 5560
     },
     {
-        "Name": "Andy Nicholson",
         "id_movie": 49047,
         "title": "Gravity",
         "release_date": "2013-09-27",
@@ -1312,7 +1230,6 @@
         "vote_count": 5751
     },
     {
-        "Name": "Andy Nicholson",
         "id_movie": 157350,
         "title": "Divergent",
         "release_date": "2014-03-14",
@@ -1328,7 +1245,6 @@
         "vote_count": 4663
     },
     {
-        "Name": "Andy Nicholson",
         "id_movie": 1771,
         "title": "Captain America: The First Avenger",
         "release_date": "2011-07-22",
@@ -1344,7 +1260,6 @@
         "vote_count": 7047
     },
     {
-        "Name": "Peter Francis",
         "id_movie": 272,
         "title": "Batman Begins",
         "release_date": "2005-06-10",
@@ -1360,7 +1275,6 @@
         "vote_count": 7359
     },
     {
-        "Name": "Peter Francis",
         "id_movie": 671,
         "title": "Harry Potter and the Philosopher's Stone",
         "release_date": "2001-11-16",
@@ -1376,7 +1290,6 @@
         "vote_count": 7006
     },
     {
-        "Name": "Peter Francis",
         "id_movie": 672,
         "title": "Harry Potter and the Chamber of Secrets",
         "release_date": "2002-11-13",
@@ -1392,7 +1305,6 @@
         "vote_count": 5815
     },
     {
-        "Name": "Douglas A. Mowat",
         "id_movie": 27205,
         "title": "Inception",
         "release_date": "2010-07-14",
@@ -1408,7 +1320,6 @@
         "vote_count": 13752
     },
     {
-        "Name": "Douglas A. Mowat",
         "id_movie": 210577,
         "title": "Gone Girl",
         "release_date": "2014-10-01",
@@ -1424,7 +1335,6 @@
         "vote_count": 5862
     },
     {
-        "Name": "Douglas A. Mowat",
         "id_movie": 75780,
         "title": "Jack Reacher",
         "release_date": "2012-12-20",
@@ -1440,7 +1350,6 @@
         "vote_count": 2998
     },
     {
-        "Name": "Douglas A. Mowat",
         "id_movie": 745,
         "title": "The Sixth Sense",
         "release_date": "1999-08-06",
@@ -1456,7 +1365,6 @@
         "vote_count": 3147
     },
     {
-        "Name": "Mark Bartholomew",
         "id_movie": 155,
         "title": "The Dark Knight",
         "release_date": "2008-07-16",
@@ -1472,7 +1380,6 @@
         "vote_count": 12002
     },
     {
-        "Name": "Mark Bartholomew",
         "id_movie": 675,
         "title": "Harry Potter and the Order of the Phoenix",
         "release_date": "2007-06-28",
@@ -1488,7 +1395,6 @@
         "vote_count": 5494
     },
     {
-        "Name": "Mark Bartholomew",
         "id_movie": 674,
         "title": "Harry Potter and the Goblet of Fire",
         "release_date": "2005-11-05",
@@ -1504,7 +1410,6 @@
         "vote_count": 5608
     },
     {
-        "Name": "Mark Bartholomew",
         "id_movie": 673,
         "title": "Harry Potter and the Prisoner of Azkaban",
         "release_date": "2004-05-31",
@@ -1520,7 +1425,6 @@
         "vote_count": 5877
     },
     {
-        "Name": "Marco Bittner Rosser",
         "id_movie": 16869,
         "title": "Inglourious Basterds",
         "release_date": "2009-08-18",
@@ -1536,7 +1440,6 @@
         "vote_count": 6430
     },
     {
-        "Name": "Marco Bittner Rosser",
         "id_movie": 752,
         "title": "V for Vendetta",
         "release_date": "2006-03-15",
@@ -1552,7 +1455,6 @@
         "vote_count": 4442
     },
     {
-        "Name": "Alastair Bullock",
         "id_movie": 767,
         "title": "Harry Potter and the Half-Blood Prince",
         "release_date": "2009-07-07",
@@ -1568,7 +1470,6 @@
         "vote_count": 5293
     },
     {
-        "Name": "Alastair Bullock",
         "id_movie": 58595,
         "title": "Snow White and the Huntsman",
         "release_date": "2012-05-30",
@@ -1584,7 +1485,6 @@
         "vote_count": 3118
     },
     {
-        "Name": "Sandy Reynolds-Wasco",
         "id_movie": 216015,
         "title": "Fifty Shades of Grey",
         "release_date": "2015-02-11",
@@ -1600,7 +1500,6 @@
         "vote_count": 3254
     },
     {
-        "Name": "Sandy Reynolds-Wasco",
         "id_movie": 680,
         "title": "Pulp Fiction",
         "release_date": "1994-10-08",
@@ -1616,7 +1515,6 @@
         "vote_count": 8428
     },
     {
-        "Name": "Sandy Reynolds-Wasco",
         "id_movie": 500,
         "title": "Reservoir Dogs",
         "release_date": "1992-09-02",
@@ -1632,7 +1530,6 @@
         "vote_count": 3697
     },
     {
-        "Name": "Paki Smith",
         "id_movie": 49026,
         "title": "The Dark Knight Rises",
         "release_date": "2012-07-16",
@@ -1648,7 +1545,6 @@
         "vote_count": 9106
     },
     {
-        "Name": "Paki Smith",
         "id_movie": 49017,
         "title": "Dracula Untold",
         "release_date": "2014-10-01",
@@ -1664,7 +1560,6 @@
         "vote_count": 2389
     },
     {
-        "Name": "Guillaume Aretos",
         "id_movie": 808,
         "title": "Shrek",
         "release_date": "2001-05-16",
@@ -1680,7 +1575,6 @@
         "vote_count": 4056
     },
     {
-        "Name": "Hugo Santiago",
         "id_movie": 91314,
         "title": "Transformers: Age of Extinction",
         "release_date": "2014-06-25",
@@ -1696,7 +1590,6 @@
         "vote_count": 3095
     },
     {
-        "Name": "Hugo Santiago",
         "id_movie": 807,
         "title": "Se7en",
         "release_date": "1995-09-22",
@@ -1712,7 +1605,6 @@
         "vote_count": 5765
     },
     {
-        "Name": "Malcolm Stone",
         "id_movie": 228150,
         "title": "Fury",
         "release_date": "2014-10-15",
@@ -1728,7 +1620,6 @@
         "vote_count": 3946
     },
     {
-        "Name": "Malcolm Stone",
         "id_movie": 277,
         "title": "Underworld",
         "release_date": "2003-09-19",
@@ -1744,7 +1635,6 @@
         "vote_count": 2512
     },
     {
-        "Name": "Elli Griff",
         "id_movie": 9543,
         "title": "Prince of Persia: The Sands of Time",
         "release_date": "2010-05-19",
@@ -1760,7 +1650,6 @@
         "vote_count": 2317
     },
     {
-        "Name": "William Cone",
         "id_movie": 920,
         "title": "Cars",
         "release_date": "2006-06-08",
@@ -1776,7 +1665,6 @@
         "vote_count": 3877
     },
     {
-        "Name": "Emilia Roux",
         "id_movie": 49049,
         "title": "Dredd",
         "release_date": "2012-09-07",
@@ -1792,7 +1680,6 @@
         "vote_count": 1940
     },
     {
-        "Name": "Emilia Roux",
         "id_movie": 17654,
         "title": "District 9",
         "release_date": "2009-08-05",
@@ -1808,7 +1695,6 @@
         "vote_count": 3382
     },
     {
-        "Name": "Jan Pascale",
         "id_movie": 68734,
         "title": "Argo",
         "release_date": "2012-10-11",
@@ -1824,7 +1710,6 @@
         "vote_count": 3423
     },
     {
-        "Name": "Jan Pascale",
         "id_movie": 227159,
         "title": "Horrible Bosses 2",
         "release_date": "2014-11-26",
@@ -1840,7 +1725,6 @@
         "vote_count": 1536
     },
     {
-        "Name": "Jan Pascale",
         "id_movie": 273481,
         "title": "Sicario",
         "release_date": "2015-09-17",
@@ -1856,7 +1740,6 @@
         "vote_count": 2416
     },
     {
-        "Name": "Lauri Gaffin",
         "id_movie": 10138,
         "title": "Iron Man 2",
         "release_date": "2010-04-28",
@@ -1872,7 +1755,6 @@
         "vote_count": 6849
     },
     {
-        "Name": "Lauri Gaffin",
         "id_movie": 10195,
         "title": "Thor",
         "release_date": "2011-04-21",
@@ -1888,7 +1770,6 @@
         "vote_count": 6525
     },
     {
-        "Name": "Lauri Gaffin",
         "id_movie": 1402,
         "title": "The Pursuit of Happyness",
         "release_date": "2006-12-14",
@@ -1904,7 +1785,6 @@
         "vote_count": 2525
     },
     {
-        "Name": "Kevin Kavanaugh",
         "id_movie": 1124,
         "title": "The Prestige",
         "release_date": "2006-10-19",
@@ -1920,7 +1800,6 @@
         "vote_count": 4391
     },
     {
-        "Name": "Kevin Kavanaugh",
         "id_movie": 857,
         "title": "Saving Private Ryan",
         "release_date": "1998-07-24",
@@ -1936,7 +1815,6 @@
         "vote_count": 5048
     },
     {
-        "Name": "Kevin Kavanaugh",
         "id_movie": 242582,
         "title": "Nightcrawler",
         "release_date": "2014-10-23",
@@ -1952,7 +1830,6 @@
         "vote_count": 3395
     },
     {
-        "Name": "Jesse Rosenthal",
         "id_movie": 312221,
         "title": "Creed",
         "release_date": "2015-11-25",
@@ -1968,7 +1845,6 @@
         "vote_count": 1915
     },
     {
-        "Name": "Jesse Rosenthal",
         "id_movie": 82693,
         "title": "Silver Linings Playbook",
         "release_date": "2012-09-08",
@@ -1984,7 +1860,6 @@
         "vote_count": 4742
     },
     {
-        "Name": "Pilar Revuelta",
         "id_movie": 147441,
         "title": "Exodus: Gods and Kings",
         "release_date": "2014-12-03",
@@ -2000,7 +1875,6 @@
         "vote_count": 1921
     },
     {
-        "Name": "Pilar Revuelta",
         "id_movie": 1417,
         "title": "Pan's Labyrinth",
         "release_date": "2006-05-27",
@@ -2016,7 +1890,6 @@
         "vote_count": 3041
     },
     {
-        "Name": "Susan Bode",
         "id_movie": 41154,
         "title": "Men in Black 3",
         "release_date": "2012-05-23",
@@ -2032,7 +1905,6 @@
         "vote_count": 4160
     },
     {
-        "Name": "Susan Bode",
         "id_movie": 257211,
         "title": "The Intern",
         "release_date": "2015-09-24",
@@ -2048,7 +1920,6 @@
         "vote_count": 1881
     },
     {
-        "Name": "Grant Van Der Slagt",
         "id_movie": 68735,
         "title": "Warcraft",
         "release_date": "2016-05-25",
@@ -2064,7 +1935,6 @@
         "vote_count": 2268
     },
     {
-        "Name": "Grant Van Der Slagt",
         "id_movie": 61791,
         "title": "Rise of the Planet of the Apes",
         "release_date": "2011-08-03",
@@ -2080,7 +1950,6 @@
         "vote_count": 4347
     },
     {
-        "Name": "Chris Shriver",
         "id_movie": 106646,
         "title": "The Wolf of Wall Street",
         "release_date": "2013-12-25",
@@ -2096,7 +1965,6 @@
         "vote_count": 6571
     },
     {
-        "Name": "Chris Shriver",
         "id_movie": 194662,
         "title": "Birdman",
         "release_date": "2014-08-27",
@@ -2112,7 +1980,6 @@
         "vote_count": 4535
     },
     {
-        "Name": "Page Buckner",
         "id_movie": 1930,
         "title": "The Amazing Spider-Man",
         "release_date": "2012-06-27",
@@ -2128,7 +1995,6 @@
         "vote_count": 6586
     },
     {
-        "Name": "Page Buckner",
         "id_movie": 135397,
         "title": "Jurassic World",
         "release_date": "2015-06-09",
@@ -2144,7 +2010,6 @@
         "vote_count": 8662
     },
     {
-        "Name": "Page Buckner",
         "id_movie": 1724,
         "title": "The Incredible Hulk",
         "release_date": "2008-06-12",
@@ -2160,7 +2025,6 @@
         "vote_count": 3021
     },
     {
-        "Name": "Page Buckner",
         "id_movie": 68718,
         "title": "Django Unchained",
         "release_date": "2012-12-25",
@@ -2176,7 +2040,6 @@
         "vote_count": 10099
     },
     {
-        "Name": "Leslie A. Pope",
         "id_movie": 559,
         "title": "Spider-Man 3",
         "release_date": "2007-05-01",
@@ -2192,7 +2055,6 @@
         "vote_count": 3576
     },
     {
-        "Name": "Leslie A. Pope",
         "id_movie": 640,
         "title": "Catch Me If You Can",
         "release_date": "2002-12-25",
@@ -2208,7 +2070,6 @@
         "vote_count": 3795
     },
     {
-        "Name": "Y\u00f4ji Takeshige",
         "id_movie": 128,
         "title": "Princess Mononoke",
         "release_date": "1997-07-12",
@@ -2224,7 +2085,6 @@
         "vote_count": 1983
     },
     {
-        "Name": "Y\u00f4ji Takeshige",
         "id_movie": 129,
         "title": "Spirited Away",
         "release_date": "2001-07-20",
@@ -2240,7 +2100,6 @@
         "vote_count": 3840
     },
     {
-        "Name": "Patrick M. Sullivan Jr.",
         "id_movie": 8909,
         "title": "Wanted",
         "release_date": "2008-06-19",
@@ -2256,7 +2115,6 @@
         "vote_count": 2528
     },
     {
-        "Name": "Sonja Klaus",
         "id_movie": 70981,
         "title": "Prometheus",
         "release_date": "2012-05-30",
@@ -2272,7 +2130,6 @@
         "vote_count": 5080
     },
     {
-        "Name": "Sonja Klaus",
         "id_movie": 1996,
         "title": "Lara Croft Tomb Raider: The Cradle of Life",
         "release_date": "2003-07-21",
@@ -2288,7 +2145,6 @@
         "vote_count": 1418
     },
     {
-        "Name": "Karen O'Hara",
         "id_movie": 557,
         "title": "Spider-Man",
         "release_date": "2002-05-01",
@@ -2304,7 +2160,6 @@
         "vote_count": 5265
     },
     {
-        "Name": "Karen O'Hara",
         "id_movie": 49530,
         "title": "In Time",
         "release_date": "2011-10-27",
@@ -2320,7 +2175,6 @@
         "vote_count": 3417
     },
     {
-        "Name": "Keith P. Cunningham",
         "id_movie": 13448,
         "title": "Angels & Demons",
         "release_date": "2009-05-13",
@@ -2336,7 +2190,6 @@
         "vote_count": 2129
     },
     {
-        "Name": "Keith P. Cunningham",
         "id_movie": 13475,
         "title": "Star Trek",
         "release_date": "2009-05-06",
@@ -2352,7 +2205,6 @@
         "vote_count": 4518
     },
     {
-        "Name": "Keith P. Cunningham",
         "id_movie": 161,
         "title": "Ocean's Eleven",
         "release_date": "2001-12-07",
@@ -2368,7 +2220,6 @@
         "vote_count": 3783
     },
     {
-        "Name": "Keith P. Cunningham",
         "id_movie": 1949,
         "title": "Zodiac",
         "release_date": "2007-03-02",
@@ -2384,7 +2235,6 @@
         "vote_count": 2023
     },
     {
-        "Name": "Keith P. Cunningham",
         "id_movie": 37799,
         "title": "The Social Network",
         "release_date": "2010-09-30",
@@ -2400,7 +2250,6 @@
         "vote_count": 3391
     },
     {
-        "Name": "Gary Kosko",
         "id_movie": 157336,
         "title": "Interstellar",
         "release_date": "2014-11-05",
@@ -2416,7 +2265,6 @@
         "vote_count": 10867
     },
     {
-        "Name": "Sally Thornton",
         "id_movie": 1573,
         "title": "Die Hard 2",
         "release_date": "1990-07-02",
@@ -2432,7 +2280,6 @@
         "vote_count": 1896
     },
     {
-        "Name": "Chris Lowe",
         "id_movie": 206647,
         "title": "Spectre",
         "release_date": "2015-10-26",
@@ -2448,7 +2295,6 @@
         "vote_count": 4466
     },
     {
-        "Name": "Chris Lowe",
         "id_movie": 224141,
         "title": "Into the Woods",
         "release_date": "2014-12-25",
@@ -2464,7 +2310,6 @@
         "vote_count": 1652
     },
     {
-        "Name": "Robert Cowper",
         "id_movie": 286217,
         "title": "The Martian",
         "release_date": "2015-09-30",
@@ -2480,7 +2325,6 @@
         "vote_count": 7268
     },
     {
-        "Name": "Robert Cowper",
         "id_movie": 184315,
         "title": "Hercules",
         "release_date": "2014-07-23",
@@ -2496,7 +2340,6 @@
         "vote_count": 1680
     },
     {
-        "Name": "Bill Crutcher",
         "id_movie": 267860,
         "title": "London Has Fallen",
         "release_date": "2016-03-02",
@@ -2512,7 +2355,6 @@
         "vote_count": 1621
     },
     {
-        "Name": "Bill Crutcher",
         "id_movie": 203833,
         "title": "The Book Thief",
         "release_date": "2013-11-08",
@@ -2528,7 +2370,6 @@
         "vote_count": 1486
     },
     {
-        "Name": "Brandt Gordon",
         "id_movie": 97020,
         "title": "RoboCop",
         "release_date": "2014-01-30",
@@ -2544,7 +2385,6 @@
         "vote_count": 2342
     },
     {
-        "Name": "Michelle Day",
         "id_movie": 1272,
         "title": "Sunshine",
         "release_date": "2007-04-05",
@@ -2560,7 +2400,6 @@
         "vote_count": 1182
     },
     {
-        "Name": "Michelle Day",
         "id_movie": 12405,
         "title": "Slumdog Millionaire",
         "release_date": "2008-05-12",
@@ -2576,7 +2415,6 @@
         "vote_count": 2827
     },
     {
-        "Name": "Michelle Day",
         "id_movie": 264660,
         "title": "Ex Machina",
         "release_date": "2015-01-21",
@@ -2592,7 +2430,6 @@
         "vote_count": 4737
     },
     {
-        "Name": "Stuart Kearns",
         "id_movie": 291805,
         "title": "Now You See Me 2",
         "release_date": "2016-06-02",
@@ -2608,7 +2445,6 @@
         "vote_count": 3235
     },
     {
-        "Name": "Ian Gracie",
         "id_movie": 64682,
         "title": "The Great Gatsby",
         "release_date": "2013-05-10",
@@ -2624,7 +2460,6 @@
         "vote_count": 3769
     },
     {
-        "Name": "Ian Gracie",
         "id_movie": 205584,
         "title": "Gods of Egypt",
         "release_date": "2016-02-25",
@@ -2640,7 +2475,6 @@
         "vote_count": 1277
     },
     {
-        "Name": "Fred Arbegast",
         "id_movie": 180,
         "title": "Minority Report",
         "release_date": "2002-06-20",
@@ -2656,7 +2490,6 @@
         "vote_count": 2608
     },
     {
-        "Name": "Fred Arbegast",
         "id_movie": 2059,
         "title": "National Treasure",
         "release_date": "2004-11-19",
@@ -2672,7 +2505,6 @@
         "vote_count": 1926
     },
     {
-        "Name": "Nick Gottschalk",
         "id_movie": 241259,
         "title": "Alice Through the Looking Glass",
         "release_date": "2016-05-25",
@@ -2688,7 +2520,6 @@
         "vote_count": 1725
     },
     {
-        "Name": "Nick Gottschalk",
         "id_movie": 58574,
         "title": "Sherlock Holmes: A Game of Shadows",
         "release_date": "2011-11-22",
@@ -2704,7 +2535,6 @@
         "vote_count": 3886
     },
     {
-        "Name": "Nick Gottschalk",
         "id_movie": 205775,
         "title": "In the Heart of the Sea",
         "release_date": "2015-11-20",
@@ -2720,7 +2550,6 @@
         "vote_count": 1276
     },
     {
-        "Name": "Katie Spencer",
         "id_movie": 10528,
         "title": "Sherlock Holmes",
         "release_date": "2009-12-23",
@@ -2736,7 +2565,6 @@
         "vote_count": 5766
     },
     {
-        "Name": "Anja M\u00fcller",
         "id_movie": 60304,
         "title": "Hansel & Gretel: Witch Hunters",
         "release_date": "2013-01-17",
@@ -2752,7 +2580,6 @@
         "vote_count": 3239
     },
     {
-        "Name": "Kevin Mangan",
         "id_movie": 13,
         "title": "Forrest Gump",
         "release_date": "1994-07-06",
@@ -2768,7 +2595,6 @@
         "vote_count": 7927
     },
     {
-        "Name": "Liz Griffiths",
         "id_movie": 259693,
         "title": "The Conjuring 2",
         "release_date": "2016-05-13",
@@ -2784,7 +2610,6 @@
         "vote_count": 1949
     },
     {
-        "Name": "Liz Griffiths",
         "id_movie": 122906,
         "title": "About Time",
         "release_date": "2013-08-16",
@@ -2800,7 +2625,6 @@
         "vote_count": 2067
     },
     {
-        "Name": "Stephan O. Gessler",
         "id_movie": 120467,
         "title": "The Grand Budapest Hotel",
         "release_date": "2014-02-26",
@@ -2816,7 +2640,6 @@
         "vote_count": 4519
     },
     {
-        "Name": "Cornelia Ott",
         "id_movie": 324668,
         "title": "Jason Bourne",
         "release_date": "2016-07-27",
@@ -2832,7 +2655,6 @@
         "vote_count": 2341
     },
     {
-        "Name": "Roxy Konrad",
         "id_movie": 131634,
         "title": "The Hunger Games: Mockingjay - Part 2",
         "release_date": "2015-11-18",
@@ -2848,7 +2670,6 @@
         "vote_count": 3984
     },
     {
-        "Name": "Peter Popken",
         "id_movie": 2502,
         "title": "The Bourne Supremacy",
         "release_date": "2004-07-23",
@@ -2864,7 +2685,6 @@
         "vote_count": 2825
     },
     {
-        "Name": "Paul D. Austerberry",
         "id_movie": 76649,
         "title": "Pompeii",
         "release_date": "2014-02-18",
@@ -2880,7 +2700,6 @@
         "vote_count": 1267
     },
     {
-        "Name": "Paul D. Austerberry",
         "id_movie": 24021,
         "title": "The Twilight Saga: Eclipse",
         "release_date": "2010-06-23",
@@ -2896,7 +2715,6 @@
         "vote_count": 2301
     },
     {
-        "Name": "Scott Herbertson",
         "id_movie": 157353,
         "title": "Transcendence",
         "release_date": "2014-04-16",
@@ -2912,7 +2730,6 @@
         "vote_count": 2295
     },
     {
-        "Name": "Geoff Hubbard",
         "id_movie": 415,
         "title": "Batman & Robin",
         "release_date": "1997-06-20",
@@ -2928,7 +2745,6 @@
         "vote_count": 1418
     },
     {
-        "Name": "Stephen J. Lineweaver",
         "id_movie": 214756,
         "title": "Ted 2",
         "release_date": "2015-06-25",
@@ -2944,7 +2760,6 @@
         "vote_count": 2463
     },
     {
-        "Name": "Stephen J. Lineweaver",
         "id_movie": 72105,
         "title": "Ted",
         "release_date": "2012-06-29",
@@ -2960,7 +2775,6 @@
         "vote_count": 4697
     },
     {
-        "Name": "Jeffrey Mossa",
         "id_movie": 87101,
         "title": "Terminator Genisys",
         "release_date": "2015-06-23",
@@ -2976,7 +2790,6 @@
         "vote_count": 3631
     },
     {
-        "Name": "Chris Farmer",
         "id_movie": 49521,
         "title": "Man of Steel",
         "release_date": "2013-06-12",
@@ -2992,7 +2805,6 @@
         "vote_count": 6359
     },
     {
-        "Name": "Michael E. Goldman",
         "id_movie": 54138,
         "title": "Star Trek Into Darkness",
         "release_date": "2013-05-05",
@@ -3008,7 +2820,6 @@
         "vote_count": 4418
     },
     {
-        "Name": "Michael E. Goldman",
         "id_movie": 254128,
         "title": "San Andreas",
         "release_date": "2015-05-27",
@@ -3024,7 +2835,6 @@
         "vote_count": 2968
     },
     {
-        "Name": "Nick Dent",
         "id_movie": 296096,
         "title": "Me Before You",
         "release_date": "2016-06-02",
@@ -3040,7 +2850,6 @@
         "vote_count": 2562
     },
     {
-        "Name": "Nick Dent",
         "id_movie": 205596,
         "title": "The Imitation Game",
         "release_date": "2014-11-14",
@@ -3056,7 +2865,6 @@
         "vote_count": 5723
     },
     {
-        "Name": "Peter Lando",
         "id_movie": 181533,
         "title": "Night at the Museum: Secret of the Tomb",
         "release_date": "2014-12-17",
@@ -3072,7 +2880,6 @@
         "vote_count": 1851
     },
     {
-        "Name": "Peter Lando",
         "id_movie": 68724,
         "title": "Elysium",
         "release_date": "2013-08-07",
@@ -3088,7 +2895,6 @@
         "vote_count": 3439
     },
     {
-        "Name": "Peter Lando",
         "id_movie": 32657,
         "title": "Percy Jackson & the Olympians: The Lightning Thief",
         "release_date": "2010-02-01",
@@ -3104,7 +2910,6 @@
         "vote_count": 2010
     },
     {
-        "Name": "Ron von Blomberg",
         "id_movie": 59440,
         "title": "Warrior",
         "release_date": "2011-09-09",
@@ -3120,7 +2925,6 @@
         "vote_count": 1272
     },
     {
-        "Name": "Ron von Blomberg",
         "id_movie": 38,
         "title": "Eternal Sunshine of the Spotless Mind",
         "release_date": "2004-03-19",
@@ -3136,7 +2940,6 @@
         "vote_count": 3652
     },
     {
-        "Name": "Ian Gooding",
         "id_movie": 82690,
         "title": "Wreck-It Ralph",
         "release_date": "2012-11-01",
@@ -3152,7 +2955,6 @@
         "vote_count": 4570
     },
     {
-        "Name": "Ian Gooding",
         "id_movie": 10198,
         "title": "The Princess and the Frog",
         "release_date": "2009-12-08",
@@ -3168,7 +2970,6 @@
         "vote_count": 1247
     },
     {
-        "Name": "Ian Gooding",
         "id_movie": 812,
         "title": "Aladdin",
         "release_date": "1992-11-25",
@@ -3184,7 +2985,6 @@
         "vote_count": 3416
     },
     {
-        "Name": "Ramsey Avery",
         "id_movie": 333371,
         "title": "10 Cloverfield Lane",
         "release_date": "2016-03-10",
@@ -3200,7 +3000,6 @@
         "vote_count": 2468
     },
     {
-        "Name": "Ramsey Avery",
         "id_movie": 158852,
         "title": "Tomorrowland",
         "release_date": "2015-05-19",
@@ -3216,7 +3015,6 @@
         "vote_count": 2846
     },
     {
-        "Name": "Douglas Cumming",
         "id_movie": 198663,
         "title": "The Maze Runner",
         "release_date": "2014-09-10",
@@ -3232,7 +3030,6 @@
         "vote_count": 5371
     },
     {
-        "Name": "Douglas Cumming",
         "id_movie": 250546,
         "title": "Annabelle",
         "release_date": "2014-10-02",
@@ -3248,7 +3045,6 @@
         "vote_count": 1517
     },
     {
-        "Name": "Sonya Savova",
         "id_movie": 53182,
         "title": "300: Rise of an Empire",
         "release_date": "2014-03-05",
@@ -3264,7 +3060,6 @@
         "vote_count": 2397
     },
     {
-        "Name": "Sonya Savova",
         "id_movie": 76163,
         "title": "The Expendables 2",
         "release_date": "2012-08-08",
@@ -3280,7 +3075,6 @@
         "vote_count": 2896
     },
     {
-        "Name": "Sonya Savova",
         "id_movie": 138103,
         "title": "The Expendables 3",
         "release_date": "2014-08-04",
@@ -3296,7 +3090,6 @@
         "vote_count": 1795
     },
     {
-        "Name": "Paul A. Felix",
         "id_movie": 177572,
         "title": "Big Hero 6",
         "release_date": "2014-10-24",
@@ -3312,7 +3105,6 @@
         "vote_count": 6135
     },
     {
-        "Name": "Paul A. Felix",
         "id_movie": 11688,
         "title": "The Emperor's New Groove",
         "release_date": "2000-12-09",
@@ -3328,7 +3120,6 @@
         "vote_count": 1490
     },
     {
-        "Name": "Paul A. Felix",
         "id_movie": 11544,
         "title": "Lilo & Stitch",
         "release_date": "2002-06-21",
@@ -3344,7 +3135,6 @@
         "vote_count": 1314
     },
     {
-        "Name": "Matthew Gray",
         "id_movie": 177677,
         "title": "Mission: Impossible - Rogue Nation",
         "release_date": "2015-07-23",
@@ -3360,7 +3150,6 @@
         "vote_count": 3224
     },
     {
-        "Name": "Sara Wan",
         "id_movie": 210860,
         "title": "Mortdecai",
         "release_date": "2015-01-21",
@@ -3376,7 +3165,6 @@
         "vote_count": 1055
     },
     {
-        "Name": "Robert St. Pierre",
         "id_movie": 12244,
         "title": "9",
         "release_date": "2009-08-19",
@@ -3392,7 +3180,6 @@
         "vote_count": 1262
     },
     {
-        "Name": "Brendan Heffernan",
         "id_movie": 12437,
         "title": "Underworld: Rise of the Lycans",
         "release_date": "2009-01-22",
@@ -3408,7 +3195,6 @@
         "vote_count": 1428
     },
     {
-        "Name": "Luke Freeborn",
         "id_movie": 72559,
         "title": "G.I. Joe: Retaliation",
         "release_date": "2013-03-26",
@@ -3424,7 +3210,6 @@
         "vote_count": 3025
     },
     {
-        "Name": "Luke Freeborn",
         "id_movie": 321697,
         "title": "Steve Jobs",
         "release_date": "2015-10-09",
@@ -3440,7 +3225,6 @@
         "vote_count": 1573
     },
     {
-        "Name": "Alessandro Santucci",
         "id_movie": 253412,
         "title": "Everest",
         "release_date": "2015-09-10",
@@ -3456,7 +3240,6 @@
         "vote_count": 1772
     },
     {
-        "Name": "P. Scott Bailey",
         "id_movie": 550,
         "title": "Fight Club",
         "release_date": "1999-10-15",
@@ -3472,7 +3255,6 @@
         "vote_count": 9413
     },
     {
-        "Name": "Molly Hughes",
         "id_movie": 222935,
         "title": "The Fault in Our Stars",
         "release_date": "2014-05-16",
@@ -3488,7 +3270,6 @@
         "vote_count": 3759
     },
     {
-        "Name": "Molly Hughes",
         "id_movie": 49040,
         "title": "The Bourne Legacy",
         "release_date": "2012-08-08",
@@ -3504,7 +3285,6 @@
         "vote_count": 2651
     },
     {
-        "Name": "Matt Codd",
         "id_movie": 10865,
         "title": "Atlantis: The Lost Empire",
         "release_date": "2001-06-02",
@@ -3520,7 +3300,6 @@
         "vote_count": 1224
     },
     {
-        "Name": "Andy McLaren",
         "id_movie": 122917,
         "title": "The Hobbit: The Battle of the Five Armies",
         "release_date": "2014-12-10",
@@ -3536,7 +3315,6 @@
         "vote_count": 4760
     },
     {
-        "Name": "Andy McLaren",
         "id_movie": 57158,
         "title": "The Hobbit: The Desolation of Smaug",
         "release_date": "2013-12-11",
@@ -3552,7 +3330,6 @@
         "vote_count": 4524
     },
     {
-        "Name": "Andy McLaren",
         "id_movie": 49051,
         "title": "The Hobbit: An Unexpected Journey",
         "release_date": "2012-11-26",
@@ -3568,7 +3345,6 @@
         "vote_count": 8297
     },
     {
-        "Name": "Suttirat Anne Larlarb",
         "id_movie": 44115,
         "title": "127 Hours",
         "release_date": "2010-11-05",
@@ -3584,7 +3360,6 @@
         "vote_count": 2606
     },
     {
-        "Name": "James Foster",
         "id_movie": 37724,
         "title": "Skyfall",
         "release_date": "2012-10-25",
@@ -3600,7 +3375,6 @@
         "vote_count": 7604
     },
     {
-        "Name": "Peter Stratford",
         "id_movie": 22970,
         "title": "The Cabin in the Woods",
         "release_date": "2012-04-12",
@@ -3616,7 +3390,6 @@
         "vote_count": 2263
     },
     {
-        "Name": "Kendall O'Connor",
         "id_movie": 408,
         "title": "Snow White and the Seven Dwarfs",
         "release_date": "1937-12-20",
@@ -3632,7 +3405,6 @@
         "vote_count": 1914
     },
     {
-        "Name": "Sandi Tanaka",
         "id_movie": 1979,
         "title": "Fantastic 4: Rise of the Silver Surfer",
         "release_date": "2007-06-13",
@@ -3648,7 +3420,6 @@
         "vote_count": 2589
     },
     {
-        "Name": "Scott P. Murphy",
         "id_movie": 44833,
         "title": "Battleship",
         "release_date": "2012-04-11",
@@ -3664,7 +3435,6 @@
         "vote_count": 2114
     },
     {
-        "Name": "Mike Piccirillo",
         "id_movie": 75612,
         "title": "Oblivion",
         "release_date": "2013-04-10",
@@ -3680,7 +3450,6 @@
         "vote_count": 4800
     },
     {
-        "Name": "David Stein",
         "id_movie": 76203,
         "title": "12 Years a Slave",
         "release_date": "2013-10-18",
@@ -3696,7 +3465,6 @@
         "vote_count": 3674
     },
     {
-        "Name": "David Stein",
         "id_movie": 44214,
         "title": "Black Swan",
         "release_date": "2010-12-02",
@@ -3712,7 +3480,6 @@
         "vote_count": 4430
     },
     {
-        "Name": "Ed Natividad",
         "id_movie": 76757,
         "title": "Jupiter Ascending",
         "release_date": "2015-02-04",
@@ -3728,7 +3495,6 @@
         "vote_count": 2768
     },
     {
-        "Name": "Ed Natividad",
         "id_movie": 83542,
         "title": "Cloud Atlas",
         "release_date": "2012-10-26",
@@ -3744,7 +3510,6 @@
         "vote_count": 2977
     },
     {
-        "Name": "Greg Berry",
         "id_movie": 271110,
         "title": "Captain America: Civil War",
         "release_date": "2016-04-27",
@@ -3760,7 +3525,6 @@
         "vote_count": 7241
     },
     {
-        "Name": "Laurel Bergman",
         "id_movie": 281957,
         "title": "The Revenant",
         "release_date": "2015-12-25",
@@ -3776,7 +3540,6 @@
         "vote_count": 6396
     },
     {
-        "Name": "Elliott Glick",
         "id_movie": 225886,
         "title": "Sex Tape",
         "release_date": "2014-07-17",
@@ -3792,7 +3555,6 @@
         "vote_count": 1695
     },
     {
-        "Name": "Elliott Glick",
         "id_movie": 138832,
         "title": "We're the Millers",
         "release_date": "2013-08-07",
@@ -3808,7 +3570,6 @@
         "vote_count": 2972
     },
     {
-        "Name": "Elliott Glick",
         "id_movie": 318846,
         "title": "The Big Short",
         "release_date": "2015-12-11",
@@ -3824,7 +3585,6 @@
         "vote_count": 2607
     },
     {
-        "Name": "Kelly Curley",
         "id_movie": 256591,
         "title": "Focus",
         "release_date": "2015-02-25",
@@ -3840,7 +3600,6 @@
         "vote_count": 2542
     },
     {
-        "Name": "Easton Michael Smith",
         "id_movie": 163,
         "title": "Ocean's Twelve",
         "release_date": "2004-12-09",
@@ -3856,7 +3615,6 @@
         "vote_count": 2124
     },
     {
-        "Name": "Tim Flattery",
         "id_movie": 188927,
         "title": "Star Trek Beyond",
         "release_date": "2016-07-07",
@@ -3872,7 +3630,6 @@
         "vote_count": 2568
     },
     {
-        "Name": "Christian Zimmermann",
         "id_movie": 14,
         "title": "American Beauty",
         "release_date": "1999-09-15",
@@ -3888,7 +3645,6 @@
         "vote_count": 3313
     },
     {
-        "Name": "Ray Chan",
         "id_movie": 99861,
         "title": "Avengers: Age of Ultron",
         "release_date": "2015-04-22",
@@ -3904,7 +3660,6 @@
         "vote_count": 6767
     },
     {
-        "Name": "Ray Chan",
         "id_movie": 1372,
         "title": "Blood Diamond",
         "release_date": "2006-12-07",
@@ -3920,7 +3675,6 @@
         "vote_count": 2281
     },
     {
-        "Name": "Harry Lange",
         "id_movie": 1891,
         "title": "The Empire Strikes Back",
         "release_date": "1980-05-17",
@@ -3936,7 +3690,6 @@
         "vote_count": 5879
     },
     {
-        "Name": "Harry Lange",
         "id_movie": 62,
         "title": "2001: A Space Odyssey",
         "release_date": "1968-04-10",
@@ -3952,7 +3705,6 @@
         "vote_count": 2998
     },
     {
-        "Name": "Zolt\u00e1n Horv\u00e1th",
         "id_movie": 47964,
         "title": "A Good Day to Die Hard",
         "release_date": "2013-02-06",
@@ -3968,7 +3720,6 @@
         "vote_count": 3493
     },
     {
-        "Name": "Drew Struzan",
         "id_movie": 105,
         "title": "Back to the Future",
         "release_date": "1985-07-03",
@@ -3984,7 +3735,6 @@
         "vote_count": 6079
     },
     {
-        "Name": "Paul D. Kelly",
         "id_movie": 146233,
         "title": "Prisoners",
         "release_date": "2013-09-18",
@@ -4000,7 +3750,6 @@
         "vote_count": 3085
     },
     {
-        "Name": "Gregory A. Weimerskirch",
         "id_movie": 307081,
         "title": "Southpaw",
         "release_date": "2015-06-15",
@@ -4016,7 +3765,6 @@
         "vote_count": 2067
     },
     {
-        "Name": "Michael Sexton",
         "id_movie": 70,
         "title": "Million Dollar Baby",
         "release_date": "2004-12-15",
@@ -4032,7 +3780,6 @@
         "vote_count": 2439
     },
     {
-        "Name": "Guy Hendrix Dyas",
         "id_movie": 1452,
         "title": "Superman Returns",
         "release_date": "2006-06-28",
@@ -4048,7 +3795,6 @@
         "vote_count": 1400
     },
     {
-        "Name": "Harry E. Otto",
         "id_movie": 190859,
         "title": "American Sniper",
         "release_date": "2014-12-11",
@@ -4064,7 +3810,6 @@
         "vote_count": 4469
     },
     {
-        "Name": "David Hindle",
         "id_movie": 45269,
         "title": "The King's Speech",
         "release_date": "2010-09-06",
@@ -4080,7 +3825,6 @@
         "vote_count": 2752
     },
     {
-        "Name": "David Hindle",
         "id_movie": 266856,
         "title": "The Theory of Everything",
         "release_date": "2014-11-26",
@@ -4096,7 +3840,6 @@
         "vote_count": 3311
     },
     {
-        "Name": "Nigel Churcher",
         "id_movie": 133805,
         "title": "Carrie",
         "release_date": "2013-10-16",
@@ -4112,7 +3855,6 @@
         "vote_count": 1463
     },
     {
-        "Name": "Martina Javorova",
         "id_movie": 52520,
         "title": "Underworld: Awakening",
         "release_date": "2012-01-19",
@@ -4128,7 +3870,6 @@
         "vote_count": 1862
     },
     {
-        "Name": "Martina Javorova",
         "id_movie": 293863,
         "title": "The Age of Adaline",
         "release_date": "2015-04-16",
@@ -4144,7 +3885,6 @@
         "vote_count": 1990
     },
     {
-        "Name": "Christopher R. DeMuri",
         "id_movie": 136797,
         "title": "Need for Speed",
         "release_date": "2014-03-13",
@@ -4160,7 +3900,6 @@
         "vote_count": 1520
     },
     {
-        "Name": "Sophie Neudorfer",
         "id_movie": 274854,
         "title": "The Last Witch Hunter",
         "release_date": "2015-10-21",
@@ -4176,7 +3915,6 @@
         "vote_count": 1316
     },
     {
-        "Name": "Scott Ritenour",
         "id_movie": 11036,
         "title": "The Notebook",
         "release_date": "2004-06-25",
@@ -4192,7 +3930,6 @@
         "vote_count": 3067
     },
     {
-        "Name": "Elena Albanese",
         "id_movie": 168259,
         "title": "Furious 7",
         "release_date": "2015-04-01",
@@ -4208,7 +3945,6 @@
         "vote_count": 4176
     },
     {
-        "Name": "Kendelle Elliott",
         "id_movie": 2048,
         "title": "I, Robot",
         "release_date": "2004-07-15",
@@ -4224,7 +3960,6 @@
         "vote_count": 3793
     },
     {
-        "Name": "Josh Lusby",
         "id_movie": 2105,
         "title": "American Pie",
         "release_date": "1999-07-09",
@@ -4240,7 +3975,6 @@
         "vote_count": 2296
     },
     {
-        "Name": "Emmanuel Shiu",
         "id_movie": 187,
         "title": "Sin City",
         "release_date": "2005-04-01",
@@ -4256,7 +3990,6 @@
         "vote_count": 2691
     },
     {
-        "Name": "Sam Page",
         "id_movie": 225574,
         "title": "Non-Stop",
         "release_date": "2014-01-26",
@@ -4272,7 +4005,6 @@
         "vote_count": 2268
     },
     {
-        "Name": "Phillip Tellez",
         "id_movie": 246655,
         "title": "X-Men: Apocalypse",
         "release_date": "2016-05-18",
@@ -4288,7 +4020,6 @@
         "vote_count": 4721
     },
     {
-        "Name": "Phillip Tellez",
         "id_movie": 36586,
         "title": "Blade II",
         "release_date": "2002-03-22",
@@ -4304,7 +4035,6 @@
         "vote_count": 1528
     },
     {
-        "Name": "Daniel R. Jennings",
         "id_movie": 27578,
         "title": "The Expendables",
         "release_date": "2010-08-03",
@@ -4320,7 +4050,6 @@
         "vote_count": 2926
     },
     {
-        "Name": "Jana Chovancova",
         "id_movie": 2501,
         "title": "The Bourne Identity",
         "release_date": "2002-06-14",
@@ -4336,7 +4065,6 @@
         "vote_count": 3583
     },
     {
-        "Name": "Missy Parker",
         "id_movie": 1865,
         "title": "Pirates of the Caribbean: On Stranger Tides",
         "release_date": "2011-05-14",
@@ -4352,7 +4080,6 @@
         "vote_count": 4948
     },
     {
-        "Name": "Missy Parker",
         "id_movie": 238636,
         "title": "The Purge: Anarchy",
         "release_date": "2014-07-17",
@@ -4368,7 +4095,6 @@
         "vote_count": 1954
     },
     {
-        "Name": "Ravi Bansal",
         "id_movie": 278927,
         "title": "The Jungle Book",
         "release_date": "2016-04-07",
@@ -4384,7 +4110,6 @@
         "vote_count": 2892
     },
     {
-        "Name": "Cuitlahuac Morales Velazquez",
         "id_movie": 118340,
         "title": "Guardians of the Galaxy",
         "release_date": "2014-07-30",
@@ -4400,7 +4125,6 @@
         "vote_count": 9742
     },
     {
-        "Name": "Richard K. Buoen",
         "id_movie": 294254,
         "title": "Maze Runner: The Scorch Trials",
         "release_date": "2015-09-09",
@@ -4416,7 +4140,6 @@
         "vote_count": 3040
     },
     {
-        "Name": "Dominique Moisan",
         "id_movie": 240832,
         "title": "Lucy",
         "release_date": "2014-07-14",
@@ -4432,7 +4155,6 @@
         "vote_count": 5878
     },
     {
-        "Name": "Dominique Moisan",
         "id_movie": 260346,
         "title": "Taken 3",
         "release_date": "2014-12-16",
@@ -4448,7 +4170,6 @@
         "vote_count": 2200
     },
     {
-        "Name": "Randall D. Wilkins",
         "id_movie": 782,
         "title": "Gattaca",
         "release_date": "1997-09-07",
@@ -4464,7 +4185,6 @@
         "vote_count": 1808
     },
     {
-        "Name": "David Scott Gagnon",
         "id_movie": 169917,
         "title": "A Walk Among the Tombstones",
         "release_date": "2014-09-18",
@@ -4480,7 +4200,6 @@
         "vote_count": 1131
     },
     {
-        "Name": "John Villarino",
         "id_movie": 17578,
         "title": "The Adventures of Tintin",
         "release_date": "2011-10-25",
@@ -4496,7 +4215,6 @@
         "vote_count": 2061
     },
     {
-        "Name": "Craig Edgar",
         "id_movie": 562,
         "title": "Die Hard",
         "release_date": "1988-07-15",
@@ -4512,7 +4230,6 @@
         "vote_count": 3948
     },
     {
-        "Name": "Craig Edgar",
         "id_movie": 744,
         "title": "Top Gun",
         "release_date": "1986-05-16",
@@ -4528,7 +4245,6 @@
         "vote_count": 1698
     },
     {
-        "Name": "Jeff B. Adams Jr.",
         "id_movie": 189,
         "title": "Sin City: A Dame to Kill For",
         "release_date": "2014-08-20",
@@ -4544,7 +4260,6 @@
         "vote_count": 1286
     },
     {
-        "Name": "Jacinta Leong",
         "id_movie": 76341,
         "title": "Mad Max: Fury Road",
         "release_date": "2015-05-13",
@@ -4560,7 +4275,6 @@
         "vote_count": 9427
     },
     {
-        "Name": "Scott Dougan",
         "id_movie": 262504,
         "title": "Allegiant",
         "release_date": "2016-03-09",
@@ -4576,7 +4290,6 @@
         "vote_count": 1998
     },
     {
-        "Name": "Lori Rowbotham",
         "id_movie": 568,
         "title": "Apollo 13",
         "release_date": "1995-06-30",
@@ -4592,7 +4305,6 @@
         "vote_count": 1599
     },
     {
-        "Name": "K. Emily Levine",
         "id_movie": 64688,
         "title": "21 Jump Street",
         "release_date": "2012-03-12",
@@ -4608,7 +4320,6 @@
         "vote_count": 4074
     },
     {
-        "Name": "Edward J. Protiva",
         "id_movie": 13223,
         "title": "Gran Torino",
         "release_date": "2008-12-09",
@@ -4624,7 +4335,6 @@
         "vote_count": 3086
     },
     {
-        "Name": "Marion Kolsby",
         "id_movie": 1422,
         "title": "The Departed",
         "release_date": "2006-10-05",
@@ -4640,7 +4350,6 @@
         "vote_count": 4339
     },
     {
-        "Name": "Patrick O'Connor",
         "id_movie": 76726,
         "title": "Chronicle",
         "release_date": "2012-02-01",
@@ -4656,7 +4365,6 @@
         "vote_count": 1935
     },
     {
-        "Name": "Tommy Tomlinson",
         "id_movie": 106,
         "title": "Predator",
         "release_date": "1987-06-11",
@@ -4672,7 +4380,6 @@
         "vote_count": 2093
     },
     {
-        "Name": "Carla S. Nemec",
         "id_movie": 4547,
         "title": "Panic Room",
         "release_date": "2002-03-29",
@@ -4688,7 +4395,6 @@
         "vote_count": 1267
     },
     {
-        "Name": "Evelyn Barbier",
         "id_movie": 310,
         "title": "Bruce Almighty",
         "release_date": "2003-05-23",
@@ -4704,7 +4410,6 @@
         "vote_count": 3012
     },
     {
-        "Name": "Theodore Suchecki",
         "id_movie": 156022,
         "title": "The Equalizer",
         "release_date": "2014-09-24",
@@ -4720,7 +4425,6 @@
         "vote_count": 2954
     },
     {
-        "Name": "Seth Engstrom",
         "id_movie": 12155,
         "title": "Alice in Wonderland",
         "release_date": "2010-03-03",
@@ -4736,7 +4440,6 @@
         "vote_count": 4645
     },
     {
-        "Name": "James Harris",
         "id_movie": 544,
         "title": "There's Something About Mary",
         "release_date": "1998-07-15",
@@ -4752,7 +4455,6 @@
         "vote_count": 1590
     },
     {
-        "Name": "Justin O'Neal Miller",
         "id_movie": 193893,
         "title": "Let's Be Cops",
         "release_date": "2014-08-13",
@@ -4768,7 +4470,6 @@
         "vote_count": 1219
     },
     {
-        "Name": "Andre Medina",
         "id_movie": 159824,
         "title": "Hotel Transylvania 2",
         "release_date": "2015-09-21",
@@ -4784,7 +4485,6 @@
         "vote_count": 1497
     },
     {
-        "Name": "Simon Rodgers",
         "id_movie": 81188,
         "title": "Rise of the Guardians",
         "release_date": "2012-11-21",
@@ -4800,7 +4500,6 @@
         "vote_count": 1922
     },
     {
-        "Name": "Simon Rodgers",
         "id_movie": 49519,
         "title": "The Croods",
         "release_date": "2013-03-20",
@@ -4816,7 +4515,6 @@
         "vote_count": 2399
     },
     {
-        "Name": "Bill Schwab",
         "id_movie": 109445,
         "title": "Frozen",
         "release_date": "2013-11-27",
@@ -4832,7 +4530,6 @@
         "vote_count": 5295
     },
     {
-        "Name": "Hans Bacher",
         "id_movie": 10674,
         "title": "Mulan",
         "release_date": "1998-06-18",
@@ -4848,7 +4545,6 @@
         "vote_count": 2008
     },
     {
-        "Name": "Pat Sito",
         "id_movie": 9502,
         "title": "Kung Fu Panda",
         "release_date": "2008-06-04",
@@ -4864,7 +4560,6 @@
         "vote_count": 3145
     },
     {
-        "Name": "Shane Prigmore",
         "id_movie": 10191,
         "title": "How to Train Your Dragon",
         "release_date": "2010-03-05",
@@ -4880,7 +4575,6 @@
         "vote_count": 4227
     },
     {
-        "Name": "Shane Prigmore",
         "id_movie": 14836,
         "title": "Coraline",
         "release_date": "2009-02-05",
@@ -4896,7 +4590,6 @@
         "vote_count": 1386
     },
     {
-        "Name": "Shane Prigmore",
         "id_movie": 137106,
         "title": "The Lego Movie",
         "release_date": "2014-02-06",
@@ -4912,7 +4605,6 @@
         "vote_count": 3070
     },
     {
-        "Name": "Kim Eun-young",
         "id_movie": 110415,
         "title": "Snowpiercer",
         "release_date": "2013-08-01",
@@ -4928,7 +4620,6 @@
         "vote_count": 2854
     },
     {
-        "Name": "Waldemar Weiss",
         "id_movie": 423,
         "title": "The Pianist",
         "release_date": "2002-09-24",
@@ -4944,7 +4635,6 @@
         "vote_count": 1864
     },
     {
-        "Name": "Waldemar Weiss",
         "id_movie": 424,
         "title": "Schindler's List",
         "release_date": "1993-11-29",
@@ -4960,7 +4650,6 @@
         "vote_count": 4329
     },
     {
-        "Name": "Martin Foley",
         "id_movie": 107,
         "title": "Snatch",
         "release_date": "2000-09-01",
@@ -4976,7 +4665,6 @@
         "vote_count": 2912
     },
     {
-        "Name": "Mary Kirkland",
         "id_movie": 264644,
         "title": "Room",
         "release_date": "2015-10-16",
@@ -4992,7 +4680,6 @@
         "vote_count": 2757
     },
     {
-        "Name": "Mary Kirkland",
         "id_movie": 310131,
         "title": "The Witch",
         "release_date": "2016-02-19",
@@ -5008,7 +4695,6 @@
         "vote_count": 1434
     },
     {
-        "Name": "Jay Pelissier",
         "id_movie": 262500,
         "title": "Insurgent",
         "release_date": "2015-03-18",
@@ -5024,7 +4710,6 @@
         "vote_count": 3829
     },
     {
-        "Name": "Chloe Lipp",
         "id_movie": 291870,
         "title": "Dirty Grandpa",
         "release_date": "2016-01-21",
@@ -5040,7 +4725,6 @@
         "vote_count": 1406
     },
     {
-        "Name": "Kathy Altieri",
         "id_movie": 228161,
         "title": "Home",
         "release_date": "2015-03-18",
@@ -5056,7 +4740,6 @@
         "vote_count": 1519
     },
     {
-        "Name": "Bert Berry",
         "id_movie": 150540,
         "title": "Inside Out",
         "release_date": "2015-06-09",
@@ -5072,7 +4755,6 @@
         "vote_count": 6560
     },
     {
-        "Name": "David Nichols",
         "id_movie": 137,
         "title": "Groundhog Day",
         "release_date": "1993-02-11",
@@ -5088,7 +4770,6 @@
         "vote_count": 2301
     },
     {
-        "Name": "Karen Higgins",
         "id_movie": 16996,
         "title": "17 Again",
         "release_date": "2009-03-11",
@@ -5104,7 +4785,6 @@
         "vote_count": 1350
     },
     {
-        "Name": "Josue Clotaire Fleurimond",
         "id_movie": 238615,
         "title": "Self/less",
         "release_date": "2015-07-10",
@@ -5120,7 +4800,6 @@
         "vote_count": 1091
     },
     {
-        "Name": "Jeff Hay",
         "id_movie": 755,
         "title": "From Dusk Till Dawn",
         "release_date": "1996-01-19",
@@ -5136,7 +4815,6 @@
         "vote_count": 1603
     },
     {
-        "Name": "Nancy Haigh",
         "id_movie": 6977,
         "title": "No Country for Old Men",
         "release_date": "2007-11-08",
@@ -5152,7 +4830,6 @@
         "vote_count": 3003
     },
     {
-        "Name": "Linda DeScenna",
         "id_movie": 78,
         "title": "Blade Runner",
         "release_date": "1982-06-25",
@@ -5168,7 +4845,6 @@
         "vote_count": 3509
     },
     {
-        "Name": "Cheryl Carasik",
         "id_movie": 285,
         "title": "Pirates of the Caribbean: At World's End",
         "release_date": "2007-05-19",
@@ -5184,7 +4860,6 @@
         "vote_count": 4500
     },
     {
-        "Name": "Naomi Shohan",
         "id_movie": 6479,
         "title": "I Am Legend",
         "release_date": "2007-12-14",
@@ -5200,7 +4875,6 @@
         "vote_count": 4853
     },
     {
-        "Name": "Naomi Shohan",
         "id_movie": 2034,
         "title": "Training Day",
         "release_date": "2001-10-05",
@@ -5216,7 +4890,6 @@
         "vote_count": 1634
     },
     {
-        "Name": "Anna Pinnock",
         "id_movie": 87827,
         "title": "Life of Pi",
         "release_date": "2012-11-20",
@@ -5232,7 +4905,6 @@
         "vote_count": 5797
     },
     {
-        "Name": "Lin MacDonald",
         "id_movie": 20526,
         "title": "TRON: Legacy",
         "release_date": "2010-12-10",
@@ -5248,7 +4920,6 @@
         "vote_count": 2841
     },
     {
-        "Name": "Rosemary Brandenburg",
         "id_movie": 8960,
         "title": "Hancock",
         "release_date": "2008-07-01",
@@ -5264,7 +4935,6 @@
         "vote_count": 2961
     },
     {
-        "Name": "Rosemary Brandenburg",
         "id_movie": 9802,
         "title": "The Rock",
         "release_date": "1996-06-06",
@@ -5280,7 +4950,6 @@
         "vote_count": 1456
     },
     {
-        "Name": "Karen Manthey",
         "id_movie": 956,
         "title": "Mission: Impossible III",
         "release_date": "2006-05-03",
@@ -5296,7 +4965,6 @@
         "vote_count": 2028
     },
     {
-        "Name": "Debra Schutt",
         "id_movie": 271718,
         "title": "Trainwreck",
         "release_date": "2015-07-17",
@@ -5312,7 +4980,6 @@
         "vote_count": 1181
     },
     {
-        "Name": "Helen Jarvis",
         "id_movie": 18360,
         "title": "Night at the Museum: Battle of the Smithsonian",
         "release_date": "2009-05-20",
@@ -5328,7 +4995,6 @@
         "vote_count": 1971
     },
     {
-        "Name": "Helen Jarvis",
         "id_movie": 56292,
         "title": "Mission: Impossible - Ghost Protocol",
         "release_date": "2011-12-07",
@@ -5344,7 +5010,6 @@
         "vote_count": 3972
     },
     {
-        "Name": "Sharon Seymour",
         "id_movie": 241554,
         "title": "Run All Night",
         "release_date": "2015-03-11",
@@ -5360,7 +5025,6 @@
         "vote_count": 1148
     },
     {
-        "Name": "Dawn Swiderski",
         "id_movie": 954,
         "title": "Mission: Impossible",
         "release_date": "1996-05-22",
@@ -5376,7 +5040,6 @@
         "vote_count": 2631
     },
     {
-        "Name": "Danielle Berman",
         "id_movie": 68721,
         "title": "Iron Man 3",
         "release_date": "2013-04-18",
@@ -5392,7 +5055,6 @@
         "vote_count": 8806
     },
     {
-        "Name": "Danielle Berman",
         "id_movie": 77,
         "title": "Memento",
         "release_date": "2000-10-11",
@@ -5408,7 +5070,6 @@
         "vote_count": 4028
     },
     {
-        "Name": "Julie Berghoff",
         "id_movie": 176,
         "title": "Saw",
         "release_date": "2004-10-01",
@@ -5424,7 +5085,6 @@
         "vote_count": 2184
     },
     {
-        "Name": "Melanie Jones",
         "id_movie": 244786,
         "title": "Whiplash",
         "release_date": "2014-10-10",
@@ -5440,7 +5100,6 @@
         "vote_count": 4254
     },
     {
-        "Name": "Melanie Jones",
         "id_movie": 158015,
         "title": "The Purge",
         "release_date": "2013-05-31",
@@ -5456,7 +5115,6 @@
         "vote_count": 2428
     },
     {
-        "Name": "Norman Reynolds",
         "id_movie": 11,
         "title": "Star Wars",
         "release_date": "1977-05-25",
@@ -5472,7 +5130,6 @@
         "vote_count": 6624
     },
     {
-        "Name": "Norman Reynolds",
         "id_movie": 85,
         "title": "Raiders of the Lost Ark",
         "release_date": "1981-06-12",
@@ -5488,7 +5145,6 @@
         "vote_count": 3854
     },
     {
-        "Name": "Elliot Scott",
         "id_movie": 89,
         "title": "Indiana Jones and the Last Crusade",
         "release_date": "1989-05-24",
@@ -5504,7 +5160,6 @@
         "vote_count": 3152
     },
     {
-        "Name": "Elliot Scott",
         "id_movie": 87,
         "title": "Indiana Jones and the Temple of Doom",
         "release_date": "1984-05-23",
@@ -5520,7 +5175,6 @@
         "vote_count": 2781
     },
     {
-        "Name": "John M. Dwyer",
         "id_movie": 280,
         "title": "Terminator 2: Judgment Day",
         "release_date": "1991-07-01",
@@ -5536,7 +5190,6 @@
         "vote_count": 4185
     },
     {
-        "Name": "John M. Dwyer",
         "id_movie": 1091,
         "title": "The Thing",
         "release_date": "1982-06-25",
@@ -5552,7 +5205,6 @@
         "vote_count": 1588
     },
     {
-        "Name": "Rick Heinrichs",
         "id_movie": 58,
         "title": "Pirates of the Caribbean: Dead Man's Chest",
         "release_date": "2006-06-20",
@@ -5568,7 +5220,6 @@
         "vote_count": 5246
     },
     {
-        "Name": "Rick Heinrichs",
         "id_movie": 62213,
         "title": "Dark Shadows",
         "release_date": "2012-05-08",
@@ -5584,7 +5235,6 @@
         "vote_count": 2320
     },
     {
-        "Name": "Peter Landsdown Smith",
         "id_movie": 278,
         "title": "The Shawshank Redemption",
         "release_date": "1994-09-23",
@@ -5600,7 +5250,6 @@
         "vote_count": 8205
     },
     {
-        "Name": "Thomas E. Sanders",
         "id_movie": 197,
         "title": "Braveheart",
         "release_date": "1995-05-24",
@@ -5616,7 +5265,6 @@
         "vote_count": 3336
     },
     {
-        "Name": "Dean Tavoularis",
         "id_movie": 242,
         "title": "The Godfather: Part III",
         "release_date": "1990-12-24",
@@ -5632,7 +5280,6 @@
         "vote_count": 1546
     },
     {
-        "Name": "Dean Tavoularis",
         "id_movie": 240,
         "title": "The Godfather: Part II",
         "release_date": "1974-12-20",
@@ -5648,7 +5295,6 @@
         "vote_count": 3338
     },
     {
-        "Name": "Dean Tavoularis",
         "id_movie": 238,
         "title": "The Godfather",
         "release_date": "1972-03-14",
@@ -5664,7 +5310,6 @@
         "vote_count": 5893
     },
     {
-        "Name": "Robert Guerra",
         "id_movie": 453,
         "title": "A Beautiful Mind",
         "release_date": "2001-12-11",
@@ -5680,7 +5325,6 @@
         "vote_count": 3009
     },
     {
-        "Name": "Dennis Gassner",
         "id_movie": 10764,
         "title": "Quantum of Solace",
         "release_date": "2008-10-30",
@@ -5696,7 +5340,6 @@
         "vote_count": 2965
     },
     {
-        "Name": "Carlo Simi",
         "id_movie": 429,
         "title": "The Good, the Bad and the Ugly",
         "release_date": "1966-12-23",
@@ -5712,7 +5355,6 @@
         "vote_count": 2311
     },
     {
-        "Name": "Ed Verreaux",
         "id_movie": 227156,
         "title": "The Giver",
         "release_date": "2014-08-11",
@@ -5728,7 +5370,6 @@
         "vote_count": 1798
     },
     {
-        "Name": "Roger Christian",
         "id_movie": 348,
         "title": "Alien",
         "release_date": "1979-05-25",
@@ -5744,7 +5385,6 @@
         "vote_count": 4470
     },
     {
-        "Name": "Bo Welch",
         "id_movie": 364,
         "title": "Batman Returns",
         "release_date": "1992-06-19",
@@ -5760,7 +5400,6 @@
         "vote_count": 1673
     },
     {
-        "Name": "Bo Welch",
         "id_movie": 4011,
         "title": "Beetlejuice",
         "release_date": "1988-02-29",
@@ -5776,7 +5415,6 @@
         "vote_count": 1444
     },
     {
-        "Name": "Gene Serdena",
         "id_movie": 152601,
         "title": "Her",
         "release_date": "2013-12-18",
@@ -5792,7 +5430,6 @@
         "vote_count": 4097
     },
     {
-        "Name": "David Brisbin",
         "id_movie": 18239,
         "title": "The Twilight Saga: New Moon",
         "release_date": "2009-03-15",
@@ -5808,7 +5445,6 @@
         "vote_count": 2436
     },
     {
-        "Name": "Terence Marsh",
         "id_movie": 497,
         "title": "The Green Mile",
         "release_date": "1999-12-10",
@@ -5824,7 +5460,6 @@
         "vote_count": 4048
     },
     {
-        "Name": "Robert Gould",
         "id_movie": 563,
         "title": "Starship Troopers",
         "release_date": "1997-11-06",
@@ -5840,7 +5475,6 @@
         "vote_count": 1560
     },
     {
-        "Name": "Wolf Kroeger",
         "id_movie": 1368,
         "title": "First Blood",
         "release_date": "1982-10-22",
@@ -5856,7 +5490,6 @@
         "vote_count": 1488
     },
     {
-        "Name": "Jeff Mann",
         "id_movie": 9679,
         "title": "Gone in Sixty Seconds",
         "release_date": "2000-06-09",
@@ -5872,7 +5505,6 @@
         "vote_count": 1485
     },
     {
-        "Name": "Jeffrey Beecroft",
         "id_movie": 2649,
         "title": "The Game",
         "release_date": "1997-09-12",
@@ -5888,7 +5520,6 @@
         "vote_count": 1506
     },
     {
-        "Name": "Bob Pauley",
         "id_movie": 10193,
         "title": "Toy Story 3",
         "release_date": "2010-06-16",
@@ -5904,7 +5535,6 @@
         "vote_count": 4597
     },
     {
-        "Name": "David Lazan",
         "id_movie": 629,
         "title": "The Usual Suspects",
         "release_date": "1995-07-19",
@@ -5920,7 +5550,6 @@
         "vote_count": 3254
     },
     {
-        "Name": "Joe Alves",
         "id_movie": 840,
         "title": "Close Encounters of the Third Kind",
         "release_date": "1977-11-16",
@@ -5936,7 +5565,6 @@
         "vote_count": 1098
     },
     {
-        "Name": "Hugh Bateup",
         "id_movie": 332567,
         "title": "The Shallows",
         "release_date": "2016-06-24",
@@ -5952,7 +5580,6 @@
         "vote_count": 1567
     },
     {
-        "Name": "Thomas Valentine",
         "id_movie": 75656,
         "title": "Now You See Me",
         "release_date": "2013-05-29",
@@ -5968,7 +5595,6 @@
         "vote_count": 5487
     },
     {
-        "Name": "Alec Hammond",
         "id_movie": 141,
         "title": "Donnie Darko",
         "release_date": "2001-01-18",
@@ -5984,7 +5610,6 @@
         "vote_count": 3452
     },
     {
-        "Name": "James D. Bissell",
         "id_movie": 601,
         "title": "E.T. the Extra-Terrestrial",
         "release_date": "1982-04-03",
@@ -6000,7 +5625,6 @@
         "vote_count": 3269
     },
     {
-        "Name": "Jess Gonchor",
         "id_movie": 350,
         "title": "The Devil Wears Prada",
         "release_date": "2006-06-30",
@@ -6016,7 +5640,6 @@
         "vote_count": 3088
     },
     {
-        "Name": "Barry Chusid",
         "id_movie": 45612,
         "title": "Source Code",
         "release_date": "2011-03-30",
@@ -6032,7 +5655,6 @@
         "vote_count": 2699
     },
     {
-        "Name": "Maher Ahmad",
         "id_movie": 5503,
         "title": "The Fugitive",
         "release_date": "1993-08-06",
@@ -6048,7 +5670,6 @@
         "vote_count": 1220
     },
     {
-        "Name": "Derek R. Hill",
         "id_movie": 117263,
         "title": "Olympus Has Fallen",
         "release_date": "2013-03-20",
@@ -6064,7 +5685,6 @@
         "vote_count": 2981
     },
     {
-        "Name": "J. Dennis Washington",
         "id_movie": 235,
         "title": "Stand by Me",
         "release_date": "1986-08-22",
@@ -6080,7 +5700,6 @@
         "vote_count": 1522
     },
     {
-        "Name": "Jeremy Stanbridge",
         "id_movie": 1954,
         "title": "The Butterfly Effect",
         "release_date": "2004-01-22",
@@ -6096,7 +5715,6 @@
         "vote_count": 2060
     },
     {
-        "Name": "Hugues Tissandier",
         "id_movie": 8681,
         "title": "Taken",
         "release_date": "2008-02-18",
@@ -6112,7 +5730,6 @@
         "vote_count": 4369
     },
     {
-        "Name": "Chris L. Spellman",
         "id_movie": 286565,
         "title": "Paper Towns",
         "release_date": "2015-06-18",
@@ -6128,7 +5745,6 @@
         "vote_count": 1937
     },
     {
-        "Name": "Bill Brzeski",
         "id_movie": 18785,
         "title": "The Hangover",
         "release_date": "2009-06-05",
@@ -6144,7 +5760,6 @@
         "vote_count": 6173
     },
     {
-        "Name": "Yarrow Cheney",
         "id_movie": 93456,
         "title": "Despicable Me 2",
         "release_date": "2013-06-25",
@@ -6160,7 +5775,6 @@
         "vote_count": 4637
     },
     {
-        "Name": "Yarrow Cheney",
         "id_movie": 20352,
         "title": "Despicable Me",
         "release_date": "2010-07-08",
@@ -6176,7 +5790,6 @@
         "vote_count": 6478
     },
     {
-        "Name": "Chris Sanders",
         "id_movie": 8587,
         "title": "The Lion King",
         "release_date": "1994-06-23",
@@ -6192,7 +5805,6 @@
         "vote_count": 5376
     },
     {
-        "Name": "Rodrigo Blaas",
         "id_movie": 82702,
         "title": "How to Train Your Dragon 2",
         "release_date": "2014-06-12",
@@ -6208,7 +5820,6 @@
         "vote_count": 3106
     },
     {
-        "Name": "Jeremy Woolsey",
         "id_movie": 242512,
         "title": "Ouija",
         "release_date": "2014-10-24",
@@ -6224,7 +5835,6 @@
         "vote_count": 983
     },
     {
-        "Name": "Bruno Delbonnel",
         "id_movie": 194,
         "title": "Am\u00e9lie",
         "release_date": "2001-04-25",
@@ -6240,7 +5850,6 @@
         "vote_count": 3310
     },
     {
-        "Name": "Shawn Brennan",
         "id_movie": 62177,
         "title": "Brave",
         "release_date": "2012-06-21",
@@ -6256,7 +5865,6 @@
         "vote_count": 4641
     },
     {
-        "Name": "Bill Pope",
         "id_movie": 107985,
         "title": "The World's End",
         "release_date": "2013-07-18",
@@ -6272,7 +5880,6 @@
         "vote_count": 1778
     },
     {
-        "Name": "Lula Carvalho",
         "id_movie": 98566,
         "title": "Teenage Mutant Ninja Turtles",
         "release_date": "2014-08-07",
@@ -6288,7 +5895,6 @@
         "vote_count": 2636
     },
     {
-        "Name": "Amir Mokri",
         "id_movie": 257344,
         "title": "Pixels",
         "release_date": "2015-07-16",
@@ -6304,7 +5910,6 @@
         "vote_count": 2513
     },
     {
-        "Name": "Niko Tavernise",
         "id_movie": 328387,
         "title": "Nerve",
         "release_date": "2016-07-27",
@@ -6320,7 +5925,6 @@
         "vote_count": 2181
     },
     {
-        "Name": "Jacques Jouffret",
         "id_movie": 316727,
         "title": "The Purge: Election Year",
         "release_date": "2016-06-29",
@@ -6336,7 +5940,6 @@
         "vote_count": 1306
     },
     {
-        "Name": "Kevin D. Hewitt",
         "id_movie": 270303,
         "title": "It Follows",
         "release_date": "2015-02-04",
@@ -6352,7 +5955,6 @@
         "vote_count": 1832
     },
     {
-        "Name": "Robin Buerki",
         "id_movie": 4951,
         "title": "10 Things I Hate About You",
         "release_date": "1999-03-30",
@@ -6368,7 +5970,6 @@
         "vote_count": 1701
     },
     {
-        "Name": "Mike Valentine",
         "id_movie": 627,
         "title": "Trainspotting",
         "release_date": "1996-02-23",
@@ -6384,7 +5985,6 @@
         "vote_count": 2655
     },
     {
-        "Name": "Dick Colean",
         "id_movie": 510,
         "title": "One Flew Over the Cuckoo's Nest",
         "release_date": "1975-11-18",
@@ -6400,7 +6000,6 @@
         "vote_count": 2919
     },
     {
-        "Name": "Gene Kearney",
         "id_movie": 1366,
         "title": "Rocky",
         "release_date": "1976-11-21",
@@ -6416,7 +6015,6 @@
         "vote_count": 1791
     },
     {
-        "Name": "Sharon Calahan",
         "id_movie": 9487,
         "title": "A Bug's Life",
         "release_date": "1998-11-25",
@@ -6432,7 +6030,6 @@
         "vote_count": 2303
     },
     {
-        "Name": "Don Burgess",
         "id_movie": 8358,
         "title": "Cast Away",
         "release_date": "2000-12-22",
@@ -6448,7 +6045,6 @@
         "vote_count": 3218
     },
     {
-        "Name": "Phedon Papamichael",
         "id_movie": 290595,
         "title": "The Huntsman: Winter's War",
         "release_date": "2016-04-06",
@@ -6464,7 +6060,6 @@
         "vote_count": 1523
     },
     {
-        "Name": "Janusz Kami\u0144ski",
         "id_movie": 217,
         "title": "Indiana Jones and the Kingdom of the Crystal Skull",
         "release_date": "2008-05-21",
@@ -6480,7 +6075,6 @@
         "vote_count": 2495
     },
     {
-        "Name": "Tony Kaye",
         "id_movie": 73,
         "title": "American History X",
         "release_date": "1998-10-30",
@@ -6496,7 +6090,6 @@
         "vote_count": 3016
     },
     {
-        "Name": "Michael Chapman",
         "id_movie": 103,
         "title": "Taxi Driver",
         "release_date": "1976-02-07",
@@ -6512,7 +6105,6 @@
         "vote_count": 2535
     },
     {
-        "Name": "Bill Butler",
         "id_movie": 621,
         "title": "Grease",
         "release_date": "1978-07-07",
@@ -6528,7 +6120,6 @@
         "vote_count": 1581
     },
     {
-        "Name": "John Toll",
         "id_movie": 616,
         "title": "The Last Samurai",
         "release_date": "2003-12-05",
@@ -6544,7 +6135,6 @@
         "vote_count": 1895
     },
     {
-        "Name": "Matthew F. Leonetti",
         "id_movie": 100042,
         "title": "Dumb and Dumber To",
         "release_date": "2014-11-12",
@@ -6560,7 +6150,6 @@
         "vote_count": 1127
     },
     {
-        "Name": "John Seale",
         "id_movie": 207,
         "title": "Dead Poets Society",
         "release_date": "1989-06-02",
@@ -6576,7 +6165,6 @@
         "vote_count": 2705
     },
     {
-        "Name": "Adam Greenberg",
         "id_movie": 218,
         "title": "The Terminator",
         "release_date": "1984-10-26",
@@ -6592,7 +6180,6 @@
         "vote_count": 4128
     },
     {
-        "Name": "Guillermo Navarro",
         "id_movie": 11253,
         "title": "Hellboy II: The Golden Army",
         "release_date": "2008-07-11",
@@ -6608,7 +6195,6 @@
         "vote_count": 1527
     },
     {
-        "Name": "Dean Semler",
         "id_movie": 102651,
         "title": "Maleficent",
         "release_date": "2014-05-28",
@@ -6624,7 +6210,6 @@
         "vote_count": 4496
     },
     {
-        "Name": "Matthew Libatique",
         "id_movie": 1726,
         "title": "Iron Man",
         "release_date": "2008-04-30",
@@ -6640,7 +6225,6 @@
         "vote_count": 8776
     },
     {
-        "Name": "Matthew Libatique",
         "id_movie": 277216,
         "title": "Straight Outta Compton",
         "release_date": "2015-08-13",
@@ -6656,7 +6240,6 @@
         "vote_count": 1355
     },
     {
-        "Name": "Julio Macat",
         "id_movie": 772,
         "title": "Home Alone 2: Lost in New York",
         "release_date": "1992-11-19",
@@ -6672,7 +6255,6 @@
         "vote_count": 2395
     },
     {
-        "Name": "Chris Hanley",
         "id_movie": 122081,
         "title": "Spring Breakers",
         "release_date": "2013-01-24",
@@ -6688,7 +6270,6 @@
         "vote_count": 1551
     },
     {
-        "Name": "John R. Leonetti",
         "id_movie": 854,
         "title": "The Mask",
         "release_date": "1994-07-29",
@@ -6704,7 +6285,6 @@
         "vote_count": 2472
     },
     {
-        "Name": "John R. Leonetti",
         "id_movie": 49018,
         "title": "Insidious",
         "release_date": "2010-09-13",
@@ -6720,7 +6300,6 @@
         "vote_count": 1737
     },
     {
-        "Name": "Barry Peterson",
         "id_movie": 187017,
         "title": "22 Jump Street",
         "release_date": "2014-06-05",
@@ -6736,7 +6315,6 @@
         "vote_count": 3319
     },
     {
-        "Name": "Toni-Ann Walker",
         "id_movie": 111,
         "title": "Scarface",
         "release_date": "1983-12-08",
@@ -6752,7 +6330,6 @@
         "vote_count": 2948
     },
     {
-        "Name": "Melanie Deforrest",
         "id_movie": 152532,
         "title": "Dallas Buyers Club",
         "release_date": "2013-09-07",
@@ -6768,7 +6345,6 @@
         "vote_count": 2886
     },
     {
-        "Name": "Leesa Evans",
         "id_movie": 325133,
         "title": "Neighbors 2: Sorority Rising",
         "release_date": "2016-05-04",
@@ -6784,7 +6360,6 @@
         "vote_count": 1462
     },
     {
-        "Name": "Tim Gomillion",
         "id_movie": 425,
         "title": "Ice Age",
         "release_date": "2002-03-10",
@@ -6800,7 +6375,6 @@
         "vote_count": 3857
     },
     {
-        "Name": "Stephan Franck",
         "id_movie": 10386,
         "title": "The Iron Giant",
         "release_date": "1999-08-06",
@@ -6816,7 +6390,6 @@
         "vote_count": 1436
     },
     {
-        "Name": "Jeannine Berger",
         "id_movie": 950,
         "title": "Ice Age: The Meltdown",
         "release_date": "2006-03-23",
@@ -6832,7 +6405,6 @@
         "vote_count": 2951
     },
     {
-        "Name": "Jeannine Berger",
         "id_movie": 211672,
         "title": "Minions",
         "release_date": "2015-06-17",
@@ -6848,7 +6420,6 @@
         "vote_count": 4571
     },
     {
-        "Name": "Claire Williams",
         "id_movie": 49444,
         "title": "Kung Fu Panda 2",
         "release_date": "2011-05-25",
@@ -6864,7 +6435,6 @@
         "vote_count": 1880
     },
     {
-        "Name": "Genndy Tartakovsky",
         "id_movie": 76492,
         "title": "Hotel Transylvania",
         "release_date": "2012-09-20",
@@ -6880,7 +6450,6 @@
         "vote_count": 2566
     },
     {
-        "Name": "Anthony Di Ninno",
         "id_movie": 223702,
         "title": "Sausage Party",
         "release_date": "2016-07-11",
@@ -6896,7 +6465,6 @@
         "vote_count": 2238
     },
     {
-        "Name": "Elizabeth Banks",
         "id_movie": 254470,
         "title": "Pitch Perfect 2",
         "release_date": "2015-05-07",
@@ -6912,7 +6480,6 @@
         "vote_count": 1940
     },
     {
-        "Name": "Jennifer Yuh Nelson",
         "id_movie": 140300,
         "title": "Kung Fu Panda 3",
         "release_date": "2016-01-23",
@@ -6928,7 +6495,6 @@
         "vote_count": 1603
     },
     {
-        "Name": "Terry Gilliam",
         "id_movie": 762,
         "title": "Monty Python and the Holy Grail",
         "release_date": "1975-03-13",
@@ -6944,7 +6510,6 @@
         "vote_count": 1708
     },
     {
-        "Name": "Alfred Hitchcock",
         "id_movie": 539,
         "title": "Psycho",
         "release_date": "1960-06-16",
@@ -6960,7 +6525,6 @@
         "vote_count": 2320
     },
     {
-        "Name": "Carlos Saldanha",
         "id_movie": 8355,
         "title": "Ice Age: Dawn of the Dinosaurs",
         "release_date": "2009-06-29",
@@ -6976,7 +6540,6 @@
         "vote_count": 2271
     },
     {
-        "Name": "Eric Brevig",
         "id_movie": 88751,
         "title": "Journey to the Center of the Earth",
         "release_date": "2008-07-10",
@@ -6992,7 +6555,6 @@
         "vote_count": 1309
     },
     {
-        "Name": "Park Chan-wook",
         "id_movie": 670,
         "title": "Oldboy",
         "release_date": "2003-01-01",
@@ -7008,7 +6570,6 @@
         "vote_count": 1945
     },
     {
-        "Name": "Tom McGrath",
         "id_movie": 38055,
         "title": "Megamind",
         "release_date": "2010-10-28",
@@ -7024,7 +6585,6 @@
         "vote_count": 1918
     },
     {
-        "Name": "Peter Sohn",
         "id_movie": 105864,
         "title": "The Good Dinosaur",
         "release_date": "2015-11-14",
@@ -7040,7 +6600,6 @@
         "vote_count": 1736
     },
     {
-        "Name": "Simon J. Smith",
         "id_movie": 270946,
         "title": "Penguins of Madagascar",
         "release_date": "2014-11-22",
@@ -7056,7 +6615,6 @@
         "vote_count": 1346
     },
     {
-        "Name": "Nicholas Stoller",
         "id_movie": 9870,
         "title": "Forgetting Sarah Marshall",
         "release_date": "2008-04-17",
@@ -7072,7 +6630,6 @@
         "vote_count": 1172
     },
     {
-        "Name": "Todd Phillips",
         "id_movie": 45243,
         "title": "The Hangover Part II",
         "release_date": "2011-05-25",
@@ -7088,7 +6645,6 @@
         "vote_count": 3739
     },
     {
-        "Name": "Mike Thurmeier",
         "id_movie": 57800,
         "title": "Ice Age: Continental Drift",
         "release_date": "2012-06-26",
@@ -7104,7 +6660,6 @@
         "vote_count": 2672
     },
     {
-        "Name": "Justin Hammond",
         "id_movie": 1735,
         "title": "The Mummy: Tomb of the Dragon Emperor",
         "release_date": "2008-07-01",
@@ -7120,7 +6675,6 @@
         "vote_count": 1387
     },
     {
-        "Name": "Rhett Reese",
         "id_movie": 19908,
         "title": "Zombieland",
         "release_date": "2009-10-07",
@@ -7136,7 +6690,6 @@
         "vote_count": 3550
     },
     {
-        "Name": "Barbara Broccoli",
         "id_movie": 36669,
         "title": "Die Another Day",
         "release_date": "2002-11-17",
@@ -7152,7 +6705,6 @@
         "vote_count": 1092
     },
     {
-        "Name": "Marcia Ross",
         "id_movie": 7453,
         "title": "The Hitchhiker's Guide to the Galaxy",
         "release_date": "2005-01-15",
@@ -7168,7 +6720,6 @@
         "vote_count": 1315
     },
     {
-        "Name": "Walt Disney",
         "id_movie": 433,
         "title": "Mary Poppins",
         "release_date": "1964-08-27",
@@ -7184,7 +6735,6 @@
         "vote_count": 1183
     },
     {
-        "Name": "Henry Fonda",
         "id_movie": 389,
         "title": "12 Angry Men",
         "release_date": "1957-03-25",
@@ -7200,7 +6750,6 @@
         "vote_count": 2078
     },
     {
-        "Name": "Stephenie Meyer",
         "id_movie": 8966,
         "title": "Twilight",
         "release_date": "2008-11-20",
@@ -7216,7 +6765,6 @@
         "vote_count": 3561
     },
     {
-        "Name": "Noel Langley",
         "id_movie": 630,
         "title": "The Wizard of Oz",
         "release_date": "1939-08-15",
