@@ -732,23 +732,6 @@ function showMovieInfo(d) {
         newRow.append("td").text(row2);
     }
 
-    function addCrewLine(c) {
-        let l = crewTable.append("tr").append("td");
-        let crew = crewByID(c);
-        l.text(crew.name);
-        l.on("click", function () {
-            alert(crew.name);
-        });
-    }
-    function addMovieLine(c) {
-        let l = movieTable.append("tr").append("td");
-        let m = movieByID(c);
-        l.text(m.title);
-        l.on("click", function () {
-            alert(m.title);
-        });
-    }
-
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
     let div = sidepanel.append("div");
@@ -766,17 +749,39 @@ function showMovieInfo(d) {
     sidepanel.append("hr");
     div = sidepanel.append("div");
 
-    let margin = {top:30, right: 10, bottom: 10, left: 10};
-    let width = parseInt(div.style("width")) - margin.left - margin.right;
-    let height = parseInt(d3.select(".side-panel").style("height"))*2/3 - margin.top - margin.bottom;
     let tmp = getLinksForMovie(d);
     let crewIDs = tmp.crew;
     let moviesIDs = tmp.movies;
     let links = tmp.links;
+
+
+    let margin = {top:30, right: 10, bottom: 10, left: 10};
+    let width = parseInt(div.style("width")) - margin.left - margin.right;
+    let height = parseInt(d3.select(".side-panel").style("height"))*2/3 - margin.top - margin.bottom;
+
+    let min_height = Math.max(crewIDs.length, moviesIDs.length)*16; //text = 12, 4 margin
+    if(height < min_height) {
+        height = min_height;
+    }
+
+
     let crewScale = d3.scaleLinear().range([0, height]).domain([0, crewIDs.length]);
-    let crewX = width/6;
-    let movieX = width*5/6;
+    let crewX = width/4;
+    let movieX = width*3/4;
     let movieScale = d3.scaleLinear().range([0, height]).domain([0, moviesIDs.length]);
+    let crew = [];
+    let movies = [];
+    crewIDs.forEach(function(d, i) {
+        crew.push({id: d, x: crewX, y: crewScale(i)});
+    });
+    moviesIDs.forEach(function(d, i) {
+        movies.push({id: d, x: movieX, y: movieScale(i)});
+    });
+    let graphLinks = [];
+    links.forEach(function(link) {
+        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: 1};
+        graphLinks.push(l);
+    });
 
     let svgcontainer = div.append("svg")
     .attr("class", "background")
@@ -794,23 +799,8 @@ function showMovieInfo(d) {
     .attr("height", height)
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-
-    let crew = [];
-    let movies = [];
-    crewIDs.forEach(function(d, i) {
-        crew.push({id: d, x: crewX, y: crewScale(i)});
-    });
-    moviesIDs.forEach(function(d, i) {
-        movies.push({id: d, x: movieX, y: movieScale(i)});
-    });
-    let graphLinks = [];
-    links.forEach(function(link) {
-        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: 1};
-        graphLinks.push(l);
-    });
-    console.log(graphLinks);
     let drawnLinks = svg.append("g")
-    .attr("class", "links")
+    .attr("class", "link--movieViz")
     .selectAll("link")
     .data(graphLinks)
     .enter().append("line")
@@ -825,9 +815,9 @@ function showMovieInfo(d) {
     .enter().append("text")
     .attr("text-anchor", "end")
     .attr("x", function (d) { return d.x; })
-    .attr("y", function (d) { return d.y; })
+    .attr("y", function (d) { return d.y+6; })
     .attr("class", "text_default")
-    .text(function(d) {return d.id;});
+    .text(function(d) {return crewByID(d.id).name;});
 
     let moviesName = svg.append("g")
     .selectAll("text")
@@ -835,10 +825,10 @@ function showMovieInfo(d) {
     .enter().append("text")
     .attr("text-anchor", "start")
     .attr("x", function (d) { return d.x; })
-    .attr("y", function (d) { return d.y; })
+    .attr("y", function (d) { return d.y+6; })
     .attr("class", "text_default")
-    .text(function(d) {return d.id;});
+    .text(function(d) {return movieByID(d.id).title;});
 
+    div.style("height", parseInt(d3.select(".side-panel").style("height")) * 2/3 + 'px');
     div.style("overflow-y", "scroll");
-
 }
