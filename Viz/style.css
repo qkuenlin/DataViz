@@ -41,6 +41,13 @@
     fill: steelblue;
 }
 
+.text_default {
+    fill: #ffffff;
+    stroke: none;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
 .side-panel {
     width: 33%;
     max-width: 33%;

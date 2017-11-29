@@ -479,6 +479,27 @@ function dragended(d) {
 }
 }
 
+
+function getLinksForMovie(movie) {
+    let crew = new Set();
+    let related_movies = new Set();
+    let linksCrewMovie = []
+
+    filtered_people_movies_links.forEach( function(link){
+        if (movie.id_movie == link.id_movie) {
+            crew.add(link.id_person);
+        }
+    });
+    filtered_people_movies_links.forEach(function (link) {
+        if (link.id_movie != movie.id_movie && crew.has(link.id_person)) {
+            related_movies.add(link.id_movie);
+            linksCrewMovie.push(link);
+        }
+    });
+    return {crew: Array.from(crew), movies: Array.from(related_movies), links: linksCrewMovie};
+}
+
+
 function showMovieInfo(d) {
     function addRow(table, row1, row2) {
         let newRow = table.append("tr");
@@ -519,20 +540,99 @@ function showMovieInfo(d) {
     div.style("overflow-y", "scroll");
     sidepanel.append("hr");
     div = sidepanel.append("div");
-    table = div.append("table").classed("large", true);;
-    let headerRow = table.append("tr");
-    headerRow.append("th").text("Crew");
-    headerRow.append("th").text("Related movies");
-    let crewMovie = getCrewAndMovieLinks(d);
-    let row = table.append("tr");
-    let crewTable = row.append("td").append("table").classed("large", true);;
-    let movieTable = row.append("td").append("table").classed("large", true);;
-    crewMovie.crew.forEach(function(c) {
-        addCrewLine(c);
+
+    let margin = {top:30, right: 10, bottom: 10, left: 10};
+    let width = parseInt(div.style("width")) - margin.left - margin.right;
+    let height = parseInt(d3.select(".side-panel").style("height"))*2/3 - margin.top - margin.bottom;
+    let tmp = getLinksForMovie(d);
+    let crewIDs = tmp.crew;
+    let moviesIDs = tmp.movies;
+    let links = tmp.links;
+    let crewScale = d3.scaleLinear().range([0, height]).domain([0, crewIDs.length]);
+    let crewX = width/6;
+    let movieX = width*5/6;
+    let movieScale = d3.scaleLinear().range([0, height]).domain([0, moviesIDs.length]);
+
+    let svgcontainer = div.append("svg")
+    .attr("class", "background")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+
+    let background = svgcontainer.append("g");
+    background.append("rect")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "background");
+
+    let svg = svgcontainer.append("g")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    let crew = [];
+    let movies = [];
+    crewIDs.forEach(function(d, i) {
+        crew.push({id: d, x: crewX, y: crewScale(i)});
     });
-    crewMovie.links.forEach(function(l) {
-        addMovieLine(l);
+    console.log(crew);
+    moviesIDs.forEach(function(d, i) {
+        movies.push({id: d, x: movieX, y: movieScale(i)});
     });
-    div.style("height", parseInt(d3.select(".side-panel").style("height"))*2/3 + 'px');
+
+    let graphLinks = [];
+    links.forEach(function(link) {
+        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: 1};
+        graphLinks.push(l);
+    });
+    console.log(graphLinks);
+    let drawnLinks = svg.append("g")
+    .attr("class", "links")
+    .selectAll("link")
+    .data(graphLinks)
+    .enter().append("line")
+    //.attr("d", line)
+    .attr("x1", function (d) { return d.source.x; })
+    .attr("y1", function (d) { return d.source.y; })
+    .attr("x2", function (d) { return d.target.x; })
+    .attr("y2", function (d) { return d.target.y; });
+
+    let crewNames = svg.append("g")
+    .selectAll("text")
+    .data(crew)
+    .enter().append("text")
+    .attr("text-anchor", "end")
+    .attr("x", function (d) { return d.x; })
+    .attr("y", function (d) { return d.y; })
+    .attr("class", "text_default")
+    .text(function(d) {return d.id;});
+
+    let moviesName = svg.append("g")
+    .selectAll("text")
+    .data(movies)
+    .enter().append("text")
+    .attr("text-anchor", "start")
+    .attr("x", function (d) { return d.x; })
+    .attr("y", function (d) { return d.y; })
+    .attr("class", "text_default")
+    .text(function(d) {return d.id;});
+
     div.style("overflow-y", "scroll");
+
+    // table = div.append("table").classed("large", true);;
+    // let headerRow = table.append("tr");
+    // headerRow.append("th").text("Crew");
+    // headerRow.append("th").text("Related movies");
+    // let crewMovie = getCrewAndMovieLinks(d);
+    // let row = table.append("tr");
+    // let crewTable = row.append("td").append("table").classed("large", true);;
+    // let movieTable = row.append("td").append("table").classed("large", true);;
+    // crewMovie.crew.forEach(function(c) {
+    //     addCrewLine(c);
+    // });
+    // crewMovie.links.forEach(function(l) {
+    //     addMovieLine(l);
+    // });
+    // div.style("height", parseInt(d3.select(".side-panel").style("height"))*2/3 + 'px');
+    // div.style("overflow-y", "scroll");
 }
