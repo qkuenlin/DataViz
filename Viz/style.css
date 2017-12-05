@@ -68,11 +68,14 @@
 }
 
 .side-panel {
-    width: 33%;
-    max-width: 33%;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
     vertical-align: top;
     display: inline-block;
     padding-right: 5px;
+    padding-left: 5px;
 }
 
 .side-links {
@@ -92,6 +95,7 @@ div.tooltip {
 
 .svg-container {
     display: inline-block;
+    max-width: 100%;
     vertical-align: top;
     overflow: hidden;
 }
@@ -124,7 +128,7 @@ table, th, td {
 
 .sliderText {
     text-align: center;
-    height: 25px;
+    /*height: 25px;*/
 }
 
 .dropdown {
@@ -148,14 +152,14 @@ footer{
 
 #filters {
     display: flex;
-    height: 60px;
+    /*height: 60px;*/
     margin-bottom: 20px;
     font-family: Tahoma;
     font-size: 12px;
 }
 
 #DepartementOptions {
-    width: 100px;
+    width: 200px;
 }
 
 #filterButton {
@@ -166,4 +170,25 @@ span.minussign {
     font-size: 12px;
     font-family: Tahoma;
     padding: 0px 10px;
+}
+
+/* scroll bar*/
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0);
+	border-radius: 10px;
+	background-color: #343a40;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #343a40;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
 }

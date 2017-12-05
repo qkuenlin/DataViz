@@ -12,6 +12,7 @@ if __name__ == '__main__':
     print(genre_dico)
 
 
+
     # lecture du fichier sous for de dico
     with open('Data/movie.csv', "r") as csvfile:
 

@@ -7,28 +7,33 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="slider/codebase/fonts/font_roboto/roboto.css" />
     <link rel="stylesheet" type="text/css" href="slider/codebase/dhtmlxslider.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
+
     <script src="slider/codebase/dhtmlxslider.js"></script>
     <script src="edgeBundle/d3-ForceEdgeBundling.js"></script>
+    <script src="bootstrap/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script src="d3.min.js"></script>
 </head>
-<body>
+<body class="bg-dark text-white">
     <header>
-        <h1>Ultimate Movie Data Viz</h1>
+        <h1 class="text-center">Ultimate Movie Data Viz</h1>
     </header>
     <div class="wrapper">
-        <div class="side-panel">
+        <div class="row">
+            <div class="col-4">
+                <div class="side-panel">
         </div>
-        <div class="svg-container">
-            <div id="filters">
-                <table width="200" cellspacing="0" cellpadding="0" border="0" class="DropDownMenu">
-
-                    <tr>
-                        <td class="DropDownText">Link by Department</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select class="dropdown" id="DepartementOptions">
+            </div>
+            <div class="col-8">
+                <div class="svg-container">
+                    <div id="filters" class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                              <label for="DepartementOptions">Select list:</label>
+                              <select class="form-control" id="DepartementOptions">
                                 <option value="All" selected="selected">All</option>
                                 <option value="Cast">Actor</option>
                                 <option value="Art">Art</option>
@@ -41,48 +46,39 @@
                                 <option value="Sound">Sound</option>
                                 <option value="Visual Effects">Visual Effects</option>
                                 <option value="Writing">Writing</option>
-                            </select>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row text-center">
+                                <p class="sliderText">Year</p>
+                            </div>
+                            <div class="row" id="sliderYear"></div>
+                            <div class="row sliderText text-center">
+                                <span id="sliderYearLink"></span>
+                                <span class="minussign">-</span>
+                                <span id="sliderYearLink2"></span>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="row">
+                                <p class="sliderText">Reviews</p>
+                            </div>
+                            <div class="row" id="sliderReview"></div>
+                            <div class="row sliderText">
+                                <span id="sliderReviewLink"></span>
+                                <span class="minussign">-</span>
+                                <span id="sliderReviewLink2"></span>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <button id="filterButton" type="button" onclick="filterAll()" class="btn btn-info">Filter</button>
+                        </div>
+                    </div>
 
-                        </td>
-                    </tr>
-                </table>
-
-                <table width="200" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
-                    <tr>
-                        <td class="sliderText">Year</td>
-                    </tr>
-                    <tr>
-                        <td><div id="sliderYear"></div></td>
-                    </tr>
-                    <tr class="sliderText">
-                        <td>
-                            <span id="sliderYearLink"></span>
-                            <span class="minussign">-</span>
-                            <span id="sliderYearLink2"></span>
-                        </td>
-                    </tr>
-                </table>
-
-                <table width="100" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
-                    <tr>
-                        <td class="sliderText">Reviews</td>
-                    </tr>
-                    <tr>
-                        <td><div id="sliderReview"></div></td>
-                    </tr>
-                    <tr class="sliderText">
-                        <td>
-                            <span id="sliderReviewLink"></span>
-                            <span class="minussign">-</span>
-                            <span id="sliderReviewLink2"></span>
-                        </td>
-                    </tr>
-                </table>
-
-                <button id="filterButton" type="button" onclick="filterAll()">Filter</button>
+                    <svg class="svg-content" width="960" height="700" viewbox="0 0 960 700" preserveAspectRatio="xMinYMin meet"></svg>
+                </div>
             </div>
-
-            <svg class="svg-content" width="960" height="700" viewbox="0 0 960 700" preserveAspectRatio="xMinYMin meet"></svg>
         </div>
     </div>
 
