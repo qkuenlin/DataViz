@@ -8,7 +8,7 @@
 [V] side-panel
 	click on film to go there
 	autre graphs en dessous
+	highlight link when mouse over it
+	close side panel when exiting second view and put back general information
 
 [] search by keywords, movie title or person
-
-filter doesn't filter side panel
