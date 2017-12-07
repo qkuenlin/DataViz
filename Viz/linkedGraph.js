@@ -44,6 +44,10 @@ let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
 let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
+let tooltipDiv = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 function UISetup() {
     sliderYear = new dhtmlXSlider({
         parent: "sliderYear",
@@ -581,6 +585,7 @@ function drawCircularViz(update) {
     }
 
     function resetView() {
+        tooltipDiv.style("opacity", 0);
         link.attr("class", "link");
 
         node.attr("class", "node")
@@ -590,6 +595,7 @@ function drawCircularViz(update) {
     }
 
     function click(n) {
+        tooltipDiv.style("opacity", 0);
         d = n.data;
         showMovieInfo(d);
         drawMovieViz(new Set().add(d));
@@ -687,7 +693,7 @@ function drawMovieViz(_movies, switchAxis, reStartSimulation) {
     .attr("width", width)
     .attr("height", height)
     .attr("class", "background")
-    .on("click", function () { resetView(); });
+    .on("click", function () { tooltipDiv.style("opacity", 0);;resetView(); });
 
     simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
@@ -1131,9 +1137,6 @@ function showMovieInfo(d) {
         graphLinks.push(l);
     });
 
-    let tooltipDiv = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
 
     let svgcontainer = div.append("svg")
     .attr("class", "background")
