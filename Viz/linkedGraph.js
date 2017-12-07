@@ -44,6 +44,7 @@ let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
 let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
+
 let tooltipDiv = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -84,8 +85,10 @@ function UISetup() {
 function filterAll() {
     mapMovie_filtered = filterReviews(sliderReview.getValue(), filterYears(sliderYear.getValue(), mapMovie));
     mapCrewMovie_filtered = filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'), linksForFilteredMovies());
-
-    if (currentViz == 2) drawMovieViz(movieVizSet, true);
+    if (currentViz == 2)  {
+        drawMovieViz(movieVizSet, true);
+        showMovieInfo(currentMovie);
+    }
     else drawCircularViz();
 }
 
@@ -511,7 +514,7 @@ function drawCircularViz(update) {
     document.getElementById('MovieVizOptions').style.display = "none";
     document.getElementById('CircularVizOptions').style.display = "inline";
 
-    //if (update) return updateCircularViz(); 
+    //if (update) return updateCircularViz();
 
     currentViz = 1;
 
@@ -994,7 +997,7 @@ function packageHierarchy(movies) {
 
 
 function getLinksForMovie(movie) {
-    let crew = mapMovieCrew.get(movie.id_movie);
+    let crew = new Set(mapMovieCrew.get(movie.id_movie));
     let related_movies = new Set();
     let linksCrewMovie = [];
     crew.forEach(function (c) {
@@ -1005,7 +1008,7 @@ function getLinksForMovie(movie) {
                 if (m.id_movie != movie.id_movie) {
                     add = true;
                     related_movies.add(m.id_movie);
-                    let link = m;
+                    let link = Object.assign({}, m);
                     link.id_person = c;
                     linksCrewMovie.push(link);
                 }
@@ -1032,7 +1035,10 @@ function departmentColor(departmentName) {
     return color;
 }
 
+
+let currentMovie;
 function showMovieInfo(d) {
+    currentMovie = d;
     function addRow(table, row1, row2) {
         let newRow = table.append("tr");
         newRow.append("td").text(row1);
