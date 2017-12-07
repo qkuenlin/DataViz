@@ -94,6 +94,23 @@ function AxisChange() {
     drawMovieViz(movieVizSet, true);
 }
 
+function customAxisChange() {
+    if (document.getElementById("CustomAxisSwitch").checked) {
+        document.getElementById('CustomAxisSelector').style.display = "inline";
+        AxisChange();
+    }
+    else {
+        document.getElementById('CustomAxisSelector').style.display = "none";
+        simulation
+    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
+        .force("posX", null).force("posY", null);
+
+    }
+}
+
 //load all json, set loaded to true. If add new json, need to do another callback layer
 function loadFiles() {
     d3.json("../movie.json", function (error, data) {
@@ -115,6 +132,7 @@ function loadFiles() {
                 UISetup();
                 displayDBInfo();
                 ClusterType = d3.select('#ClusterOptions').property('value');
+                document.getElementById('CustomAxisSelector').style.display = "none";
                 filterAll();
             })
         });
@@ -486,6 +504,9 @@ function drawCircularViz(update) {
         return;
     }
 
+    document.getElementById('MovieVizOptions').style.display = "none";
+    document.getElementById('CircularVizOptions').style.display = "inline";
+
     //if (update) return updateCircularViz(); 
 
     currentViz = 1;
@@ -636,13 +657,23 @@ function drawCircularViz(update) {
 
 let simulation_running;
 let graph;
+let simulation;
 
-function drawMovieViz(_movies, switchAxis) {
+function drawMovieViz(_movies, switchAxis, reStartSimulation) {
     if (!loaded) {
         return;
     }
 
-    if (switchAxis) return switchMoveVizMode();
+    document.getElementById('CircularVizOptions').style.display = "none";
+    document.getElementById('MovieVizOptions').style.display = "inline";
+
+    if (reStartSimulation) {
+        simulation_running = true;
+        return;
+    }
+    else if (switchAxis) {
+        return switchMoveVizMode();
+    }
 
     currentViz = 2;
     movieVizSet = _movies
@@ -658,18 +689,13 @@ function drawMovieViz(_movies, switchAxis) {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
-    let simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }))
-    .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height / 2));
+    simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
 
     simulation_running = true;
-    /*
-.force("collision", d3.forceCollide(15))
-.force("link", d3.forceLink())
-.force("charge", d3.forceManyBody().strength(-50))
-.force("center", d3.forceCenter(width / 2, height / 2));
-*/
 
     graph = createGraph(_movies);
 
@@ -688,64 +714,142 @@ function drawMovieViz(_movies, switchAxis) {
             .attr("fill", function (d) { return color(d.vote_average); })
             .on("click", function (d) { click(d); })
             .on("mouseover", mouseovered)
-            .on("mouseout", mouseouted);
+            .on("mouseout", mouseouted)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
 
     node.append("title").text(function (d) { return d.title });
-
 
     simulation.nodes(graph.nodes).on("tick", ticked);
     simulation.force("link").links(graph.links);
 
+    if (document.getElementById("CustomAxisSwitch").checked) {
+        switchMoveVizMode();
+    }
+
     function switchMoveVizMode() {
-        simulation_running = false;
+        simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
+
+        let maxWidth = width * 0.9;
+        let maxHeight = height * 0.9;
+
         let xAxisType = d3.select('#XAxis').property('value');
         let yAxisType = d3.select('#YAxis').property('value');
 
         let xAxis;
         let yAxis;
 
+        let strength = 1;
+
         if (xAxisType == "Year") {
             xAxis = d3.scaleLinear().domain([new Date("1970-1-1"), new Date("2017-12-30")]);
+            /*
             node
-             .each(function (d) { d.x = xAxis(new Date(d.release_date)) * width })
+             .each(function (d) { d.x = xAxis(new Date(d.release_date)) * maxWidth })
+             */
+
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(new Date(d.release_date)) * maxWidth; }).strength(strength))
+
         }
         else if (xAxisType == "Reviews") {
             xAxis = d3.scaleLinear().domain([0, 10]);
-            node
-            .each(function (d) { d.x = xAxis(d.vote_average) * width })
+           /* node
+            .each(function (d) { d.x = xAxis(d.vote_average) * maxWidth })
+            */
+
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.vote_average) * maxWidth; }).strength(strength))
         }
         else if (xAxisType == "Budget") {
-            xAxis = d3.scaleLinear().domain([0, 500000000]);
+            let max = 0;
+            let min = 1000000000000;
+            node.each(function (d) {
+                if (max < d.Budget) max = d.Budget;
+                else if (min > d.Budget) min = d.Budget;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            xAxis = d3.scaleLinear().domain([min, max]);
+            /*
             node
-           .each(function (d) { d.x = xAxis(d.Budget) * width })
+           .each(function (d) { d.x = xAxis(d.Budget) * maxWidth })
+           */
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.Budget) * maxWidth; }).strength(strength))
+
         }
         else if (xAxisType == "Revenue") {
-            xAxis = d3.scaleLinear().domain([0, 2000000000]);
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.revenue) max = d.revenue;
+                else if (min > d.revenue) min = d.revenue;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            xAxis = d3.scaleLinear().domain([min, max]);
+            /*
             node
-           .each(function (d) { d.x = xAxis(d.revenue) * width })
+           .each(function (d) { d.x = xAxis(d.revenue) * maxWidth })
+           */
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.revenue) * maxWidth; }).strength(strength))
+
         }
 
         if (yAxisType == "Year") {
             yAxis = d3.scaleLinear().domain([new Date("1970-1-1"), new Date("2017-12-30")]);
+            /*
             node
-            .each(function (d) { d.y = height - yAxis(new Date(d.release_date)) * height })
+            .each(function (d) { d.y = maxHeight - yAxis(new Date(d.release_date)) * height })
+            */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(new Date(d.release_date)) * maxHeight; }).strength(strength))
+
         }
         else if (yAxisType == "Reviews") {
             yAxis = d3.scaleLinear().domain([0, 10]);
+            /*
             node
-            .each(function (d) { d.y = height - yAxis(d.vote_average) * height })
+            .each(function (d) { d.y = maxHeight - yAxis(d.vote_average) * maxHeight })
+            */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.vote_average) * maxHeight; }).strength(strength))
+
         }
         else if (yAxisType == "Budget") {
-            yAxis = d3.scaleLinear().domain([0, 500000000]);
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.Budget) max = d.Budget;
+                else if (min > d.Budget) min = d.Budget;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            yAxis = d3.scaleLinear().domain([min, max]);
+
+            /*
             node
-          .each(function (d) { d.y = height- yAxis(d.Budget) * height })
+          .each(function (d) { d.y = maxHeight - yAxis(d.Budget) * maxHeight })
+          */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.Budget) * maxHeight; }).strength(strength))
+
         }
         else if (yAxisType == "Revenue") {
-            yAxis = d3.scaleLinear().domain([0, 2000000000]);
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.revenue) max = d.revenue;
+                else if (min > d.revenue) min = d.revenue;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            yAxis = d3.scaleLinear().domain([min, max]);
+            /*
             node
-          .each(function (d) { d.y = height-yAxis(d.revenue) * height })
-        }
+          .each(function (d) { d.y = maxHeight - yAxis(d.revenue) * maxHeight })
+          */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.revenue) * maxHeight; }).strength(strength))
 
+        }
+        /*
         node
             .transition().duration(2000)
             .attr("cx", function (d) { return d.x; })
@@ -757,10 +861,41 @@ function drawMovieViz(_movies, switchAxis) {
            .attr("y1", function (d) { return d.source.y; })
            .attr("x2", function (d) { return d.target.x; })
            .attr("y2", function (d) { return d.target.y; });
+
+    */
+        //xAxis.domain(stats.movie_freq.map(function (d) { return d.year; }));
+        //y.domain([0, d3.max(stats.movie_freq, function (d) { return d.count; })]);
+
+        MovieVizLayer.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xAxis).tickValues(xAxis.domain()));
+
+        //alert("test");
+        
+        g.append("g")
+        .call(d3.axisLeft(yAxis))
+        g.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Film per year");
+
+        alert("quw");
+        /*
+        g.selectAll(".bar")
+        .data(stats.movie_freq)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) { return x(d.year); })
+        .attr("y", function (d) { return y(d.count); })
+        .attr("width", x.bandwidth())
+        .attr("height", function (d) { return height - y(d.count); });
+        */
     }
 
     function ticked() {
-        if (simulation_running) {
             link
                 .attr("x1", function (d) { return d.source.x; })
                 .attr("y1", function (d) { return d.source.y; })
@@ -769,8 +904,26 @@ function drawMovieViz(_movies, switchAxis) {
             node
                 .attr("cx", function (d) { return d.x; })
                 .attr("cy", function (d) { return d.y; });
-        }
+        
     }
+
+    function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+    }
+
+    function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+    }
+
 
     function click(d) {
         if (_movies.has(d)) {
