@@ -1,14 +1,3 @@
-[] Data Structure (js object)
-	() Movie
-	() Actors
-	() Crew
-	() ...
-	() Companies link
-
-[T] Filter DB
-	() single entry actor/crew
-	() ...
-
 [] Data Processing
 	() Linking objects together
 	() Clustering
@@ -20,26 +9,8 @@
 	() Plot linked graph
 	() Left panel with info on selected node
 
-[V] sqlite3 https://www.npmjs.com/package/sqlite3
-
-[Q] Option bar
-	() pie chart genre
-	() general chart (Hierarchical Edge Bundling)
-	()
-
 [V] side-panel
-	general info :
-		() Info sur la DB
-		() Quoi selectionné ?
-		() courbe film par année
-	film specific :
-		() Title
-		() Overview
-		() Popularity
-		() Production companies
-		() Budget
-		() Revenue
-		() runtime
-		() tagline
-		() vote average + count
-		() Crew
+	click on film to go there
+	autre graphs en dessous
+
+[] search by keywords, movie title or person
