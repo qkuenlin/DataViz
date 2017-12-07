@@ -1,7 +1,3 @@
-[] Data Processing
-	() Linking objects together
-	() Clustering
-
 [T] Code book
 
 [Q] Vizualisation
@@ -14,3 +10,5 @@
 	autre graphs en dessous
 
 [] search by keywords, movie title or person
+
+filter doesn't filter side panel
