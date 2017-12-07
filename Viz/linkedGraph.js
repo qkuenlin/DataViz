@@ -7,6 +7,7 @@ radius = diameter / 2,
 innerRadius = radius - 40;
 
 let cluster = d3.cluster().size([360, innerRadius]);
+let ClusterType;
 
 let line = d3.radialLine()
     .curve(d3.curveBundle.beta(0.85))
@@ -91,6 +92,32 @@ function filterAll() {
     else drawCircularViz();
 }
 
+function ClusterChange() {
+    ClusterType = d3.select('#ClusterOptions').property('value');
+    drawCircularViz(true);
+}
+
+function AxisChange() {
+    drawMovieViz(movieVizSet, true);
+}
+
+function customAxisChange() {
+    if (document.getElementById("CustomAxisSwitch").checked) {
+        document.getElementById('CustomAxisSelector').style.display = "inline";
+        AxisChange();
+    }
+    else {
+        document.getElementById('CustomAxisSelector').style.display = "none";
+        simulation
+    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
+        .force("posX", null).force("posY", null);
+
+    }
+}
+
 //load all json, set loaded to true. If add new json, need to do another callback layer
 function loadFiles() {
     d3.json("../movie.json", function (error, data) {
@@ -111,6 +138,8 @@ function loadFiles() {
                 //GetAllDepartmentsAndJobs();
                 UISetup();
                 displayDBInfo();
+                ClusterType = d3.select('#ClusterOptions').property('value');
+                document.getElementById('CustomAxisSelector').style.display = "none";
                 filterAll();
             })
         });
@@ -449,6 +478,7 @@ function createGraph(movies) {
             movieSet.add(m);
         });
     });
+
     /*
     movieSet.forEach(function (movie) {
         let crewAndMovieLinks = getCrewAndMovieLinks(movie);
@@ -474,16 +504,24 @@ d3.select(window).on("resize", function () {
     drawCircularViz();
 })
 
-function drawCircularViz() {
+let link, node;
+
+function drawCircularViz(update) {
     if (!loaded) {
         return;
     }
+
+    document.getElementById('MovieVizOptions').style.display = "none";
+    document.getElementById('CircularVizOptions').style.display = "inline";
+
+    //if (update) return updateCircularViz(); 
 
     currentViz = 1;
 
     width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
     CircularVizLayer.selectAll("*").remove();
     MovieVizLayer.selectAll("*").remove();
+
 
     svg.attr("width", width)
 
@@ -493,19 +531,26 @@ function drawCircularViz() {
     .attr("class", "background")
     .on("click", function () { resetView(); });
 
+    let tooltipDiv = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
     let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
     cluster(root);
 
-    let link = CircularVizLayer.append("g").selectAll("link"),
-    node = CircularVizLayer.append("g").selectAll("nodes");
+    link = CircularVizLayer.append("g").selectAll("link"),
+        node = CircularVizLayer.append("g").selectAll("nodes");
 
     link = link
    .data(getLinks(root.leaves()))
    .enter().append("path")
+     //.transition().duration(2000)
     .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
     .attr("class", "link")
-    .attr("d", line);
+    .attr("d", line)
+    .on("mouseover", mouseoveredLink);
+
 
     node = node
     .data(root.leaves())
@@ -516,14 +561,31 @@ function drawCircularViz() {
     .on("click", function (d) { click(d); })
     .on("mouseover", mouseovered)
     .on("mouseout", mouseouted)
+       // .transition().duration(2000)
     .attr("dy", "0.31em")
     .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
     .attr("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
-    .text(function (d) { return d.data.name; })
+    .text(function (d) { return d.data.name; });
 
+    function updateCircularViz() {
+        link.selectAll("*").remove();
+        let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
-    node.append("title")
-    .text(function (d) { return d.data.title; });
+        cluster(root);
+        link = link
+           .data(getLinks(root.leaves()))
+           .enter().append("path")
+             .transition().duration(2000)
+            .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
+            .attr("class", "link")
+            .attr("d", line)
+            .on("mouseover", mouseoveredLink);
+
+        node.data(root.leaves());
+
+        node.transition().duration(2000)
+            .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+    }
 
     function resetView() {
         tooltipDiv.style("opacity", 0);
@@ -559,6 +621,13 @@ function drawCircularViz() {
     }
 
     function mouseovered(d) {
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", .9);
+        tooltipDiv.html(d.data.title)
+          .style("left", (d3.event.pageX + 10) + "px")
+          .style("top", (d3.event.pageY - 10) + "px");
+
         node.each(function (n) { n.target = n.source = false; });
 
         link.classed("link--highlight", function (l) {
@@ -576,12 +645,43 @@ function drawCircularViz() {
     function mouseouted(d) {
         link.classed("link--highlight", false).classed("link--fade", false);
         node.classed("node--highlight", false).classed("node--fade", false);
+
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 0);
+        tooltipDiv.html(d.data.title)
+    }
+
+
+
+    function mouseoveredLink(d) {
+        node.each(function (n) { n.target = n.source = false; });
+
+        link.classed("link--highlight", function (l) {
+            if (l === d) return l.source.source = true;
+            else if (l === d) return l.target.target = true;
+        })
     }
 }
 
-function drawMovieViz(_movies) {
+let simulation_running;
+let graph;
+let simulation;
+
+function drawMovieViz(_movies, switchAxis, reStartSimulation) {
     if (!loaded) {
         return;
+    }
+
+    document.getElementById('CircularVizOptions').style.display = "none";
+    document.getElementById('MovieVizOptions').style.display = "inline";
+
+    if (reStartSimulation) {
+        simulation_running = true;
+        return;
+    }
+    else if (switchAxis) {
+        return switchMoveVizMode();
     }
 
     currentViz = 2;
@@ -598,46 +698,241 @@ function drawMovieViz(_movies) {
     .attr("class", "background")
     .on("click", function () { tooltipDiv.style("opacity", 0);;resetView(); });
 
-    let simulation = d3.forceSimulation()
-    .force("collision", d3.forceCollide(15))
-    .force("link", d3.forceLink())
-    .force("charge", d3.forceManyBody().strength(-50))
-    .force("center", d3.forceCenter(width / 2, height / 2));
+    simulation = d3.forceSimulation()
+    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
 
-    let graph = createGraph(_movies);
+    simulation_running = true;
 
-    let link = MovieVizLayer.append("g")
+    graph = createGraph(_movies);
+
+    link = MovieVizLayer.append("g")
         .attr("class", "link--movieViz")
         .selectAll("line")
         .data(graph.links)
         .enter().append("line");
 
-    let node = MovieVizLayer.append("g")
+    node = MovieVizLayer.append("g")
         .attr("class", "node")
         .selectAll("circle")
         .data(graph.nodes)
             .enter().append("circle")
             .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
             .attr("fill", function (d) { return color(d.vote_average); })
-            .on("click", function (d) { click(d); });
+            .on("click", function (d) { click(d); })
+            .on("mouseover", mouseovered)
+            .on("mouseout", mouseouted)
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
 
     node.append("title").text(function (d) { return d.title });
-
 
     simulation.nodes(graph.nodes).on("tick", ticked);
     simulation.force("link").links(graph.links);
 
-    function ticked() {
-        link
-            .attr("x1", function (d) { return d.source.x; })
-            .attr("y1", function (d) { return d.source.y; })
-            .attr("x2", function (d) { return d.target.x; })
-            .attr("y2", function (d) { return d.target.y; });
+    if (document.getElementById("CustomAxisSwitch").checked) {
+        switchMoveVizMode();
+    }
 
+    function switchMoveVizMode() {
+        simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
+
+        let maxWidth = width * 0.9;
+        let maxHeight = height * 0.9;
+
+        let xAxisType = d3.select('#XAxis').property('value');
+        let yAxisType = d3.select('#YAxis').property('value');
+
+        let xAxis;
+        let yAxis;
+
+        let strength = 1;
+
+        if (xAxisType == "Year") {
+            xAxis = d3.scaleLinear().domain([new Date("1970-1-1"), new Date("2017-12-30")]);
+            /*
+            node
+             .each(function (d) { d.x = xAxis(new Date(d.release_date)) * maxWidth })
+             */
+
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(new Date(d.release_date)) * maxWidth; }).strength(strength))
+
+        }
+        else if (xAxisType == "Reviews") {
+            xAxis = d3.scaleLinear().domain([0, 10]);
+           /* node
+            .each(function (d) { d.x = xAxis(d.vote_average) * maxWidth })
+            */
+
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.vote_average) * maxWidth; }).strength(strength))
+        }
+        else if (xAxisType == "Budget") {
+            let max = 0;
+            let min = 1000000000000;
+            node.each(function (d) {
+                if (max < d.Budget) max = d.Budget;
+                else if (min > d.Budget) min = d.Budget;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            xAxis = d3.scaleLinear().domain([min, max]);
+            /*
+            node
+           .each(function (d) { d.x = xAxis(d.Budget) * maxWidth })
+           */
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.Budget) * maxWidth; }).strength(strength))
+
+        }
+        else if (xAxisType == "Revenue") {
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.revenue) max = d.revenue;
+                else if (min > d.revenue) min = d.revenue;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            xAxis = d3.scaleLinear().domain([min, max]);
+            /*
+            node
+           .each(function (d) { d.x = xAxis(d.revenue) * maxWidth })
+           */
+            simulation.force("posX", d3.forceX(function (d) { return xAxis(d.revenue) * maxWidth; }).strength(strength))
+
+        }
+
+        if (yAxisType == "Year") {
+            yAxis = d3.scaleLinear().domain([new Date("1970-1-1"), new Date("2017-12-30")]);
+            /*
+            node
+            .each(function (d) { d.y = maxHeight - yAxis(new Date(d.release_date)) * height })
+            */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(new Date(d.release_date)) * maxHeight; }).strength(strength))
+
+        }
+        else if (yAxisType == "Reviews") {
+            yAxis = d3.scaleLinear().domain([0, 10]);
+            /*
+            node
+            .each(function (d) { d.y = maxHeight - yAxis(d.vote_average) * maxHeight })
+            */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.vote_average) * maxHeight; }).strength(strength))
+
+        }
+        else if (yAxisType == "Budget") {
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.Budget) max = d.Budget;
+                else if (min > d.Budget) min = d.Budget;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            yAxis = d3.scaleLinear().domain([min, max]);
+
+            /*
+            node
+          .each(function (d) { d.y = maxHeight - yAxis(d.Budget) * maxHeight })
+          */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.Budget) * maxHeight; }).strength(strength))
+
+        }
+        else if (yAxisType == "Revenue") {
+            let max = 0;
+            let min = 1000000000;
+            node.each(function (d) {
+                if (max < d.revenue) max = d.revenue;
+                else if (min > d.revenue) min = d.revenue;
+            })
+            min = 0.85 * min;
+            max = 1.1 * max;
+            yAxis = d3.scaleLinear().domain([min, max]);
+            /*
+            node
+          .each(function (d) { d.y = maxHeight - yAxis(d.revenue) * maxHeight })
+          */
+            simulation.force("posY", d3.forceY(function (d) { return maxHeight - yAxis(d.revenue) * maxHeight; }).strength(strength))
+
+        }
+        /*
         node
+            .transition().duration(2000)
             .attr("cx", function (d) { return d.x; })
             .attr("cy", function (d) { return d.y; });
+
+        link
+           .transition().duration(2000)
+           .attr("x1", function (d) { return d.source.x; })
+           .attr("y1", function (d) { return d.source.y; })
+           .attr("x2", function (d) { return d.target.x; })
+           .attr("y2", function (d) { return d.target.y; });
+
+    */
+        //xAxis.domain(stats.movie_freq.map(function (d) { return d.year; }));
+        //y.domain([0, d3.max(stats.movie_freq, function (d) { return d.count; })]);
+
+        MovieVizLayer.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xAxis).tickValues(xAxis.domain()));
+
+        //alert("test");
+        
+        g.append("g")
+        .call(d3.axisLeft(yAxis))
+        g.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Film per year");
+
+        alert("quw");
+        /*
+        g.selectAll(".bar")
+        .data(stats.movie_freq)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) { return x(d.year); })
+        .attr("y", function (d) { return y(d.count); })
+        .attr("width", x.bandwidth())
+        .attr("height", function (d) { return height - y(d.count); });
+        */
     }
+
+    function ticked() {
+            link
+                .attr("x1", function (d) { return d.source.x; })
+                .attr("y1", function (d) { return d.source.y; })
+                .attr("x2", function (d) { return d.target.x; })
+                .attr("y2", function (d) { return d.target.y; });
+            node
+                .attr("cx", function (d) { return d.x; })
+                .attr("cy", function (d) { return d.y; });
+        
+    }
+
+    function dragstarted(d) {
+            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+    }
+
+    function dragged(d) {
+            d.fx = d3.event.x;
+            d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+            if (!d3.event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+    }
+
 
     function click(d) {
         if (_movies.has(d)) {
@@ -657,22 +952,29 @@ function drawMovieViz(_movies) {
             drawMovieViz(_movies);
         }
 
-        /*
-        node.filter(function (i) { return d.id_movie != i.data.id_movie })
-        .attr("class", "node");
+    }
 
-        link.attr("class", function (x) {
-            if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
+    function mouseovered(d) {
+        node.each(function (n) { n.target = n.source = false; });
 
-                node.filter(function (i) {
-                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
-                }).attr("class", "node");
+        link.classed("link--highlight", function (l) {
+            if (l.target.id_movie == d.id_movie) return l.source.source = true;
+            else if (l.source.id_movie == d.id_movie) return l.target.target = true;
+        })
 
-                return "link";
-            }
-            else return "link";
+        link.classed("link--fade", function (l) {
+            return !(l.target.id_movie == d.id_movie || l.source.id_movie == d.id_movie);
         });
+
+        /*
+        node.classed("node--highlight", function (n) { return n.target || n.sources; })
+        node.classed("node--fade", function (n) { return !(n.target || n.sources); });
         */
+    }
+
+    function mouseouted(d) {
+        link.classed("link--highlight", false).classed("link--fade", false);
+        node.classed("node--highlight", false).classed("node--fade", false);
     }
 
 }
@@ -682,24 +984,49 @@ function packageHierarchy(movies) {
     let root = { name: "", children: [] };
     map[""] = root;
 
+    movies.sort(function (a, b) {
+        if (ClusterType == "Production") {
+            return a.production_companies - b.production_companies;
+        }
+        else if (ClusterType == "Year") {
+            return new Date(a.release_date) - new Date(b.release_date);
+        }
+        else if (ClusterType == "Reviews") {
+            return a.vote_average - b.vote_average;
+        }
+    });
+
     movies.forEach(function (d) {
 
-        let prod = d.production_companies;
-        let i = prod.indexOf(",");
+        let key;
 
-        if (i != -1) {
-            prod = prod.substring(prod.indexOf("[") + 1, i);
+        if (ClusterType == "Production") { //Cluster by companies
+            key = d.production_companies;
+            let i = key.indexOf(",");
+
+            if (i != -1) {
+                key = key.substring(key.indexOf("[") + 1, i);
+            }
+            else {
+                key = key.substring(key.indexOf("[") + 1, key.indexOf("]"));
+            }
+        }
+        else if (ClusterType == "Year") { //Cluster by Years
+            key = new Date(d.release_date).getYear() + 1900;
+        }
+        else if (ClusterType == "Reviews") { //Cluster by Reviews
+            key = d.vote_average;
         }
         else {
-            prod = prod.substring(prod.indexOf("[") + 1, prod.indexOf("]"));
+            key = ""; // no cluster
         }
 
-        let parent = map[prod];
+        let parent = map[key];
 
         if (!parent) {
-            parent = map[prod] = { name: prod, children: [] };
+            parent = map[key] = { name: key, children: [] };
             parent.parent = root;
-            parent.key = prod;
+            parent.key = key;
 
             root.children.push(parent);
         }
@@ -726,7 +1053,7 @@ function getLinksForMovie(movie) {
         let add = false;
         if (crewData) {
             mapCrewMovie_filtered.get(c).forEach(function (m) {
-                if(m.id_movie != movie.id_movie) {
+                if (m.id_movie != movie.id_movie) {
                     add = true;
                     related_movies.add(m.id_movie);
                     let link = Object.assign({}, m);
@@ -734,21 +1061,21 @@ function getLinksForMovie(movie) {
                     linksCrewMovie.push(link);
                 }
             });
-            if(!add) {
+            if (!add) {
                 crew.delete(c);
             }
         } else {
             crew.delete(c);
         }
     });
-    return {crew: Array.from(crew), movies: Array.from(related_movies), links: linksCrewMovie};
+    return { crew: Array.from(crew), movies: Array.from(related_movies), links: linksCrewMovie };
 }
 
 let departmentColorMap = new Map();
 
 function departmentColor(departmentName) {
     let color = departmentColorMap.get(departmentName);
-    if(!color) {
+    if (!color) {
         let colors = d3.scaleOrdinal(d3.schemeCategory20).domain(d3.range(0, 19));
         color = colors(departmentColorMap.size);
         departmentColorMap.set(departmentName, color);
@@ -789,31 +1116,31 @@ function showMovieInfo(d) {
     let links = tmp.links;
 
 
-    let margin = {top:30, right: 10, bottom: 10, left: 10};
+    let margin = { top: 30, right: 10, bottom: 10, left: 10 };
     let width = parseInt(div.style("width")) - margin.left - margin.right;
-    let height = parseInt(d3.select(".side-panel").style("height"))*2/3 - margin.top - margin.bottom;
+    let height = parseInt(d3.select(".side-panel").style("height")) * 2 / 3 - margin.top - margin.bottom;
 
-    let min_height = Math.max(crewIDs.length, moviesIDs.length)*16; //text = 12, 4 margin
-    if(height < min_height) {
+    let min_height = Math.max(crewIDs.length, moviesIDs.length) * 16; //text = 12, 4 margin
+    if (height < min_height) {
         height = min_height;
     }
 
 
     let crewScale = d3.scaleLinear().range([0, height]).domain([0, crewIDs.length]);
-    let crewX = width/4;
-    let movieX = width*3/4;
+    let crewX = width / 4;
+    let movieX = width * 3 / 4;
     let movieScale = d3.scaleLinear().range([0, height]).domain([0, moviesIDs.length]);
     let crew = [];
     let movies = [];
-    crewIDs.forEach(function(d, i) {
-        crew.push({id: d, x: crewX, y: crewScale(i)});
+    crewIDs.forEach(function (d, i) {
+        crew.push({ id: d, x: crewX, y: crewScale(i) });
     });
-    moviesIDs.forEach(function(d, i) {
-        movies.push({id: d, x: movieX, y: movieScale(i)});
+    moviesIDs.forEach(function (d, i) {
+        movies.push({ id: d, x: movieX, y: movieScale(i) });
     });
     let graphLinks = [];
-    links.forEach(function(link) {
-        let l = {source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: link.department};
+    links.forEach(function (link) {
+        let l = { source: crew.find(d => d.id == link.id_person), target: movies.find(d => d.id == link.id_movie), value: link.department };
         graphLinks.push(l);
     });
 
@@ -840,18 +1167,18 @@ function showMovieInfo(d) {
     .selectAll("link")
     .data(graphLinks)
     .enter().append("line")
-    .attr("stroke", function(d) { return departmentColor(d.value)})
+    .attr("stroke", function (d) { return departmentColor(d.value) })
     .attr("x1", function (d) { return d.source.x; })
     .attr("y1", function (d) { return d.source.y; })
     .attr("x2", function (d) { return d.target.x; })
     .attr("y2", function (d) { return d.target.y; })
-    .on("mouseover", function(d) {
+    .on("mouseover", function (d) {
         tooltipDiv.transition()
          .duration(200)
          .style("opacity", .9);
-       tooltipDiv .html(d.value)
-         .style("left", (d3.event.pageX + 10) + "px")
-         .style("top", (d3.event.pageY - 10) + "px");
+        tooltipDiv.html(d.value)
+          .style("left", (d3.event.pageX + 10) + "px")
+          .style("top", (d3.event.pageY - 10) + "px");
     });
 
     let crewNames = svg.append("g")
@@ -860,9 +1187,9 @@ function showMovieInfo(d) {
     .enter().append("text")
     .attr("text-anchor", "end")
     .attr("x", function (d) { return d.x; })
-    .attr("y", function (d) { return d.y+6; })
+    .attr("y", function (d) { return d.y + 6; })
     .attr("class", "text_default")
-    .text(function(d) {return crewByID(d.id).name;});
+    .text(function (d) { return crewByID(d.id).name; });
 
     let moviesName = svg.append("g")
     .selectAll("text")
@@ -870,10 +1197,10 @@ function showMovieInfo(d) {
     .enter().append("text")
     .attr("text-anchor", "start")
     .attr("x", function (d) { return d.x; })
-    .attr("y", function (d) { return d.y+6; })
+    .attr("y", function (d) { return d.y + 6; })
     .attr("class", "text_default")
-    .text(function(d) {return movieByID(d.id).title;});
+    .text(function (d) { return movieByID(d.id).title; });
 
-    div.style("height", parseInt(d3.select(".side-panel").style("height")) * 2/3 + 'px');
+    div.style("height", parseInt(d3.select(".side-panel").style("height")) * 2 / 3 + 'px');
     div.style("overflow-y", "scroll");
 }

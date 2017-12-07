@@ -25,28 +25,28 @@
         <div class="row">
             <div class="col-4">
                 <div class="side-panel">
-        </div>
+                </div>
             </div>
             <div class="col-8">
                 <div class="svg-container">
                     <div id="filters" class="row">
                         <div class="col-3">
                             <div class="form-group">
-                              <label for="DepartementOptions">Select list:</label>
-                              <select class="form-control" id="DepartementOptions">
-                                <option value="All" selected="selected">All</option>
-                                <option value="Cast">Actor</option>
-                                <option value="Art">Art</option>
-                                <option value="Camera">Camera</option>
-                                <option value="Costume & Make-Up">Costume & Make-Up</option>
-                                <option value="Directing">Directing</option>
-                                <option value="Editing">Editing</option>
-                                <option value="Lighting">Lighting</option>
-                                <option value="Production">Production</option>
-                                <option value="Sound">Sound</option>
-                                <option value="Visual Effects">Visual Effects</option>
-                                <option value="Writing">Writing</option>
-                              </select>
+                                <label for="DepartementOptions">Select list:</label>
+                                <select class="form-control" id="DepartementOptions">
+                                    <option value="All" selected="selected">All</option>
+                                    <option value="Cast">Actor</option>
+                                    <option value="Art">Art</option>
+                                    <option value="Camera">Camera</option>
+                                    <option value="Costume & Make-Up">Costume & Make-Up</option>
+                                    <option value="Directing">Directing</option>
+                                    <option value="Editing">Editing</option>
+                                    <option value="Lighting">Lighting</option>
+                                    <option value="Production">Production</option>
+                                    <option value="Sound">Sound</option>
+                                    <option value="Visual Effects">Visual Effects</option>
+                                    <option value="Writing">Writing</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-3">
@@ -73,6 +73,48 @@
                         </div>
                         <div class="col-3">
                             <button id="filterButton" type="button" onclick="filterAll()" class="btn btn-info">Filter</button>
+                        </div>
+                    </div>
+                    <div class="col-8" id="CircularVizOptions">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="ClusterOptions">Group by:</label>
+                                <select class="dropdown" id="ClusterOptions" onChange="ClusterChange()">
+                                    <option value="Production" selected="selected">Production Companies</option>
+                                    <option value="Year">Release Year</option>
+                                    <option value="Reviews">Reviews</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-8" id="MovieVizOptions">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label for="CustomAxisSwitch">Custom Axis</label>
+                                <input type="checkbox" id="CustomAxisSwitch" onClick="customAxisChange()"/>
+                            </div>
+                        </div>
+                        <div class="col-3" id="CustomAxisSelector">
+                            <div class="form-group">
+                                <label for="XAxis">X Axis:</label>
+                                <select class="dropdown" id="XAxis" onChange="AxisChange()">
+                                    <option value="Year" selected="selected">Release Date</option>
+                                    <option value="Reviews">Reviews</option>
+                                    <option value="Budget">Budget</option>
+                                    <option value="Revenue">Revenue</option>
+                                </select>
+                            </div>                      
+
+                            <div class="form-group">
+                                <label for="YAxis">Y Axis:</label>
+                                <select class="dropdown" id="YAxis" onChange="AxisChange()">
+                                    <option value="Year">Release Date</option>
+                                    <option value="Reviews" selected="selected">Reviews</option>
+                                    <option value="Budget">Budget</option>
+                                    <option value="Revenue">Revenue</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
