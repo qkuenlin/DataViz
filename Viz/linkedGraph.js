@@ -514,7 +514,7 @@ function drawCircularViz(update) {
     document.getElementById('MovieVizOptions').style.display = "none";
     document.getElementById('CircularVizOptions').style.display = "inline";
 
-    //if (update) return updateCircularViz(); 
+    //if (update) return updateCircularViz();
 
     currentViz = 1;
 
@@ -880,7 +880,7 @@ function drawMovieViz(_movies, switchAxis, reStartSimulation) {
         .call(d3.axisBottom(xAxis).tickValues(xAxis.domain()));
 
         //alert("test");
-        
+
         g.append("g")
         .call(d3.axisLeft(yAxis))
         g.append("text")
@@ -913,7 +913,7 @@ function drawMovieViz(_movies, switchAxis, reStartSimulation) {
             node
                 .attr("cx", function (d) { return d.x; })
                 .attr("cy", function (d) { return d.y; });
-        
+
     }
 
     function dragstarted(d) {
@@ -1045,7 +1045,6 @@ function packageHierarchy(movies) {
 
 function getLinksForMovie(movie) {
     let crew = new Set(mapMovieCrew.get(movie.id_movie));
-    console.log(crew);
     let related_movies = new Set();
     let linksCrewMovie = [];
     crew.forEach(function (c) {
