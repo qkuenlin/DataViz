@@ -79,6 +79,61 @@
                     </tr>
                 </table>
 
+                <table width="200" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
+
+                    <tr>
+                        <td class="DropDownText">Cluster by:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="dropdown" id="ClusterOptions" onChange="ClusterChange()">
+                                <option value="Production" selected="selected">Production Companies</option>
+                                <option value="Year">Release Year</option>
+                                <option value="Reviews">Reviews</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="50" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
+
+                    <tr>
+                        <td class="DropDownText">X axis:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="dropdown" id="XAxis" onChange="AxisChange()">
+                                <option value="Production" selected="selected">Production Companies</option>
+                                <option value="Year">Release Date</option>
+                                <option value="Reviews">Reviews</option>
+                                <option value="Budget">Budget</option>
+                                <option value="Revenue">Revenue</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table width="50" cellspacing="0" cellpadding="0" border="0" class="RangeSlider">
+
+                    <tr>
+                        <td class="DropDownText">Y axis:</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select class="dropdown" id="YAxis" onChange="AxisChange()">
+                                <option value="Production" selected="selected">Production Companies</option>
+                                <option value="Year">Release Date</option>
+                                <option value="Reviews">Reviews</option>
+                                <option value="Budget">Budget</option>
+                                <option value="Revenue">Revenue</option>
+                            </select>
+
+                        </td>
+                    </tr>
+                </table>
+
                 <button id="filterButton" type="button" onclick="filterAll()">Filter</button>
             </div>
 
