@@ -306,8 +306,15 @@ function displayDBInfo() {
     let x = d3.scaleBand().range([0, width]).paddingInner(0.05),
     y = d3.scaleLinear().range([height, 0]);
 
-    x.domain(stats.movie_freq.map(function (d) { return d.year; }));
-    y.domain([0, d3.max(stats.movie_freq, function (d) { return d.count; })]);
+    drawBarChart(g, width, height, margin, stats.movie_freq, "year", "count", "Film per year")
+}
+
+function drawBarChart(g, width, height, margin, data, xField, yField, yLabel) {
+    let x = d3.scaleBand().range([0, width]).paddingInner(0.05),
+    y = d3.scaleLinear().range([height, 0]);
+
+    x.domain(data.map(function (d) { return d[xField]; }));
+    y.domain([0, d3.max(data, function (d) { return d[yField]; })]);
 
     g.append("g")
     .attr("transform", "translate(0," + height + ")")
@@ -321,16 +328,16 @@ function displayDBInfo() {
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
-    .text("Film per year");
+    .text(yLabel);
 
     g.selectAll(".bar")
-    .data(stats.movie_freq)
+    .data(data)
     .enter().append("rect")
     .attr("class", "bar")
-    .attr("x", function (d) { return x(d.year); })
-    .attr("y", function (d) { return y(d.count); })
+    .attr("x", function (d) { return x(d[xField]); })
+    .attr("y", function (d) { return y(d[yField]); })
     .attr("width", x.bandwidth())
-    .attr("height", function (d) { return height - y(d.count); });
+    .attr("height", function (d) { return height - y(d[yField]); });
 }
 
 function filterYears(range, _map) {
