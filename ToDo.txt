@@ -9,10 +9,7 @@
 	tool tip of mouse over
 
 [V] side-panel
-	click on film to go there
 	autre graphs en dessous
-	highlight link when mouse over it
-	highlight person and related stuff when over name
 	close side panel when exiting second view and put back general information
 
 [] search by keywords, movie title or person

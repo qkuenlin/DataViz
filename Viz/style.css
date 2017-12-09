@@ -63,6 +63,21 @@
 .text_default {
     fill: #ffffff;
     stroke: none;
+    opacity: 0.8;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.text_highlight {
+    fill: #ffffff;
+    stroke: 1px;
+    opacity: 1;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.text_fade {
+    fill: #ffffff;
+    opacity: 0.2;
+    stroke: none;
     font-size: 12px;
     font-family: sans-serif;
 }
@@ -80,7 +95,17 @@
 
 .side-links {
     stroke-width: 1px;
-    opacity: 0.8;
+    opacity: 0.6;
+}
+
+.side-links--highlight {
+    stroke-width: 2px;
+    opacity: 1;
+}
+
+.side-links--fade {
+    stroke-width: 0.4px;
+    opacity: 0.4;
 }
 
 div.tooltip {
