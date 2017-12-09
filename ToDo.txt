@@ -10,7 +10,6 @@
 
 [V] side-panel
 	autre graphs en dessous
-	close side panel when exiting second view and put back general information
 
 [] search by keywords, movie title or person
 

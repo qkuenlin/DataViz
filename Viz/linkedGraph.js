@@ -273,6 +273,7 @@ function displayDBInfo() {
     let stats = getDBStats();
     let sidepanel = d3.select(".side-panel");
     sidepanel.selectAll("*").remove();
+    tooltipDiv.style("opacity", 0);
     sidepanel.append("hr");
     let div = sidepanel.append("div").classed("textInfo", true)
     div.append("h1").text("Welcome to the Ultimate Movie Data Viz");
