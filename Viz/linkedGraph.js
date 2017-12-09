@@ -1235,7 +1235,7 @@ function showMovieInfo(d) {
         let movie = mapMovie.get(d.id)
         tooltipDiv.style("opacity", 0);
         showMovieInfo(movie);
-        drawMovieViz(new Set().add(movie));
+        drawMovieViz(new Set().add(movie), true);
     })
     .on("mouseover", function(d) {
         tooltipDiv.transition()
