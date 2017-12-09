@@ -10,9 +10,9 @@ let cluster = d3.cluster().size([360, innerRadius]);
 let ClusterType;
 
 let line = d3.radialLine()
-    .curve(d3.curveBundle.beta(0.85))
-    .radius(function (d) { return d.y; })
-    .angle(function (d) { return d.x / 180 * Math.PI; });
+.curve(d3.curveBundle.beta(0.85))
+.radius(function (d) { return d.y; })
+.angle(function (d) { return d.x / 180 * Math.PI; });
 
 
 let svg = d3.select("svg");
@@ -37,49 +37,49 @@ let currentViz = 0; //Current central Viz; 0: no viz, 1: circular, 2: movie grap
 
 let mapMovieCrew = new Map(); // Map from id_movie to Set of id_crew
 let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, department, job)
-let mapMovie = new Map(); // Map from id_movie to movie object
-let mapMovie_filtered = new Map(); // fitlered version of mapMovie
+    let mapMovie = new Map(); // Map from id_movie to movie object
+    let mapMovie_filtered = new Map(); // fitlered version of mapMovie
 
-let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
+    let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
-let movieVizSet = new Set(); //Set of movies in the movie graph viz
+    let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
 
-let tooltipDiv = d3.select("body").append("div")
+    let tooltipDiv = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-function UISetup() {
-    sliderYear = new dhtmlXSlider({
-        parent: "sliderYear",
-        linkTo: ["sliderYearLink", "sliderYearLink2"],
-        step: 1,
-        min: 1937,
-        max: 2017,
-        value: [2010, 2017],
-        range: true
-    })
+    function UISetup() {
+        sliderYear = new dhtmlXSlider({
+            parent: "sliderYear",
+            linkTo: ["sliderYearLink", "sliderYearLink2"],
+            step: 1,
+            min: 1937,
+            max: 2017,
+            value: [2010, 2017],
+            range: true
+        })
 
-    sliderReview = new dhtmlXSlider({
-        parent: "sliderReview",
-        linkTo: ["sliderReviewLink", "sliderReviewLink2"],
-        step: 0.1,
-        min: 0,
-        max: 10,
-        value: [0, 10],
-        range: true
-    })
+        sliderReview = new dhtmlXSlider({
+            parent: "sliderReview",
+            linkTo: ["sliderReviewLink", "sliderReviewLink2"],
+            step: 0.1,
+            min: 0,
+            max: 10,
+            value: [0, 10],
+            range: true
+        })
 
-    /*
-    let dropDown = document.getElementById("DepartementOptions");
-    JobDepartments.forEach(function (d) {
-    let el = document.createElement("option");
-    el.textContent = d;
-    el.value = d;
+        /*
+        let dropDown = document.getElementById("DepartementOptions");
+        JobDepartments.forEach(function (d) {
+        let el = document.createElement("option");
+        el.textContent = d;
+        el.value = d;
 
-    dropDown.appendChild(el);
-});
-*/
+        dropDown.appendChild(el);
+    });
+    */
 }
 
 function filterAll() {
@@ -109,10 +109,10 @@ function customAxisChange() {
     else {
         document.getElementById('CustomAxisSelector').style.display = "none";
         simulation
-    .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
-    .force("charge", d3.forceManyBody().strength(-200))
-    .force("center", d3.forceCenter(width / 2, height / 2))
-    .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
+        .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
         .force("posX", null).force("posY", null);
 
     }
@@ -449,7 +449,7 @@ function createLinkMap() {
 
 function getLinks(nodes) {
     var map = [],
-        imports = [];
+    imports = [];
 
     nodes.forEach(function (d) {
         map[d.data.id_movie] = d;
@@ -481,21 +481,21 @@ function createGraph(movies) {
 
     /*
     movieSet.forEach(function (movie) {
-        let crewAndMovieLinks = getCrewAndMovieLinks(movie);
+    let crewAndMovieLinks = getCrewAndMovieLinks(movie);
 
-        crewAndMovieLinks.links.forEach(function (m_id) {
-            let m = mapMovie.get(m_id);
-            if (movieSet.has(m)) {
-                let link = { source: movie, target: m, value: 1 };
-                links.push(link);
-                movieSet.add(m);
-            }
-        });
-    });
-    */
-    movieSet = Array.from(movieSet);
+    crewAndMovieLinks.links.forEach(function (m_id) {
+    let m = mapMovie.get(m_id);
+    if (movieSet.has(m)) {
+    let link = { source: movie, target: m, value: 1 };
+    links.push(link);
+    movieSet.add(m);
+}
+});
+});
+*/
+movieSet = Array.from(movieSet);
 
-    return { links: links, nodes: movieSet };
+return { links: links, nodes: movieSet };
 }
 
 loadFiles()
@@ -532,20 +532,20 @@ function drawCircularViz(update) {
     .on("click", function () { resetView(); });
 
     let tooltipDiv = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
     let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
     cluster(root);
 
     CircularLink = CircularVizLayer.append("g").selectAll("link"),
-        CircularNode = CircularVizLayer.append("g").selectAll("nodes");
+    CircularNode = CircularVizLayer.append("g").selectAll("nodes");
 
     CircularLink = CircularLink
-   .data(getLinks(root.leaves()))
-   .enter().append("path")
-     //.transition().duration(2000)
+    .data(getLinks(root.leaves()))
+    .enter().append("path")
+    //.transition().duration(2000)
     .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
     .attr("class", "link")
     .attr("d", line)
@@ -560,7 +560,7 @@ function drawCircularViz(update) {
     .on("click", function (d) { click(d); })
     .on("mouseover", mouseovered)
     .on("mouseout", mouseouted)
-       // .transition().duration(2000)
+    // .transition().duration(2000)
     .attr("dy", "0.31em")
     .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
     .attr("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
@@ -572,18 +572,18 @@ function drawCircularViz(update) {
 
         cluster(root);
         CircularLink = CircularLink
-           .data(getLinks(root.leaves()))
-           .enter().append("path")
-             .transition().duration(2000)
-            .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
-            .attr("class", "link")
-            .attr("d", line)
-            .on("mouseover", mouseoveredLink);
+        .data(getLinks(root.leaves()))
+        .enter().append("path")
+        .transition().duration(2000)
+        .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
+        .attr("class", "link")
+        .attr("d", line)
+        .on("mouseover", mouseoveredLink);
 
         CircularNode.data(root.leaves());
 
         CircularNode.transition().duration(2000)
-            .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
+        .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
     }
 
     function resetView() {
@@ -606,61 +606,61 @@ function drawCircularViz(update) {
         .attr("class", "node");
 
         link.attr("class", function (x) {
-            if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
+        if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
 
-                node.filter(function (i) {
-                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
-                }).attr("class", "node");
+        node.filter(function (i) {
+        return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
+    }).attr("class", "node");
 
-                return "link";
-            }
-            else return "link";
-        });
-        */
-    }
+    return "link";
+}
+else return "link";
+});
+*/
+}
 
-    function mouseovered(d) {
-        tooltipDiv.transition()
-        .duration(200)
-        .style("opacity", .9);
-        tooltipDiv.html(d.data.title)
-          .style("left", (d3.event.pageX + 10) + "px")
-          .style("top", (d3.event.pageY - 10) + "px");
+function mouseovered(d) {
+    tooltipDiv.transition()
+    .duration(200)
+    .style("opacity", .9);
+    tooltipDiv.html(d.data.title)
+    .style("left", (d3.event.pageX + 10) + "px")
+    .style("top", (d3.event.pageY - 10) + "px");
 
-        CircularNode.each(function (n) { n.target = n.source = false; });
+    CircularNode.each(function (n) { n.target = n.source = false; });
 
-        CircularLink.classed("link--highlight", function (l) {
-            if (l.target === d) return l.source.source = true;
-            else if (l.source === d) return l.target.target = true;
-        })
-        .filter(function (l) {
-            return !(l.target === d || l.source === d);
-        }).classed("link--fade", true);
+    CircularLink.classed("link--highlight", function (l) {
+        if (l.target === d) return l.source.source = true;
+        else if (l.source === d) return l.target.target = true;
+    })
+    .filter(function (l) {
+        return !(l.target === d || l.source === d);
+    }).classed("link--fade", true);
 
-        CircularNode.classed("node--highlight", function (n) { return n.target || n.sources; })
-        .classed("node--fade", function (n) { return !(n.target || n.sources); });
-    }
+    CircularNode.classed("node--highlight", function (n) { return n.target || n.sources; })
+    .classed("node--fade", function (n) { return !(n.target || n.sources); });
+}
 
-    function mouseouted(d) {
-        CircularLink.classed("link--highlight", false).classed("link--fade", false);
-        CircularNode.classed("node--highlight", false).classed("node--fade", false);
+function mouseouted(d) {
+    CircularLink.classed("link--highlight", false).classed("link--fade", false);
+    CircularNode.classed("node--highlight", false).classed("node--fade", false);
 
-        tooltipDiv.transition()
-        .duration(200)
-        .style("opacity", 0);
-        tooltipDiv.html(d.data.title)
-    }
+    tooltipDiv.transition()
+    .duration(200)
+    .style("opacity", 0);
+    tooltipDiv.html(d.data.title)
+}
 
 
 
-    function mouseoveredLink(d) {
-        CircularNode.each(function (n) { n.target = n.source = false; });
+function mouseoveredLink(d) {
+    CircularNode.each(function (n) { n.target = n.source = false; });
 
-        CircularLink.classed("link--highlight", function (l) {
-            if (l === d) return l.source.source = true;
-            else if (l === d) return l.target.target = true;
-        })
-    }
+    CircularLink.classed("link--highlight", function (l) {
+        if (l === d) return l.source.source = true;
+        else if (l === d) return l.target.target = true;
+    })
+}
 }
 
 let graph;
@@ -699,25 +699,25 @@ function drawMovieViz(_movies, recalculate) {
         graph = createGraph(_movies);
 
         MovieLink = MovieVizLayer.append("g")
-            .attr("class", "link--movieViz")
-            .selectAll("line")
-            .data(graph.links)
-            .enter().append("line");
+        .attr("class", "link--movieViz")
+        .selectAll("line")
+        .data(graph.links)
+        .enter().append("line");
 
         MovieNode = MovieVizLayer.append("g")
-            .attr("class", "node")
-            .selectAll("circle")
-            .data(graph.nodes)
-                .enter().append("circle")
-                .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
-                .attr("fill", function (d) { return color(d.vote_average); })
-                .on("click", function (d) { click(d); })
-                .on("mouseover", mouseovered)
-                .on("mouseout", mouseouted)
-                .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended));
+        .attr("class", "node")
+        .selectAll("circle")
+        .data(graph.nodes)
+        .enter().append("circle")
+        .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
+        .attr("fill", function (d) { return color(d.vote_average); })
+        .on("click", function (d) { click(d); })
+        .on("mouseover", mouseovered)
+        .on("mouseout", mouseouted)
+        .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
 
         if (document.getElementById("CustomAxisSwitch").checked) {
             switcForceMode();
@@ -859,13 +859,13 @@ function drawMovieViz(_movies, recalculate) {
 
     function ticked() {
         MovieLink
-                .attr("x1", function (d) { return d.source.x; })
-                .attr("y1", function (d) { return d.source.y; })
-                .attr("x2", function (d) { return d.target.x; })
-                .attr("y2", function (d) { return d.target.y; });
+        .attr("x1", function (d) { return d.source.x; })
+        .attr("y1", function (d) { return d.source.y; })
+        .attr("x2", function (d) { return d.target.x; })
+        .attr("y2", function (d) { return d.target.y; });
         MovieNode
-                .attr("cx", function (d) { return d.x; })
-                .attr("cy", function (d) { return d.y; });
+        .attr("cx", function (d) { return d.x; })
+        .attr("cy", function (d) { return d.y; });
 
     }
 
@@ -1113,8 +1113,9 @@ function showMovieInfo(d) {
     .attr("height", height)
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-let crewNames;
-let moviesName;
+    let crewNames;
+    let moviesName;
+
     let drawnLinks = svg.append("g")
     .attr("class", "side-links")
     .selectAll("link")
@@ -1127,11 +1128,11 @@ let moviesName;
     .attr("y2", function (d) { return d.target.y; })
     .on("mouseover", function (d) {
         tooltipDiv.transition()
-         .duration(200)
-         .style("opacity", .9);
+        .duration(200)
+        .style("opacity", 9);
         tooltipDiv.html(d.value)
-          .style("left", (d3.event.pageX + 10) + "px")
-          .style("top", (d3.event.pageY - 10) + "px");
+        .style("left", (d3.event.pageX + 10) + "px")
+        .style("top", (d3.event.pageY - 10) + "px");
         drawnLinks.classed("side-links--highlight", function(l){
             return l.source.id == d.source.id && l.target.id == d.target.id;
         })
@@ -1174,6 +1175,9 @@ let moviesName;
     .attr("class", "text_default")
     .text(function (d) { return crewByID(d.id).name; })
     .on("mouseover", function(d) {
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 0);
         moviesName.classed("text_fade", true)
         drawnLinks.classed("side-links--highlight", function(l){
             if (l.source.id == d.id) {
@@ -1222,6 +1226,9 @@ let moviesName;
         drawMovieViz(new Set().add(movie));
     })
     .on("mouseover", function(d) {
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 0);
         crewNames.classed("text_fade", true)
         drawnLinks.classed("side-links--highlight", function(l){
             if (l.target.id == d.id) {
