@@ -59,6 +59,9 @@
 .bar {
     fill: steelblue;
 }
+.bar:hover {
+    fill: brown;
+}
 
 .text_default {
     fill: #ffffff;
@@ -78,6 +81,29 @@
     fill: #ffffff;
     opacity: 0.2;
     stroke: none;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #ffffff;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    fill: #ffffff;
+    opacity: 0.9;
+    stroke: 1px;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+
+.text_label {
+    fill: #ffffff;
+    opacity: 0.9;
+    stroke: 1px;
     font-size: 12px;
     font-family: sans-serif;
 }

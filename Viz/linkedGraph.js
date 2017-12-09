@@ -317,12 +317,15 @@ function drawBarChart(g, width, height, margin, data, xField, yField, yLabel) {
     y.domain([0, d3.max(data, function (d) { return d[yField]; })]);
 
     g.append("g")
+    .attr("class", "axis")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x).tickValues(x.domain().filter(function (d, i) { return !(i % 4) })));
 
     g.append("g")
+    .attr("class", "axis")
     .call(d3.axisLeft(y))
     g.append("text")
+    .classed("text_label", true)
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
