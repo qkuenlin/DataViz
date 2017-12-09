@@ -893,6 +893,7 @@ function drawMovieViz(_movies, recalculate) {
             _movies.delete(d);
             if (_movies.size == 0) {
                 drawCircularViz();
+                displayDBInfo();
                 return;
             }
             else {
