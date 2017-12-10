@@ -49,6 +49,14 @@ let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, departmen
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+    let bb = document.querySelector('#year-filter')
+                    .getBoundingClientRect(),
+       yearsliderwidth = bb.right - bb.left;
+    // console.log(yearsliderwidth);
+
+    let cc = document.querySelector('#review-filter')
+                    .getBoundingClientRect(),
+       reviewsliderwidth = cc.right - cc.left;
     function UISetup() {
         sliderYear = new dhtmlXSlider({
             parent: "sliderYear",
@@ -57,8 +65,9 @@ let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, departmen
             min: 1937,
             max: 2017,
             value: [2010, 2017],
-            range: true
-        })
+            range: true,
+            size: yearsliderwidth-30
+        });
 
         sliderReview = new dhtmlXSlider({
             parent: "sliderReview",
@@ -67,8 +76,9 @@ let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, departmen
             min: 0,
             max: 10,
             value: [0, 10],
-            range: true
-        })
+            range: true,
+            size: reviewsliderwidth-30
+        });
 
         /*
         let dropDown = document.getElementById("DepartementOptions");
@@ -522,7 +532,9 @@ function drawCircularViz(update) {
         return;
     }
 
+    document.getElementById("CustomAxisSwitch").checked = false;
     document.getElementById('MovieVizOptions').style.display = "none";
+    document.getElementById('CustomAxisSelector').style.display = "none";
     document.getElementById('CircularVizOptions').style.display = "inline";
 
     //if (update) return updateCircularViz();

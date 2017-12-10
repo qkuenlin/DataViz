@@ -190,6 +190,7 @@ table, th, td {
     min-width: 200px;
 }
 
+
 .DropDownMenu {
 }
 
@@ -204,21 +205,21 @@ header {
 footer {
 }
 
-#filters {
-    display: flex;
-    /*height: 60px;*/
-    margin-bottom: 20px;
-    font-family: Tahoma;
-    font-size: 12px;
+/*#filters {*/
+    /*display: flex;*/
+    /*!*height: 60px;*!*/
+    /*margin-bottom: 20px;*/
+    /*font-family: Tahoma;*/
+    /*font-size: 12px;*/
+/*}*/
+
+.form-control {
+    width: 100%;
 }
 
-#DepartementOptions {
-    width: 200px;
-}
-
-#filterButton {
-    float: left
-}
+/*#filterButton {*/
+    /*float: left;*/
+/*}*/
 
 span.minussign {
     font-size: 12px;
