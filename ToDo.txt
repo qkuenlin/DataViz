@@ -16,3 +16,5 @@
 go back button
 
 click on background reset side panel
+
+v. js l. 1140 -> faire en sorte que width soit en fonction de taille des films (au pire on laisse 100)

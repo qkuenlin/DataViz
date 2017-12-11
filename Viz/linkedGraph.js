@@ -15,7 +15,7 @@ let line = d3.radialLine()
 .angle(function (d) { return d.x / 180 * Math.PI; });
 
 
-let svg = d3.select("svg");
+let svg = d3.select("#main-svg");
 let backgroundLayer = svg.append('g');
 let CircularVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
 let MovieVizLayer = svg.append('g');
@@ -278,15 +278,18 @@ function movieByID(id) {
     return mapMovie.get(id);
 }
 
+function getHeight(tag){
+        return parseInt(d3.select(tag).style("height"))
+}
 //display DB info inside side panel
 function displayDBInfo() {
     let stats = getDBStats();
-    let sidepanel = d3.select(".side-panel");
-    sidepanel.selectAll("*").remove();
+    let div = d3.select(".TextZone");
+    div.selectAll("*").remove();
     tooltipDiv.style("opacity", 0);
-    sidepanel.append("hr");
-    let div = sidepanel.append("div").classed("textInfo", true)
-    div.append("h1").text("Welcome to the Ultimate Movie Data Viz");
+    d3.select(".TitleZone").selectAll("*").remove()
+    d3.select(".TitleZone")
+        .append("h1").text("Welcome to the Ultimate Movie Data Viz");
     div.append("p").classed('justified', true).text("This DB contains information on " + all_movies.length.toString() + " movies.");
     div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
     div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + all_people_movies_links.length + ".")
@@ -300,15 +303,19 @@ function displayDBInfo() {
     div.append("p").classed("justified", true).text("The total revenue of the movies in the DB is of " + (stats.tot_rev).toLocaleString() + "$.");
     div.append("p").classed("justified", true).text("The total length of the movies in the DB is " + (stats.tot_runtime).toLocaleString() + " minutes, which is " + minutes2String(stats.tot_runtime) + ".");
 
-    div.style("height", parseInt(d3.select(".side-panel").style("height")) / 2 + 'px');
+    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
+    div.style("max-height", Zoneheight*0.45 + 'px');
     div.style("overflow-y", "scroll");
-    sidepanel.append("hr");
-    let svg_width = parseInt(d3.select(".side-panel").style("width"));
-    let svg_height = parseInt(d3.select(".side-panel").style("height")) -
-    parseInt(d3.select(".textInfo").style("height"));
 
-    let svg = sidepanel.append("svg").attr("width", svg_width).attr("height", svg_height);
-    let margin = { top: 5, right: 5, bottom: 20, left: 50 };
+
+    let sidepanel2 = d3.select(".DrawZone");
+    let svg = sidepanel2.select("#side-svg");
+    svg.selectAll("*").remove();
+    let svg_width = parseInt(d3.select(".DrawZone").style("width")) -30; //col padding is 2*15
+    let svg_height = Zoneheight*0.50;
+    console.log(svg_width)
+    svg.attr("width", svg_width).attr("height", svg_height);
+    let margin = { top: 5, right: 5, bottom: 30, left: 50 };
     let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     let width = svg.attr("width") - margin.left - margin.right;
     let height = svg.attr("height") - margin.top - margin.bottom;
@@ -1065,26 +1072,31 @@ function showMovieInfo(d) {
     currentMovie = d;
     function addRow(table, row1, row2) {
         let newRow = table.append("tr");
-        newRow.append("td").text(row1);
+        newRow.append("th").attr("scope","row").text(row1);
         newRow.append("td").text(row2);
     }
+    let titleZone = d3.select(".TitleZone")
+    titleZone.selectAll("*").remove()
+    titleZone.append("h1").text(d.title)
+    let textZone = d3.select(".TextZone");
+    textZone.selectAll("*").remove();
 
-    let sidepanel = d3.select(".side-panel");
-    sidepanel.selectAll("*").remove();
-    let div = sidepanel.append("div");
-    div.append("h1").text(d.title);
-    div.append("h2").text(d.tagline);
-    let table = div.append("table").classed("large", true);
+    textZone.append("h3").text(d.tagline);
+    let table = textZone.append("table").classed("table table-striped table-dark", true);
     addRow(table, "Released date", d.release_date);
     addRow(table, "Runtime", "" + d.runtime + " min");
     addRow(table, "Vote average", "" + d.vote_average + "/10");
     addRow(table, "Vote count", "" + d.vote_count);
     addRow(table, "Budget", "" + d.Budget.toLocaleString() + "$");
     addRow(table, "Revenue", "" + d.revenue.toLocaleString() + "$");
-    div.style("height", parseInt(d3.select(".side-panel").style("height")) / 3 + 'px');
-    div.style("overflow-y", "scroll");
-    sidepanel.append("hr");
-    div = sidepanel.append("div");
+
+    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
+
+
+    textZone.style("max-height", Zoneheight*0.35 + 'px');
+    textZone.style("overflow-y", "scroll");
+
+    div = d3.select(".DrawZone");
 
     let tmp = getLinksForMovie(d);
     let crewIDs = tmp.crew;
@@ -1092,9 +1104,10 @@ function showMovieInfo(d) {
     let links = tmp.links;
 
 
-    let margin = { top: 30, right: 10, bottom: 10, left: 10 };
-    let width = parseInt(div.style("width")) - margin.left - margin.right;
-    let height = parseInt(d3.select(".side-panel").style("height")) * 2 / 3 - margin.top - margin.bottom;
+    let margin = { top: 20, right: 10, bottom: 20, left: 5 };
+    //svg legerement plus petit que ce que pourrait car enlève deja marges
+    let width = parseInt(div.style("width"))-30 - margin.left - margin.right; //div.col has 2*15 of pad
+    let height = Zoneheight * 0.6 - margin.top - margin.bottom;
 
     let min_height = Math.max(crewIDs.length, moviesIDs.length) * 16; //text = 12, 4 margin
     if (height < min_height) {
@@ -1121,16 +1134,17 @@ function showMovieInfo(d) {
     });
 
 
-    let svgcontainer = div.append("svg")
-    .attr("class", "background")
-    .attr("width", width + margin.left + margin.right)
+    let svgcontainer = div.select("#side-svg");
+    svgcontainer.selectAll("*").remove()
+    svgcontainer//.attr("class", "background")
+    .attr("width", width +100) // to see long names #TODO faire taille fonction du nom
     .attr("height", height + margin.top + margin.bottom);
 
-    let background = svgcontainer.append("g");
-    background.append("rect")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("class", "background");
+    // let background = svgcontainer.append("g");
+    // background.append("rect")
+    // .attr("width", width )
+    // .attr("height", height)
+    // .attr("class", "background");
 
     let svg = svgcontainer.append("g")
     .attr("width", width)
@@ -1285,6 +1299,7 @@ function showMovieInfo(d) {
         drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
     });
 
-    div.style("height", parseInt(d3.select(".side-panel").style("height")) * 2 / 3 + 'px');
+    div.style("max-height", Zoneheight * 0.6 + 'px');
     div.style("overflow-y", "scroll");
+    div.style("overflow-x", "scroll")
 }
