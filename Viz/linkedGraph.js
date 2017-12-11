@@ -37,59 +37,63 @@ let currentViz = 0; //Current central Viz; 0: no viz, 1: circular, 2: movie grap
 
 let mapMovieCrew = new Map(); // Map from id_movie to Set of id_crew
 let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, department, job)
-    let mapMovie = new Map(); // Map from id_movie to movie object
-    let mapMovie_filtered = new Map(); // fitlered version of mapMovie
+let mapMovie = new Map(); // Map from id_movie to movie object
+let mapMovie_filtered = new Map(); // fitlered version of mapMovie
 
-    let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
+let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
-    let movieVizSet = new Set(); //Set of movies in the movie graph viz
+let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
 
-    let tooltipDiv = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+let tooltipDiv = d3.select("body").append("div")
+.attr("class", "tooltip")
+.style("opacity", 0);
 
-    let bb = document.querySelector('#year-filter')
-                    .getBoundingClientRect(),
-       yearsliderwidth = bb.right - bb.left;
-    // console.log(yearsliderwidth);
+let bb = document.querySelector('#year-filter')
+                .getBoundingClientRect(),
+   yearsliderwidth = bb.right - bb.left;
+// console.log(yearsliderwidth);
 
-    let cc = document.querySelector('#review-filter')
-                    .getBoundingClientRect(),
-       reviewsliderwidth = cc.right - cc.left;
-    function UISetup() {
-        sliderYear = new dhtmlXSlider({
-            parent: "sliderYear",
-            linkTo: ["sliderYearLink", "sliderYearLink2"],
-            step: 1,
-            min: 1937,
-            max: 2017,
-            value: [2010, 2017],
-            range: true,
-            size: yearsliderwidth-30
-        });
-
-        sliderReview = new dhtmlXSlider({
-            parent: "sliderReview",
-            linkTo: ["sliderReviewLink", "sliderReviewLink2"],
-            step: 0.1,
-            min: 0,
-            max: 10,
-            value: [0, 10],
-            range: true,
-            size: reviewsliderwidth-30
-        });
-
-        /*
-        let dropDown = document.getElementById("DepartementOptions");
-        JobDepartments.forEach(function (d) {
-        let el = document.createElement("option");
-        el.textContent = d;
-        el.value = d;
-
-        dropDown.appendChild(el);
+let cc = document.querySelector('#review-filter')
+                .getBoundingClientRect(),
+   reviewsliderwidth = cc.right - cc.left;
+function resizeSVG(){
+    svgheight = getHeight("#main-panel") - getHeight("#filters")
+    d3.select(".svg-content").attr("height", svgheight)
+}
+function UISetup() {
+    sliderYear = new dhtmlXSlider({
+        parent: "sliderYear",
+        linkTo: ["sliderYearLink", "sliderYearLink2"],
+        step: 1,
+        min: 1937,
+        max: 2017,
+        value: [2010, 2017],
+        range: true,
+        size: yearsliderwidth-30
     });
-    */
+
+    sliderReview = new dhtmlXSlider({
+        parent: "sliderReview",
+        linkTo: ["sliderReviewLink", "sliderReviewLink2"],
+        step: 0.1,
+        min: 0,
+        max: 10,
+        value: [0, 10],
+        range: true,
+        size: reviewsliderwidth-30
+    });
+
+    /*
+    let dropDown = document.getElementById("DepartementOptions");
+    JobDepartments.forEach(function (d) {
+    let el = document.createElement("option");
+    el.textContent = d;
+    el.value = d;
+
+    dropDown.appendChild(el);
+});
+*/
 }
 
 function filterAll() {
@@ -114,10 +118,12 @@ function AxisChange() {
 function customAxisChange() {
     if (document.getElementById("CustomAxisSwitch").checked) {
         document.getElementById('CustomAxisSelector').style.display = "inline";
+        resizeSVG()
         AxisChange();
     }
     else {
         document.getElementById('CustomAxisSelector').style.display = "none";
+        resizeSVG()
         simulation
         .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
         .force("charge", d3.forceManyBody().strength(-200))
