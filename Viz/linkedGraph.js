@@ -101,8 +101,67 @@ function UISetup() {
 */
 }
 
+//search in all fields
+function searchAll() {
+    let newSet = new Set([...searchFilm(true), ...searchKeywords(true), ...searchCrew(true)]);
+    drawMovieViz(newSet);
+}
+
+function searchFilm(all_token=false) {
+    // get the words the user want to search
+    let search = document.querySelector("#SearchValue").value.toLowerCase()
+    let newSet = new Set();
+    // for each movie
+    mapMovie.forEach(function (value, key, map){
+        // if the search term is in the title, add the movie to the set
+        if (value.title.toLowerCase().includes(search)) newSet.add(value);
+    })
+    // if search all return, if not draw directly
+    if (all_token){
+        return newSet
+    } else {drawMovieViz(newSet);}
+}
+
+function searchKeywords(all_token=false) {
+    // get the words the user want to search
+    let search = document.querySelector("#SearchValue").value.toLowerCase()
+    let newSet = new Set();
+    // for each movie
+    mapMovie.forEach(function (value, key, map){
+        // if the search term is in the keywords, add the movie to the set
+        if (value.keywords.toLowerCase().includes(search)) newSet.add(value);
+    })
+    // if search all return, if not draw directly
+    if (all_token){
+        return newSet
+    } else {drawMovieViz(newSet);}
+}
+
+function searchCrew(all_token=false) {
+    // get the words the user want to search
+    let search = document.querySelector("#SearchValue").value.toLowerCase()
+    let newSet = new Set();
+    // for each person
+    people.forEach(function (value){
+        // if the search is in the name of the perso
+        if (value.name.toLowerCase().includes(search)){
+            // get all the movies linked to this person and add them to the set
+            let n = mapCrewMovie.get(value.id_person)   ;
+            if (n) n.forEach((d)=> newSet.add(movieByID(d.id_movie)))
+        };
+    })
+    // if search all return, if not draw directly
+    if (all_token){
+        return newSet
+    } else {drawMovieViz(newSet);}
+}
+
+
+// apply all filters
 function filterAll() {
+    // filter movie by year then by review
     mapMovie_filtered = filterReviews(sliderReview.getValue(), filterYears(sliderYear.getValue(), mapMovie));
+    // filter links between selected movies with the department
     mapCrewMovie_filtered = filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'), linksForFilteredMovies());
     if (currentViz == 2)  {
         drawMovieViz(movieVizSet, true);
@@ -324,7 +383,6 @@ function displayDBInfo() {
     svg.selectAll("*").remove();
     let svg_width = parseInt(d3.select(".DrawZone").style("width")) -30; //col padding is 2*15
     let svg_height = Zoneheight*0.50;
-    console.log(svg_width)
     svg.attr("width", svg_width).attr("height", svg_height);
     let margin = { top: 5, right: 5, bottom: 30, left: 50 };
     let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -406,35 +464,41 @@ function filterReviews(range, _map) {
     return newMap;
 }
 
+//get the link only for the filtered movies
 function linksForFilteredMovies() {
     let newMap = new Map();
+    // for each person
     mapCrewMovie.forEach(function (value, key, map) {
         let newSet = new Set();
+        // for each movie linked to one person
         value.forEach(function (d) {
+            // if the movie is in the list of filtered movie, keep the movie
             if (mapMovie_filtered.get(d.id_movie)) newSet.add(d);
         })
-
+        // if there is movies for this person, add it to it
         if (newSet.size > 0) newMap.set(key, newSet)
     });
-
+    // return the list of person only with filtered movies
     return newMap;
 }
 
+// filter list of linked movie by the department
 function filterLinksPerDepartement(dept, _map) {
-
+    // if no filter -> do nothing
     if (dept != "All") {
         let newMap = new Map();
-
+        //for each person
         _map.forEach(function (value, key, map) {
             let newSet = new Set();
-
+            // for each movie of that person
             value.forEach(function (d) {
+                // keep the link only if the department match
                 if (d.department == dept) newSet.add(d);
             })
-
+            // keep the perso only if she has some links
             if (newSet.size > 0) newMap.set(key, newSet)
         });
-
+        // return the list of person with their movies
         return newMap;
 
     }
@@ -466,20 +530,28 @@ function getCrewAndMovieLinks(movie) {
     return { crew: crew, links: related_movies };
 }
 
+// create link list
 function createLinkMap() {
+    // For each link in the data
     all_people_movies_links.forEach(function (d) {
+        //check if link already present in mapCrewMovie
         let n = mapCrewMovie.get(d.id_person);
-        if (!n) {
+        if (!n) { //if not
+            // create the key corresponding to this person
             mapCrewMovie.set(d.id_person, new Set());
             n = mapCrewMovie.get(d.id_person);
         }
+        // in all case, add the film to the list od film for this person
         n.add({ id_movie: d.id_movie, department: d.department, job: d.job });
 
+        // check if link already in mapMovieCrew
         let m = mapMovieCrew.get(d.id_movie);
-        if (!m) {
+        if (!m) { //if not
+            // create the key corresponding to this movie
             mapMovieCrew.set(d.id_movie, new Set());
             m = mapMovieCrew.get(d.id_movie);
         }
+        // add the person to the list of this movie
         m.add(d.id_person);
     })
 }
