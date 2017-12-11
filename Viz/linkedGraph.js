@@ -536,6 +536,7 @@ loadFiles()
 
 d3.select(window).on("resize", function () {
     drawCircularViz();
+    displayDBInfo();
 })
 
 let CircularLink, CircularNode;
@@ -1252,6 +1253,15 @@ function showMovieInfo(d) {
         moviesName.classed("text_highlight", false).classed("text_fade", false);
         crewNames.classed("text_highlight", false).classed("text_fade", false);
         drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
+    })
+    .on("click", function(d) {
+        let movies = mapCrewMovie_filtered.get(d.id)
+        let movieSet = new Set();
+        movies.forEach(function(d) {
+            movieSet.add(mapMovie.get(d.id_movie))
+        })
+        drawMovieViz(movieSet, true);
+        tooltipDiv.style("opacity", 0);
     });
 
     moviesName = svg.append("g")
