@@ -7,9 +7,11 @@
 	legend for node color
 	color of slider changes accordingly with value
 	tool tip of mouse over
+	toggle button for either closing a node or opening its side panel
 
 [V] side-panel
 	autre graphs en dessous
+	when mouse over element in side, highlight corresponding node in main view
 
 [] search by keywords, movie title or person
 
