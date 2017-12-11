@@ -61,6 +61,11 @@ function resizeSVG(){
     svgheight = getHeight("#main-panel") - getHeight("#filters")
     d3.select(".svg-content").attr("height", svgheight)
 }
+
+function Test() {
+    console.log(document.querySelector("#SearchValue").value)
+    console.log(document.querySelector("#SearchType"))
+}
 function UISetup() {
     sliderYear = new dhtmlXSlider({
         parent: "sliderYear",
