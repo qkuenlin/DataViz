@@ -40,22 +40,22 @@ let currentViz = 0; //Current central Viz; 0: no viz, 1: circular, 2: movie grap
 
 let mapMovieCrew = new Map(); // Map from id_movie to Set of id_crew
 let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, department, job)
-let mapMovie = new Map(); // Map from id_movie to movie object
-let mapMovie_filtered = new Map(); // fitlered version of mapMovie
+    let mapMovie = new Map(); // Map from id_movie to movie object
+    let mapMovie_filtered = new Map(); // fitlered version of mapMovie
 
-let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
+    let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
-let movieVizSet = new Set(); //Set of movies in the movie graph viz
+    let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
 
-let tooltipDiv = d3.select("body").append("div")
-.attr("class", "tooltip")
-.style("opacity", 0);
+    let tooltipDiv = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
-let bb = document.querySelector('#year-filter')
-                .getBoundingClientRect(),
-   yearsliderwidth = bb.right - bb.left;
-// console.log(yearsliderwidth);
+    let bb = document.querySelector('#year-filter')
+    .getBoundingClientRect(),
+    yearsliderwidth = bb.right - bb.left;
+    // console.log(yearsliderwidth);
 
 let cc = document.querySelector('#review-filter')
                 .getBoundingClientRect(),
@@ -66,21 +66,21 @@ function resizeSVG(){
     d3.select(".svg-content").attr("height", height)
 }
 
-function Test() {
-    console.log(document.querySelector("#SearchValue").value)
-    console.log(document.querySelector("#SearchType"))
-}
-function UISetup() {
-    sliderYear = new dhtmlXSlider({
-        parent: "sliderYear",
-        linkTo: ["sliderYearLink", "sliderYearLink2"],
-        step: 1,
-        min: 1937,
-        max: 2017,
-        value: [2010, 2017],
-        range: true,
-        size: yearsliderwidth-30
-    });
+    function Test() {
+        console.log(document.querySelector("#SearchValue").value)
+        console.log(document.querySelector("#SearchType"))
+    }
+    function UISetup() {
+        sliderYear = new dhtmlXSlider({
+            parent: "sliderYear",
+            linkTo: ["sliderYearLink", "sliderYearLink2"],
+            step: 1,
+            min: 1937,
+            max: 2017,
+            value: [2010, 2017],
+            range: true,
+            size: yearsliderwidth-30
+        });
 
     sliderYear.attachEvent("onSlideEnd", function(value){
         filterAll();}
@@ -116,9 +116,9 @@ function UISetup() {
     el.textContent = d;
     el.value = d;
 
-    dropDown.appendChild(el);
-});
-*/
+        dropDown.appendChild(el);
+    });
+    */
 }
 
 //search in all fields
@@ -1346,159 +1346,207 @@ function searchFilm(all_token=false) {
                 let crewNames;
                 let moviesName;
 
-                let drawnLinks = svg.append("g")
-                .attr("class", "side-links")
-                .selectAll("link")
-                .data(graphLinks)
-                .enter().append("line")
-                .attr("stroke", function (d) { return departmentColor(d.value) })
-                .attr("x1", function (d) { return d.source.x; })
-                .attr("y1", function (d) { return d.source.y; })
-                .attr("x2", function (d) { return d.target.x; })
-                .attr("y2", function (d) { return d.target.y; })
-                .on("mouseover", function (d) {
-                    tooltipDiv.transition()
-                    .duration(200)
-                    .style("opacity", 9);
-                    tooltipDiv.html(d.value)
-                    .style("left", (d3.event.pageX + 10) + "px")
-                    .style("top", (d3.event.pageY - 10) + "px");
-                    drawnLinks.classed("side-links--highlight", function(l){
-                        return l.source.id == d.source.id && l.target.id == d.target.id;
-                    })
-                    drawnLinks.classed("side-links--fade", function(l){
-                        return !(l.source.id == d.source.id && l.target.id == d.target.id);
-                    })
-                    crewNames.classed("text_highlight", function(l) {
-                        return l.id == d.source.id
-                    })
-                    crewNames.classed("text_fade", function(l) {
-                        return l.id != d.source.id
-                    })
-                    moviesName.classed("text_highlight", function(l) {
-                        return l.id == d.target.id
-                    })
-                    moviesName.classed("text_fade", function(l) {
-                        return l.id != d.target.id
-                    })
-                })
-                .on("mouseout", function (d) {
-                    drawnLinks.classed("side-links--highlight", false)
-                    .classed("side-links--fade", false);
-                    crewNames.classed("text_highlight", false)
-                    .classed("text_fade", false);
-                    crewNames.classed("text_fade", false)
-                    .classed("text_fade", false);
-                    moviesName.classed("text_highlight", false)
-                    .classed("text_fade", false);
-                    moviesName.classed("text_fade", false)
-                    .classed("text_fade", false);
-                });
+    let drawnLinks = svg.append("g")
+    .attr("class", "side-links")
+    .selectAll("link")
+    .data(graphLinks)
+    .enter().append("line")
+    .attr("stroke", function (d) { return departmentColor(d.value) })
+    .attr("x1", function (d) { return d.source.x; })
+    .attr("y1", function (d) { return d.source.y; })
+    .attr("x2", function (d) { return d.target.x; })
+    .attr("y2", function (d) { return d.target.y; })
+    .on("mouseover", function (d) {
+        MovieLink.classed("link--highlight", function (l) {
+            return d.target.id == l.target.id_movie || d.target.id == l.source.id_movie;
+        })
+        MovieLink.classed("link--fade", function (l) {
+            return !(d.target.id == l.target.id_movie || d.target.id == l.source.id_movie);
+        });
+        MovieNode.classed("node--highlight", function (l) {
+            return d.target.id == l.id_movie || l.id_movie == currentMovie.id_movie;
+        })
+        MovieNode.classed("node--fade", function (l) {
+            return !(d.target.id == l.id_movie || l.id_movie == currentMovie.id_movie);
+        });
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 9);
+        tooltipDiv.html(d.value)
+        .style("left", (d3.event.pageX + 10) + "px")
+        .style("top", (d3.event.pageY - 10) + "px");
+        drawnLinks.classed("side-links--highlight", function(l){
+            return l.source.id == d.source.id && l.target.id == d.target.id;
+        })
+        drawnLinks.classed("side-links--fade", function(l){
+            return !(l.source.id == d.source.id && l.target.id == d.target.id);
+        })
+        crewNames.classed("text_highlight", function(l) {
+            return l.id == d.source.id
+        })
+        crewNames.classed("text_fade", function(l) {
+            return l.id != d.source.id
+        })
+        moviesName.classed("text_highlight", function(l) {
+            return l.id == d.target.id
+        })
+        moviesName.classed("text_fade", function(l) {
+            return l.id != d.target.id
+        })
+    })
+    .on("mouseout", function (d) {
+        MovieLink.classed("link--highlight", false).classed("link--fade", false);
+        MovieNode.classed("node--highlight", false).classed("node--fade", false);
+        drawnLinks.classed("side-links--highlight", false)
+        .classed("side-links--fade", false);
+        crewNames.classed("text_highlight", false)
+        .classed("text_fade", false);
+        crewNames.classed("text_fade", false)
+        .classed("text_fade", false);
+        moviesName.classed("text_highlight", false)
+        .classed("text_fade", false);
+        moviesName.classed("text_fade", false)
+        .classed("text_fade", false);
+    });
 
-                crewNames = svg.append("g")
-                .selectAll("text")
-                .data(crew)
-                .enter().append("text")
-                .attr("text-anchor", "end")
-                .attr("x", function (d) { return d.x; })
-                .attr("y", function (d) { return d.y + 6; })
-                .attr("class", "text_default")
-                .text(function (d) { return crewByID(d.id).name; })
-                .on("mouseover", function(d) {
-                    tooltipDiv.transition()
-                    .duration(200)
-                    .style("opacity", 0);
-                    moviesName.classed("text_fade", true)
-                    drawnLinks.classed("side-links--highlight", function(l){
-                        if (l.source.id == d.id) {
-                            moviesName.classed("text_highlight", function(m) {
-                                if (m.id==l.target.id) {
-                                    moviesName.filter(x=> x.id == m.id).classed("text_fade", false)
-                                    return true
-                                } else {
-                                    return false
-                                }
-                            })
-                            return true
-                        } else {
-                            return false
-                        }
-                    })
-                    drawnLinks.classed("side-links--fade", function(l){
-                        return l.source.id != d.id
-                    })
-                    crewNames.classed("text_highlight", function(l) {
-                        return l.id == d.id
-                    })
-                    crewNames.classed("text_fade", function(l) {
-                        return l.id != d.id
-                    })
+    crewNames = svg.append("g")
+    .selectAll("text")
+    .data(crew)
+    .enter().append("text")
+    .attr("text-anchor", "end")
+    .attr("x", function (d) { return d.x; })
+    .attr("y", function (d) { return d.y + 6; })
+    .attr("class", "text_default")
+    .text(function (d) { return crewByID(d.id).name; })
+    .on("mouseover", function(d) {
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 0);
+        MovieLink.classed("link--fade", true);
+        MovieNode.classed("node--fade", true);
+        moviesName.classed("text_fade", true);
+        drawnLinks.classed("side-links--highlight", function(l){
+            if (l.source.id == d.id) {
+                MovieLink._groups[0].forEach(function(l2) {
+                    if (l.target.id == l2.__data__.target.id_movie || l.target.id == l2.__data__.source.id_movie) {
+                        MovieLink.filter(function (x) {
+                            return x.target.id_movie == l2.__data__.target.id_movie &&
+                            x.source.id_movie == l2.__data__.source.id_movie;
+                        }).classed("link--highlight", true).classed("link--fade", false);
+                    }
                 })
-                .on("mouseout", function(d) {
-                    moviesName.classed("text_highlight", false).classed("text_fade", false);
-                    crewNames.classed("text_highlight", false).classed("text_fade", false);
-                    drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
+                MovieNode._groups[0].forEach(function(n) {
+                    if (l.target.id == n.__data__.id_movie || n.__data__.id_movie == currentMovie.id_movie) {
+                        MovieNode.filter(function (x) {
+                            return x.id_movie == n.__data__.id_movie;
+                        }).classed("node--highlight", true).classed("node--fade", false);
+                    }
                 })
-                .on("click", function(d) {
-                    let movies = mapCrewMovie_filtered.get(d.id)
-                    let movieSet = new Set();
-                    movies.forEach(function(d) {
-                        movieSet.add(mapMovie.get(d.id_movie))
-                    })
-                    drawMovieViz(movieSet, true);
-                    tooltipDiv.style("opacity", 0);
-                });
+                moviesName.classed("text_highlight", function(m) {
+                    if (m.id==l.target.id) {
+                        moviesName.filter(x=> x.id == m.id).classed("text_fade", false)
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                return true
+            } else {
+                return false
+            }
+        })
+        drawnLinks.classed("side-links--fade", function(l){
+            return l.source.id != d.id
+        })
+        crewNames.classed("text_highlight", function(l) {
+            return l.id == d.id
+        })
+        crewNames.classed("text_fade", function(l) {
+            return l.id != d.id
+        })
+    })
+    .on("mouseout", function(d) {
+        MovieLink.classed("link--highlight", false).classed("link--fade", false);
+        MovieNode.classed("node--highlight", false).classed("node--fade", false);
+        moviesName.classed("text_highlight", false).classed("text_fade", false);
+        crewNames.classed("text_highlight", false).classed("text_fade", false);
+        drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
+    })
+    .on("click", function(d) {
+        let movies = mapCrewMovie_filtered.get(d.id)
+        let movieSet = new Set();
+        movies.forEach(function(d) {
+            movieSet.add(mapMovie.get(d.id_movie))
+        })
+        drawMovieViz(movieSet, true);
+        tooltipDiv.style("opacity", 0);
+    });
 
-                moviesName = svg.append("g")
-                .selectAll("text")
-                .data(movies)
-                .enter().append("text")
-                .attr("text-anchor", "start")
-                .attr("x", function (d) { return d.x; })
-                .attr("y", function (d) { return d.y + 6; })
-                .attr("class", "text_default")
-                .text(function (d) { return movieByID(d.id).title; })
-                .on("click", function(d) {
-                    let movie = mapMovie.get(d.id)
-                    tooltipDiv.style("opacity", 0);
-                    showMovieInfo(movie);
-                    drawMovieViz(new Set().add(movie), true);
+    moviesName = svg.append("g")
+    .selectAll("text")
+    .data(movies)
+    .enter().append("text")
+    .attr("text-anchor", "start")
+    .attr("x", function (d) { return d.x; })
+    .attr("y", function (d) { return d.y + 6; })
+    .attr("class", "text_default")
+    .text(function (d) { return movieByID(d.id).title; })
+    .on("click", function(d) {
+        let movie = mapMovie.get(d.id)
+        tooltipDiv.style("opacity", 0);
+        showMovieInfo(movie);
+        drawMovieViz(new Set().add(movie), true);
+    })
+    .on("mouseover", function(d) {
+        MovieLink.classed("link--highlight", function(l) {
+            return l.source.id_movie == d.id || l.target.id_movie == d.id;
+        })
+        MovieLink.classed("link--fade", function(l) {
+            return !(l.source.id_movie == d.id || l.target.id_movie == d.id);
+        })
+        MovieNode.classed("node--highlight", function(l) {
+            return l.id_movie == d.id || l.id_movie == currentMovie.id_movie;
+        })
+        MovieNode.classed("node--fade", function(l) {
+            return !(l.id_movie == d.id || l.id_movie == currentMovie.id_movie);
+        })
+
+        tooltipDiv.transition()
+        .duration(200)
+        .style("opacity", 0);
+        crewNames.classed("text_fade", true)
+        drawnLinks.classed("side-links--highlight", function(l){
+            if (l.target.id == d.id) {
+                crewNames.classed("text_highlight", function(m) {
+                    if (m.id==l.source.id) {
+                        crewNames.filter(x=> x.id == m.id).classed("text_fade", false)
+                        return true
+                    } else {
+                        return false
+                    }
                 })
-                .on("mouseover", function(d) {
-                    tooltipDiv.transition()
-                    .duration(200)
-                    .style("opacity", 0);
-                    crewNames.classed("text_fade", true)
-                    drawnLinks.classed("side-links--highlight", function(l){
-                        if (l.target.id == d.id) {
-                            crewNames.classed("text_highlight", function(m) {
-                                if (m.id==l.source.id) {
-                                    crewNames.filter(x=> x.id == m.id).classed("text_fade", false)
-                                    return true
-                                } else {
-                                    return false
-                                }
-                            })
-                            return true
-                        } else {
-                            return false
-                        }
-                    })
-                    drawnLinks.classed("side-links--fade", function(l){
-                        return l.target.id != d.id
-                    })
-                    moviesName.classed("text_highlight", function(l) {
-                        return l.id == d.id
-                    })
-                    moviesName.classed("text_fade", function(l) {
-                        return l.id != d.id
-                    })
-                })
-                .on("mouseout", function(d) {
-                    moviesName.classed("text_highlight", false).classed("text_fade", false);
-                    crewNames.classed("text_highlight", false).classed("text_fade", false);
-                    drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
-                });
+                return true
+            } else {
+                return false
+            }
+        })
+        drawnLinks.classed("side-links--fade", function(l){
+            return l.target.id != d.id
+        })
+        moviesName.classed("text_highlight", function(l) {
+            return l.id == d.id
+        })
+        moviesName.classed("text_fade", function(l) {
+            return l.id != d.id
+        })
+    })
+    .on("mouseout", function(d) {
+        MovieLink.classed("link--highlight", false).classed("link--fade", false);
+        MovieNode.classed("node--highlight", false).classed("node--fade", false);
+        moviesName.classed("text_highlight", false).classed("text_fade", false);
+        crewNames.classed("text_highlight", false).classed("text_fade", false);
+        drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
+    });
 
                 div.style("max-height", Zoneheight * 0.6 + 'px');
                 div.style("overflow-y", "scroll");
