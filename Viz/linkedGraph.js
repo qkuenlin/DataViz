@@ -1,6 +1,6 @@
 let width = parseInt(d3.select(".svg-content").style("width"));
 let height = parseInt(d3.select(".svg-content").style("height"));
-let color = d3.scaleLinear().domain([4, 6, 7, 8]).range(["red", "orange", "yellow", "green"]);
+let ReviewColor = d3.scaleLinear().domain([4, 6, 7, 8]).range(["red", "orange", "yellow", "green"]);
 
 let diameter = height-20,
 radius = diameter / 2,
@@ -100,25 +100,12 @@ function resizeSVG(){
     sliderReview.attachEvent("onSlideEnd", function(value){
         filterAll();}
         );
-
     
     backgroundLayer.append("rect")
     .attr("width", width)
     .attr("height", height)
     .attr("class", "background")
     .on("click", function () { Reset(); });
-
-
-    /*
-    let dropDown = document.getElementById("DepartementOptions");
-    JobDepartments.forEach(function (d) {
-    let el = document.createElement("option");
-    el.textContent = d;
-    el.value = d;
-
-        dropDown.appendChild(el);
-    });
-    */
 }
 
 //search in all fields
@@ -696,7 +683,7 @@ function searchFilm(all_token=false) {
                 .enter().append("circle")
                 .attr("class", "node")
                 .attr("r", 4)
-                .attr("fill", function (d) { return color(d.data.vote_average); })
+                .attr("fill", function (d) { return ReviewColor(d.data.vote_average); })
                 .on("click", function (d) { click(d); })
                 .on("mouseover", mouseovered)
                 .on("mouseout", mouseouted)
@@ -731,22 +718,6 @@ function searchFilm(all_token=false) {
                     d = n.data;
                     showMovieInfo(d);
                     drawMovieViz(new Set().add(d), true);
-                    /*
-                    node.filter(function (i) { return d.id_movie != i.data.id_movie })
-                    .attr("class", "node");
-            
-                    link.attr("class", function (x) {
-                    if (x.source.data.id_movie == d.id_movie || x.target.data.id_movie == d.id_movie) {
-            
-                    node.filter(function (i) {
-                    return (x.source.data.id_movie == i.data.id_movie || x.target.data.id_movie == i.data.id_movie);
-                }).attr("class", "node");
-            
-                return "link";
-            }
-            else return "link";
-            });
-            */
                 }
 
                 function mouseovered(d) {
@@ -836,14 +807,6 @@ function searchFilm(all_token=false) {
                     UILayer.selectAll("*").remove();
                     svg.attr("width", width)
 
-                    /*
-                    backgroundLayer.append("rect")
-                    .attr("width", width)
-                    .attr("height", height)
-                    .attr("class", "background")
-                    .on("click", function () { tooltipDiv.style("opacity", 0); resetView(); });
-                    */
-
                     graph = createGraph(_movies);
 
                     MovieLink = MovieVizLayer.append("g")
@@ -858,7 +821,7 @@ function searchFilm(all_token=false) {
                     .data(graph.nodes)
                     .enter().append("circle")
                     .attr("r", function (d) { if (_movies.has(d)) return 15; else return 6 })
-                    .attr("fill", function (d) { return color(d.vote_average); })
+                    .attr("fill", function (d) { return ReviewColor(d.vote_average); })
                     .on("click", function (d) { click(d); })
                     .on("mouseover", mouseovered)
                     .on("mouseout", mouseouted)
@@ -891,8 +854,8 @@ function searchFilm(all_token=false) {
                     let maxWidth = width -50;
                     let maxHeight = height -50;
                     
-                    let minWidth = 100;
-                    let minHeight = 80;
+                    let minWidth = 120;
+                    let minHeight = 60;
 
                     let xAxisType = d3.select('#XAxis').property('value');
                     let yAxisType = d3.select('#YAxis').property('value');
@@ -902,7 +865,7 @@ function searchFilm(all_token=false) {
 
                     let strength = 10;
 
-                    if (xAxisType == "Year") {
+                    if (xAxisType == "Release Date") {
                         let max = new Date("1900-1-1");
                         let min = new Date("2100-1-1");
                         MovieNode.each(function(d){
@@ -950,7 +913,7 @@ function searchFilm(all_token=false) {
 
                     }
 
-                    if (yAxisType == "Year") {
+                    if (yAxisType == "Release Date") {
                         let max = new Date("1900-1-1");
                         let min = new Date("2100-1-1");
                         MovieNode.each(function(d){
@@ -1006,7 +969,7 @@ function searchFilm(all_token=false) {
                     let xAxisSVG = d3.axisTop().scale(xAxis);
                     
 
-                    if (xAxisType == "Year") {
+                    if (xAxisType == "Release Date") {
                         xAxisSVG.tickFormat(d3.timeFormat("%B %Y"));
                     }
 
@@ -1018,7 +981,7 @@ function searchFilm(all_token=false) {
                     
                     let yAxisSVG = d3.axisLeft().scale(yAxis);
 
-                    if (yAxisType == "Year") {
+                    if (yAxisType == "Release Date") {
                         yAxisSVG.tickFormat(d3.timeFormat("%B %Y"));
                     }
 
@@ -1027,19 +990,23 @@ function searchFilm(all_token=false) {
                     .attr("transform", "translate("+ minWidth+",0)")
                     .call(yAxisSVG);
 
-                    //.attr("transform", "translate(0," + height-200 + ")")
-                    //.call(d3.axisBottom(xAxis).tickValues(xAxis.domain()));
-
-                    /*
+                    UILayer.append("text")
+                   .classed("text_label", true)
+                   .attr("x", width / 2)
+                   .attr("y", 5)
+                   .attr("dy", "1em")
+                   .style("text-anchor", "middle")
+                   .text(xAxisType);
+                    
                     UILayer.append("text")
                     .classed("text_label", true)
                     .attr("transform", "rotate(-90)")
-                    .attr("y", 0 - margin.left)
+                    .attr("y", 0)
                     .attr("x", 0 - (height / 2))
                     .attr("dy", "1em")
                     .style("text-anchor", "middle")
-                    .text(yLabel);
-                    */
+                    .text(yAxisType);
+                    
                     //alert("test");
                     /*
                     g.append("g")
