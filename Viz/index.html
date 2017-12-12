@@ -50,7 +50,7 @@
                         <div class="row">
                             <div id="department-filter" class="col-md-3 form-group">
                                     <label for="DepartementOptions">Select list:</label>
-                                    <select class="form-control" id="DepartementOptions">
+                                    <select class="form-control" id="DepartementOptions" onchange="filterAll()">
                                         <option value="All" selected="selected">All</option>
                                         <option value="Cast">Actor</option>
                                         <option value="Art">Art</option>
@@ -95,8 +95,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="button-filter" class="col-md-3 text-sm-center">
-                                <button id="filterButton" type="button" onclick="filterAll()" class="btn btn-info">Filter</button>
+                            <div id="button-reset" class="col-md-3 text-sm-center">
+                                <button id="restButton" type="button" onclick="Reset()" class="btn btn-info">Go Back to Circular View</button>
                             </div>
                         </div>
                         <div class="row">
