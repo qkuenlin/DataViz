@@ -11,7 +11,6 @@
 
 [V] side-panel
 	autre graphs en dessous
-	when mouse over element in side, highlight corresponding node in main view
 
 [] search by keywords, movie title or person
 
