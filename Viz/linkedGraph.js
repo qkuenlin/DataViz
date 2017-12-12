@@ -104,7 +104,7 @@ let mapCrewMovie = new Map(); // Map from id_crew to Set of {id_movie, departmen
 //search in all fields
 function searchAll() {
     let newSet = new Set([...searchFilm(true), ...searchKeywords(true), ...searchCrew(true)]);
-    drawMovieViz(newSet);
+    drawMovieViz(newSet, true);
 }
 
 function searchFilm(all_token=false) {
@@ -119,7 +119,7 @@ function searchFilm(all_token=false) {
     // if search all return, if not draw directly
     if (all_token){
         return newSet
-    } else {drawMovieViz(newSet);}
+    } else {drawMovieViz(newSet, true);}
 }
 
 function searchKeywords(all_token=false) {
@@ -134,7 +134,7 @@ function searchKeywords(all_token=false) {
     // if search all return, if not draw directly
     if (all_token){
         return newSet
-    } else {drawMovieViz(newSet);}
+    } else {drawMovieViz(newSet, true);}
 }
 
 function searchCrew(all_token=false) {
@@ -153,7 +153,7 @@ function searchCrew(all_token=false) {
     // if search all return, if not draw directly
     if (all_token){
         return newSet
-    } else {drawMovieViz(newSet);}
+    } else {drawMovieViz(newSet, true);}
 }
 
 
@@ -182,20 +182,12 @@ function AxisChange() {
 function customAxisChange() {
     if (document.getElementById("CustomAxisSwitch").checked) {
         document.getElementById('CustomAxisSelector').style.display = "inline";
-        resizeSVG()
-        AxisChange();
     }
     else {
         document.getElementById('CustomAxisSelector').style.display = "none";
-        resizeSVG()
-        simulation
-        .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
-        .force("charge", d3.forceManyBody().strength(-200))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
-        .force("posX", null).force("posY", null);
-
     }
+    resizeSVG()
+    AxisChange()
 }
 
 //load all json, set loaded to true. If add new json, need to do another callback layer
@@ -714,7 +706,7 @@ function drawCircularViz(update) {
         tooltipDiv.style("opacity", 0);
         d = n.data;
         showMovieInfo(d);
-        drawMovieViz(new Set().add(d));
+        drawMovieViz(new Set().add(d), true);
         /*
         node.filter(function (i) { return d.id_movie != i.data.id_movie })
         .attr("class", "node");
@@ -795,6 +787,17 @@ function drawMovieViz(_movies, recalculate) {
     if (document.getElementById("CustomAxisSwitch").checked && !recalculate) {
         switcForceMode();
     }
+    else if(!document.getElementById("CustomAxisSwitch").checked && !recalculate){
+        simulation
+        .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
+        .force("charge", d3.forceManyBody().strength(-200))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
+
+        simulation.force("link").links(graph.links);
+
+        simulation.alphaTarget(0.05).restart();
+    }
     else {
         currentViz = 2;
         movieVizSet = _movies
@@ -842,13 +845,15 @@ function drawMovieViz(_movies, recalculate) {
             .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("collision", d3.forceCollide().radius(function (d) { return d.radius; }))
-            simulation.restart();
+            simulation.alphaTarget(0.05).restart();
+
+            simulation.force("link").links(graph.links);
+
         }
 
         MovieNode.append("title").text(function (d) { return d.title });
 
         simulation.nodes(graph.nodes).on("tick", ticked);
-        simulation.force("link").links(graph.links);
     }
 
     function switcForceMode() {
