@@ -1325,16 +1325,18 @@ function searchFilm(all_token=false) {
     .attr("y2", function (d) { return d.target.y; })
     .on("mouseover", function (d) {
         MovieLink.classed("link--highlight", function (l) {
-            return d.target.id == l.target.id_movie || d.target.id == l.source.id_movie;
+            return d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
+             d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie;
         })
         MovieLink.classed("link--fade", function (l) {
-            return !(d.target.id == l.target.id_movie || d.target.id == l.source.id_movie);
+            return !(d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
+             d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie);
         });
         MovieNode.classed("node--highlight", function (l) {
-            return d.target.id == l.id_movie || l.id_movie == currentMovie.id_movie;
+            return l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id;
         })
         MovieNode.classed("node--fade", function (l) {
-            return !(d.target.id == l.id_movie || l.id_movie == currentMovie.id_movie);
+            return !(l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id);
         });
         tooltipDiv.transition()
         .duration(200)
@@ -1395,7 +1397,8 @@ function searchFilm(all_token=false) {
         drawnLinks.classed("side-links--highlight", function(l){
             if (l.source.id == d.id) {
                 MovieLink._groups[0].forEach(function(l2) {
-                    if (l.target.id == l2.__data__.target.id_movie || l.target.id == l2.__data__.source.id_movie) {
+                    if (l.target.id == l2.__data__.target.id_movie && currentMovie.id_movie == l2.__data__.source.id_movie ||
+                        l.target.id == l2.__data__.source.id_movie && currentMovie.id_movie == l2.__data__.target.id_movie) {
                         MovieLink.filter(function (x) {
                             return x.target.id_movie == l2.__data__.target.id_movie &&
                             x.source.id_movie == l2.__data__.source.id_movie;
@@ -1465,17 +1468,17 @@ function searchFilm(all_token=false) {
         drawMovieViz(new Set().add(movie), true);
     })
     .on("mouseover", function(d) {
+        MovieNode.classed("node--fade", true);
         MovieLink.classed("link--highlight", function(l) {
-            return l.source.id_movie == d.id || l.target.id_movie == d.id;
+            if (l.source.id_movie == d.id || l.target.id_movie == d.id) {
+                MovieNode.filter(x=> x.id_movie == l.source.id_movie || x.id_movie == l.target.id_movie).classed("node--highlight", true).classed("node--fade", false);
+                return true;
+            } else {
+                return false;
+            }
         })
         MovieLink.classed("link--fade", function(l) {
             return !(l.source.id_movie == d.id || l.target.id_movie == d.id);
-        })
-        MovieNode.classed("node--highlight", function(l) {
-            return l.id_movie == d.id || l.id_movie == currentMovie.id_movie;
-        })
-        MovieNode.classed("node--fade", function(l) {
-            return !(l.id_movie == d.id || l.id_movie == currentMovie.id_movie);
         })
 
         tooltipDiv.transition()
