@@ -20,6 +20,7 @@ let backgroundLayer = svg.append('g');
 let CircularVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
 let MovieVizLayer = svg.append('g');
 let UILayer = svg.append('g');
+let UILayer2 = svg.append('g');
 
 let DateParse = d3.timeFormat("%e %B %Y");
 
@@ -106,6 +107,48 @@ function resizeSVG(){
     .attr("height", height)
     .attr("class", "background")
     .on("click", function () { Reset(); });
+
+    let linearGradient = UILayer2.append("linearGradient").attr("id", "linear-gradient");
+
+    linearGradient
+        .attr("x1", "0%")
+        .attr("y1", "100%")
+        .attr("x2", "0%")
+        .attr("y2", "0%");
+
+    linearGradient.selectAll("stop")
+        .data(ReviewColor.range())
+        .enter().append("stop")
+        .attr("offset", function(d,i){return i/(ReviewColor.range().length-1);})
+        .attr("stop-color", function(d){return d;});
+
+    let xPos = width+250;
+    let yPos = 10;
+
+    UILayer2.append("rect")
+        .attr("width", 20)
+        .attr("height", 200)
+        .attr("x", xPos)
+        .attr("y", yPos)
+        .style("fill", "url(#linear-gradient)");
+
+    let reviewScale = d3.scaleLinear().domain([10, 0]).range([0, 200]);
+
+    let ColorAxisSVG = d3.axisLeft().scale(reviewScale).ticks(5).tickSize(20);
+
+    UILayer2.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate("+ (xPos+20)+","+yPos+")")
+    .call(ColorAxisSVG);
+
+    UILayer2.append("text")
+                        .classed("text_label", true)
+                        .attr("transform", "rotate(90)")
+                        .attr("y", -(xPos+40))
+                        .attr("x", (yPos+100))
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Reviews");
 }
 
 //search in all fields
@@ -598,20 +641,6 @@ function searchFilm(all_token=false) {
                     });
                 });
 
-                /*
-                movieSet.forEach(function (movie) {
-                let crewAndMovieLinks = getCrewAndMovieLinks(movie);
-            
-                crewAndMovieLinks.links.forEach(function (m_id) {
-                let m = mapMovie.get(m_id);
-                if (movieSet.has(m)) {
-                let link = { source: movie, target: m, value: 1 };
-                links.push(link);
-                movieSet.add(m);
-            }
-            });
-            });
-            */
                 movieSet = Array.from(movieSet);
 
                 return { links: links, nodes: movieSet };
@@ -785,6 +814,8 @@ function searchFilm(all_token=false) {
                     switcForceMode();
                 }
                 else if(!document.getElementById("CustomAxisSwitch").checked && !recalculate){
+                    UILayer.selectAll("*").remove();
+
                     simulation
                     .force("link", d3.forceLink().id(function (d) { return d.id_movie; }).distance(50))
                     .force("charge", d3.forceManyBody().strength(-200))
@@ -851,7 +882,7 @@ function searchFilm(all_token=false) {
                 }
 
                 function switcForceMode() {
-                    let maxWidth = width -50;
+                    let maxWidth = width - 150;
                     let maxHeight = height -50;
                     
                     let minWidth = 120;
