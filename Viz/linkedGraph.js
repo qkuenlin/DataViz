@@ -631,6 +631,7 @@ function drawCircularViz(update) {
         return;
     }
 
+    document.getElementById('on-click-toggle').style.display = "none";
     document.getElementById("CustomAxisSwitch").checked = false;
     document.getElementById('MovieVizOptions').style.display = "none";
     document.getElementById('CustomAxisSelector').style.display = "none";
@@ -774,6 +775,7 @@ function drawMovieViz(_movies, recalculate) {
         return;
     }
 
+    document.getElementById('on-click-toggle').style.display = "inline-block";
     document.getElementById('CircularVizOptions').style.display = "none";
     document.getElementById('MovieVizOptions').style.display = "inline";
     document.getElementById('button-reset').style.display = "inline";
@@ -1063,16 +1065,20 @@ function drawMovieViz(_movies, recalculate) {
 
     function click(d) {
         if (_movies.has(d)) {
-            _movies.delete(d);
-            if (_movies.size == 0) {
-                drawCircularViz();
-                displayDBInfo();
-                return;
+            if(document.getElementById('on-click-toggle-switch').checked) {
+                showMovieInfo(d);
             } else {
-                if (d.id_movie == currentMovie.id_movie) {
-                    showMovieInfo([..._movies][0]);
+                _movies.delete(d);
+                if (_movies.size == 0) {
+                    drawCircularViz();
+                    displayDBInfo();
+                    return;
+                } else {
+                    if (d.id_movie == currentMovie.id_movie) {
+                        showMovieInfo([..._movies][0]);
+                    }
+                    drawMovieViz(_movies, true);
                 }
-                drawMovieViz(_movies, true);
             }
         }
         else {
