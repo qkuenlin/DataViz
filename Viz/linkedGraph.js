@@ -1301,6 +1301,26 @@ function searchFilm(all_token=false) {
             }
 
 
+            function overCompany(company) {
+                MovieNode.classed("node--highlight", function(d) {
+                    return d.production_companies.includes(company)
+                });
+                MovieNode.classed("node--fade", function(d) {
+                    return !d.production_companies.includes(company)
+                });
+                MovieLink.classed("link--highlight", function(d) {
+                    return d.source.production_companies.includes(company) && d.target.production_companies.includes(company);
+                });
+                MovieLink.classed("link--fade", function(d) {
+                    return !d.source.production_companies.includes(company) || !d.target.production_companies.includes(company);
+                });
+            }
+
+            function outCompany(company) {
+                MovieLink.classed("link--highlight", false).classed("link--fade", false);
+                MovieNode.classed("node--highlight", false).classed("node--fade", false);
+            }
+
             function getArrayFromString(str) {
                 return str.substr(1, str.length -2).replace(/'/g, "").split(", ")
             }
@@ -1317,7 +1337,10 @@ function searchFilm(all_token=false) {
                     if(i > 0) {
                         td.append("span").text(", ");
                     }
-                    td.append("span").classed("textWithLink", true).text(array[i]).on("click", x=> onclick(array[i]));
+                    td.append("span").classed("textWithLink", true)
+                    .text(array[i]).on("click", x=> onclick(array[i]))
+                    .on("mouseover", x=>overCompany(array[i]))
+                    .on("mouseout", x=>outCompany());
                 }
             }
 
