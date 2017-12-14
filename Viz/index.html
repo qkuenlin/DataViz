@@ -168,8 +168,13 @@
                         </div>
                     </div>
                 </div>
-                <div id="on-click-toggle">
-                    on mouse click: <input id="on-click-toggle-switch" checked data-onstyle="info" data-offstyle="warning" data-toggle="toggle" type="checkbox" data-off="close node" data-on="show info">
+                <div>
+                    <span id="on-click-toggle">
+                        on mouse click: <input id="on-click-toggle-switch" checked data-onstyle="info" data-offstyle="warning" data-toggle="toggle" type="checkbox" data-off="close node" data-on="show info">
+                    </span>
+                    <span id="reset-company-filter">
+                        <span onclick="removeCompanyFilter()" id="production-company-name" class=textWithLink>X.toto</span>
+                    </span>
                 </div>
                 <svg id="main-svg" class="svg-content" width="960" height="700" viewbox="0 0 960 700" preserveAspectRatio="xMinYMin meet"></svg>
             </div>

@@ -170,6 +170,15 @@ div.tooltip {
     text-justify: inter-word;
 }
 
+.textWithLink {
+    text-decoration: underline;
+    text-decoration-color: lightsteelblue;
+    cursor: pointer;
+}
+
+#on-click-toggle {
+    margin-right: 20px;
+}
 /*table {*/
     /*border-collapse: collapse;*/
 /*}*/

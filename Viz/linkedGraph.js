@@ -48,6 +48,7 @@ let mapCrewMovie_filtered = new Map(); // filtered version of mapCrewMovie
 
 let movieVizSet = new Set(); //Set of movies in the movie graph viz
 
+let currentCompany = "";
 
 let tooltipDiv = d3.select("body").append("div")
 .attr("class", "tooltip")
@@ -101,7 +102,7 @@ function UISetup() {
     sliderReview.attachEvent("onSlideEnd", function(value){
         filterAll();}
     );
-    
+
     backgroundLayer.append("rect")
     .attr("width", width)
     .attr("height", height)
@@ -216,7 +217,11 @@ function searchFilm(all_token=false) {
                 mapMovie_filtered = filterReviews(sliderReview.getValue(), filterYears(sliderYear.getValue(), mapMovie));
                 // filter links between selected movies with the department
                 mapCrewMovie_filtered = filterLinksPerDepartement(d3.select('#DepartementOptions').property('value'), linksForFilteredMovies());
-                if (currentViz == 2)  {
+
+                if(currentCompany != "") {
+                    filterCompany(currentCompany);
+                }
+                else if (currentViz == 2)  {
                     drawMovieViz(movieVizSet, true);
                     showMovieInfo(currentMovie);
                 }
@@ -683,6 +688,7 @@ function searchFilm(all_token=false) {
                 }
 
                 document.getElementById('on-click-toggle').style.display = "none";
+                document.getElementById('reset-company-filter').style.display = "none";
                 document.getElementById("CustomAxisSwitch").checked = false;
                 document.getElementById('MovieVizOptions').style.display = "none";
                 document.getElementById('CustomAxisSelector').style.display = "none";
@@ -914,7 +920,7 @@ function searchFilm(all_token=false) {
                 function switcForceMode() {
                     let maxWidth = width - 150;
                     let maxHeight = height -50;
-                    
+
                     let minWidth = 120;
                     let minHeight = 60;
 
@@ -1018,7 +1024,6 @@ function searchFilm(all_token=false) {
                         max = 1.1 * max;
                         yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
                         simulation.force("posY", d3.forceY(function (d) { return yAxis(d.revenue); }).strength(strength))
-
                     }
 
                     simulation.alphaTarget(0.01).restart();
@@ -1267,23 +1272,67 @@ function searchFilm(all_token=false) {
             }
 
 
+            function removeCompanyFilter() {
+                currentCompany = "";
+                document.getElementById('reset-company-filter').style.display = "none";
+                filterAll();
+            }
+
+            function filterCompany(company) {
+                currentCompany = company;
+                let newMap = new Map();
+                document.getElementById('reset-company-filter').style.display = "inline-block";
+                document.getElementById('production-company-name').innerHTML = ("X - " + company);
+                mapMovie_filtered.forEach(function (value, key, map) {
+                    if (value.production_companies.includes(company)) {
+                        newMap.set(key, value);
+                    }
+                });
+                mapMovie_filtered = new Map();
+                newMap.forEach(function (value, key, map) {
+                    mapMovie_filtered.set(key, value);
+                });
+
+                filtered_movies = filtered_movies.filter(x=>{x.production_companies.includes(company)});
+
+                mapCrewMovie_filtered = linksForFilteredMovies();
+                drawMovieViz(movieVizSet, true);
+                showMovieInfo(currentMovie);
+            }
+
+
+            function getArrayFromString(str) {
+                return str.substr(1, str.length -2).replace(/'/g, "").split(", ")
+            }
+            function addRow(table, row1, row2) {
+                let newRow = table.append("tr");
+                newRow.append("th").attr("scope","row").text(row1);
+                newRow.append("td").text(row2);
+            }
+            function addRowArrWithOnClick(table, row, array, onclick) {
+                let newRow = table.append("tr");
+                newRow.append("th").attr("scope","row").text(row);
+                let td = newRow.append("td");
+                for(let i = 0; i < array.length; i++) {
+                    if(i > 0) {
+                        td.append("span").text(", ");
+                    }
+                    td.append("span").classed("textWithLink", true).text(array[i]).on("click", x=> onclick(array[i]));
+                }
+            }
+
             let currentMovie;
             function showMovieInfo(d) {
                 currentMovie = d;
-                function addRow(table, row1, row2) {
-                    let newRow = table.append("tr");
-                    newRow.append("th").attr("scope","row").text(row1);
-                    newRow.append("td").text(row2);
-                }
                 let titleZone = d3.select(".TitleZone")
                 titleZone.selectAll("*").remove()
                 titleZone.append("h1").text(d.title)
                 let textZone = d3.select(".TextZone");
                 textZone.selectAll("*").remove();
-
                 textZone.append("h3").text(d.tagline);
                 let table = textZone.append("table").classed("table table-striped table-dark", true);
-
+                let str = getArrayFromString(d.production_companies);
+                addRowArrWithOnClick(table, "Production Companies", str, filterCompany);
                 addRow(table, "Released date", DateParse(new Date(d.release_date)));
                 addRow(table, "Runtime", "" + d.runtime + " min");
                 addRow(table, "Vote average", "" + d.vote_average + "/10");
