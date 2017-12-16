@@ -52,7 +52,7 @@ let currentCompany = "";
 
 let currentSearchSwitch = "All"; // indicates the last search param: All, Movie, Keyword, Crew
 let searchedMovies = {
-    movie: new Set(),
+    movies: new Set(),
     keywords: new Set(),
     crew: new Set(),
     crew_detail: new Map(),
@@ -186,13 +186,120 @@ function cleanSearch() {
 
 // check if a movie is in the search result list
 function checkIfSearched(movie) {
-    if (searchedMovies.movie.has(movie) ||
+    if (searchedMovies.movies.has(movie) ||
         searchedMovies.keywords.has(movie) ||
         searchedMovies.crew.has(movie)) return true;
     else return false;
 }
 
+function showSearchResult() {
+    let div = d3.select(".TextZone");
+    div.selectAll("*").remove();
+    tooltipDiv.style("opacity", 0);
+    d3.select(".TitleZone").selectAll("*").remove()
+    d3.select(".TitleZone")
+    .append("h1").text("Search Result");
 
+    if (searchedMovies.movies.size != 0){
+        paragrah = div.append("p")
+        paragrah.append("h4").text("Match by movie title")
+        listing = paragrah.append("ul").selectAll("li")
+                    .data([...searchedMovies.movies])
+                    .enter()
+                    .append("li")
+                   .append("a")
+                    .text((d)=> d.title)
+                    .attr("href","#")
+                    .attr("class","listSearch")
+                    .on("click", click)
+                    .on("mouseover", mouseovered)
+                    .on("mouseout",mouseouted)
+
+    }
+    if (searchedMovies.keywords.size != 0){
+        paragrah = div.append("p")
+        paragrah.append("h4").text("Match by keywords")
+        listing = paragrah.append("ul").selectAll("li")
+                    .data([...searchedMovies.keywords])
+                    .enter()
+                    .append("li")
+                    .append("a")
+                    .text((d)=> d.title)
+                    .attr("href","#")
+                    .attr("class","listSearch")
+                    .on("click", click)
+                    .on("mouseover", mouseovered)
+                    .on("mouseout",mouseouted)
+
+    }
+    if (searchedMovies.crew.size != 0){
+        paragrah = div.append("p")
+        paragrah.append("h4").text("Match by Crew members")
+        listing = paragrah.append("ul").selectAll("li")
+                    .data([...searchedMovies.crew_detail])
+                    .enter()
+                    .append("li")
+                    .text((d)=> crewByID(d[0]).name)
+                    .append("ul").selectAll("li")
+                    .data((d)=>[...d[1]])
+                    .enter()
+                    .append("li")
+                    .append("a")
+                    .attr("href","#")
+                    .attr("class","listSearch")
+                    .text((d)=> movieByID(d.id_movie).title)
+                    .on("click", click)
+                    .on("mouseover", mouseovered)
+                    .on("mouseout",mouseouted)
+
+    }
+
+    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
+    div.style("max-height", Zoneheight*0.95 + 'px');
+    div.style("overflow-y", "scroll");
+
+
+    let sidepanel2 = d3.select(".DrawZone");
+    let svg = sidepanel2.select("#side-svg");
+    svg.selectAll("*").remove();
+    let svg_width = parseInt(d3.select(".DrawZone").style("width")) -30; //col padding is 2*15
+    let svg_height = Zoneheight*0.01;
+    svg.attr("width", svg_width).attr("height", svg_height);
+    // let margin = { top: 5, right: 5, bottom: 30, left: 50 };
+    // let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // let width = svg.attr("width") - margin.left - margin.right;
+    // let height = svg.attr("height") - margin.top - margin.bottom;
+
+    function click(d){
+        cleanSearch();
+        let movie = mapMovie.get(d.id_movie)
+        console.log(movie)
+        tooltipDiv.style("opacity", 0);
+        showMovieInfo(movie);
+        drawMovieViz(new Set().add(movie), true);
+    }
+
+    function mouseovered(d){
+        MovieNode.classed("node--fade", true);
+        MovieLink.classed("link--highlight", function(l) {
+            if (l.source.id_movie == d.id_movie || l.target.id_movie == d.id_movie) { //|| l.target.id_movie == d.id_movie
+                MovieNode.filter(x=> x.id_movie == l.source.id_movie || x.id_movie == l.target.id_movie).classed("node--highlight", true).classed("node--fade", false);
+                return true; //|| x.id_movie == l.target.id_movie
+            } else {
+                return false;
+            }
+        })
+        MovieLink.classed("link--fade", function(l) {
+            return !(l.source.id_movie == d.id_movie || l.target.id_movie == d.id_movie);
+        })
+    }
+
+    function mouseouted(d) {
+        MovieLink.classed("link--highlight", false).classed("link--fade", false);
+        MovieNode.classed("node--highlight", false).classed("node--fade", false);
+
+    }
+}
 
 //search in all fields
 function searchAll() {
@@ -202,11 +309,13 @@ function searchAll() {
     if (document.querySelector("#SearchValue").value.toLowerCase() == "") return;
     let newSet = new Set([...searchFilm(true), ...searchKeywords(true), ...searchCrew(true)]);
     drawMovieViz(newSet, true);
+    console.log("hello")
+    showSearchResult();
 }
 
 function searchFilm(all_token=false) {
     //change the switch
-    currentSearchSwitch =  "Movie";
+
     // get the words the user want to search
     let search = document.querySelector("#SearchValue").value.toLowerCase()
     if (search == "") return; // check that field search is not empty
@@ -220,12 +329,17 @@ function searchFilm(all_token=false) {
     // if search all return, if not draw directly
     if (all_token){
         return newSet
-    } else {drawMovieViz(newSet, true);}
+    } else {
+        searchedMovies.crew, searchedMovies.keywords = new Set(), new Set();
+        currentSearchSwitch =  "Movie";
+        drawMovieViz(newSet, true);
+        showSearchResult();
+    }
 }
 
 function searchKeywords(all_token=false) {
     //change the switch
-    currentSearchSwitch =  "Keyword";
+
     // get the words the user want to search
     let search = document.querySelector("#SearchValue").value.toLowerCase()
     if (search == "") return; // check that field search is not empty
@@ -241,13 +355,16 @@ function searchKeywords(all_token=false) {
         return newSet
     }
     else {
+        searchedMovies.crew, searchedMovies.movies = new Set(), new Set();
+        currentSearchSwitch =  "Keyword";
         drawMovieViz(newSet, true);
+        showSearchResult();
     }
 }
 
 function searchCrew(all_token=false) {
     //change the switch
-    currentSearchSwitch =  "Crew";
+
     // get the words the user want to search
     let search = document.querySelector("#SearchValue").value.toLowerCase();
     if (search == "") return; // check that field search is not empty
@@ -270,7 +387,12 @@ function searchCrew(all_token=false) {
     // if search all return, if not draw directly
     if (all_token){
         return newSet
-    } else {drawMovieViz(newSet, true);}
+    } else {
+        searchedMovies.movies, searchedMovies.keywords = new Set(), new Set();
+        currentSearchSwitch =  "Crew";
+        drawMovieViz(newSet, true);
+        showSearchResult();
+    }
 }
 
 

@@ -224,21 +224,16 @@ header {
 footer {
 }
 
-/*#filters {*/
-    /*display: flex;*/
-    /*!*height: 60px;*!*/
-    /*margin-bottom: 20px;*/
-    /*font-family: Tahoma;*/
-    /*font-size: 12px;*/
-/*}*/
+
+
+a.listSearch:visited{
+    color:white;
+}
 
 .form-control {
     width: 100%;
 }
 
-/*#filterButton {*/
-    /*float: left;*/
-/*}*/
 
 span.minussign {
     font-size: 12px;
