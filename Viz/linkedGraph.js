@@ -330,7 +330,8 @@ function searchFilm(all_token=false) {
     if (all_token){
         return newSet
     } else {
-        searchedMovies.crew, searchedMovies.keywords = new Set(), new Set();
+        searchedMovies.crew = new Set();
+        searchedMovies.keywords =  new Set();
         currentSearchSwitch =  "Movie";
         drawMovieViz(newSet, true);
         showSearchResult();
@@ -355,7 +356,8 @@ function searchKeywords(all_token=false) {
         return newSet
     }
     else {
-        searchedMovies.crew, searchedMovies.movies = new Set(), new Set();
+        searchedMovies.crew = new Set();
+        searchedMovies.movies = new Set();
         currentSearchSwitch =  "Keyword";
         drawMovieViz(newSet, true);
         showSearchResult();
@@ -388,7 +390,8 @@ function searchCrew(all_token=false) {
     if (all_token){
         return newSet
     } else {
-        searchedMovies.movies, searchedMovies.keywords = new Set(), new Set();
+        searchedMovies.movies = new Set();
+        searchedMovies.keywords = new Set();
         currentSearchSwitch =  "Crew";
         drawMovieViz(newSet, true);
         showSearchResult();
