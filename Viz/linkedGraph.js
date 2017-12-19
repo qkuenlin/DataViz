@@ -1,5 +1,17 @@
-let width = parseInt(d3.select(".svg-content").style("width"));
-let height = parseInt(d3.select(".svg-content").style("height"));
+let width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
+let height = getHeight("#main-panel") - getHeight("#filters");
+
+// Setting up all svgs containers
+let svg = d3.select("#main-svg");
+let backgroundLayer = svg.append('g');
+let CircularVizLayer = svg.append('g').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+let MovieVizLayer = svg.append('g');
+let UILayer = svg.append('g');
+let UILayer2 = svg.append('g');
+
+svg.attr("width", width)
+
+
 let ReviewColor = d3.scaleLinear().domain([4, 6, 7, 8]).range(["red", "orange", "yellow", "green"]);
 
 let diameter = height-20,
@@ -14,13 +26,6 @@ let line = d3.radialLine()
 .radius(function (d) { return d.y; })
 .angle(function (d) { return d.x / 180 * Math.PI; });
 
-
-let svg = d3.select("#main-svg");
-let backgroundLayer = svg.append('g');
-let CircularVizLayer = svg.append('g').attr("transform", "translate(" + 2 * width / 3 + "," + height / 2 + ")");
-let MovieVizLayer = svg.append('g');
-let UILayer = svg.append('g');
-let UILayer2 = svg.append('g');
 
 let DateParse = d3.timeFormat("%e %B %Y");
 
@@ -73,6 +78,13 @@ yearsliderwidth = bb.right - bb.left;
 let cc = document.querySelector('#review-filter')
 .getBoundingClientRect(),
 reviewsliderwidth = cc.right - cc.left;
+
+loadFiles()
+
+d3.select(window).on("resize", function () {
+    drawCircularViz();
+    displayDBInfo();
+})
 
 function resizeSVG(){
     height = getHeight("#main-panel") - getHeight("#filters")
@@ -128,7 +140,7 @@ function UISetup() {
         .attr("offset", function(d,i){return i/(ReviewColor.range().length-1);})
         .attr("stop-color", function(d){return d;});
 
-    let xPos = width+250;
+    let xPos = width-75;
     let yPos = 10;
 
     UILayer2.append("rect")
@@ -136,6 +148,7 @@ function UISetup() {
         .attr("height", 200)
         .attr("x", xPos)
         .attr("y", yPos)
+        .attr("opacity", 0.8)
         .style("fill", "url(#linear-gradient)");
 
     let reviewScale = d3.scaleLinear().domain([10, 0]).range([0, 200]);
@@ -145,6 +158,7 @@ function UISetup() {
     UILayer2.append("g")
     .attr("class", "axis")
     .attr("transform", "translate("+ (xPos+20)+","+yPos+")")
+    .attr("opacity", 0.8)
     .call(ColorAxisSVG);
 
     UILayer2.append("text")
@@ -154,6 +168,7 @@ function UISetup() {
                         .attr("x", (yPos+100))
                         .attr("dy", "1em")
                         .style("text-anchor", "middle")
+                        .attr("opacity", 0.8)
                         .text("Reviews");
 }
 
@@ -601,6 +616,7 @@ function movieByID(id) {
 function getHeight(tag){
     return parseInt(d3.select(tag).style("height"))
 }
+
 //display DB info inside side panel
 function displayDBInfo() {
     tooltipDiv.style("opacity", 0)
@@ -917,13 +933,6 @@ function addingToGraph(movie){
     graph.nodes = movieSet;
 }
 
-loadFiles()
-
-d3.select(window).on("resize", function () {
-    drawCircularViz();
-    displayDBInfo();
-})
-
 let CircularLink, CircularNode;
 
 function drawCircularViz(update) {
@@ -940,7 +949,7 @@ function drawCircularViz(update) {
     document.getElementById('button-reset').style.display = "none";
 
     //resize svg
-    //resizeSVG();
+    resizeSVG();
 
     // if we go to this viz, we clean the search field
     cleanSearch();
@@ -948,13 +957,9 @@ function drawCircularViz(update) {
 
     currentViz = 1;
 
-    width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
     CircularVizLayer.selectAll("*").remove();
     MovieVizLayer.selectAll("*").remove();
     UILayer.selectAll("*").remove();
-
-
-    svg.attr("width", width)
 
     /*
     backgroundLayer.append("rect")
@@ -1079,7 +1084,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     document.getElementById('button-reset').style.display = "inline";
 
     //change svg height
-    //resizeSVG()
+    resizeSVG()
 
     simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
 
