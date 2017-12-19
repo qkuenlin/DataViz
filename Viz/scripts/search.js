@@ -226,9 +226,11 @@ function searchCrew(all_token) {
                     let value = map.get(d.id_movie);
                     if (value) {
                         value += ", " + d.job;
+                        if (d.role) value += ": " + d.role;
                     }
                     else{
                         value = d.job;
+                        if (d.role) value += ": " + d.role;
                     }
 
                     map.set(d.id_movie, value);

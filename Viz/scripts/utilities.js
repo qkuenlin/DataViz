@@ -103,8 +103,8 @@ function createLinkMap() {
             mapCrewMovie.set(d.id_person, new Set());
             n = mapCrewMovie.get(d.id_person);
         }
-        // in all case, add the film to the list od film for this person
-        n.add({ id_movie: d.id_movie, department: d.department, job: d.job });
+        // in all case, add the film to the list of film for this person
+        n.add({ id_movie: d.id_movie, department: d.department, job: d.job, role: d.role });
 
         // check if link already in mapMovieCrew
         let m = mapMovieCrew.get(d.id_movie);
