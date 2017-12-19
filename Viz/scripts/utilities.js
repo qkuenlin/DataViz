@@ -1,9 +1,12 @@
-let width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
-let height = getHeight("#main-panel") - getHeight("#filters");
+// let width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select("#side-panel").style("width"));
+let width = parseInt(d3.select("#main-panel").style("width"));
+// let height = getHeight("#main-panel") - getHeight("#filters");
+let height = getHeight("#filter-Viz") - getHeight("#filters");
+
 
 // Setting up all svgs containers
 let svg = d3.select("#main-svg");
-let CircularVizLayer = svg.append('g').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+let CircularVizLayer = svg.append('g').attr("id","circular-g")   //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 let MovieVizLayer = svg.append('g');
 let UILayer = svg.append('g');
 let UILayer2 = svg.append('g');
@@ -198,8 +201,14 @@ function UISetup() {
 }
 
 function resizeSVG() {
-    height = getHeight("#main-panel") - getHeight("#filters")
+    height = getHeight("#filter-Viz") - getHeight("#filters")
+    console.log("svg",height)
     d3.select(".svg-content").attr("height", height)
+}
+
+function resizeContainers(){
+    height = getHeight("#info-panel") - getHeight("#filters");
+    d3.select("#main-viz").style("height",height+"px");
 }
 
 function date2str(date) {

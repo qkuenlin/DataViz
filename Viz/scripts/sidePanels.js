@@ -144,16 +144,17 @@ function displayDBInfo() {
     elem.append("span").classed("bigtext", true).text(minutes2String(stats.tot_runtime))
     elem.append("span").text(" : total length of the DB");
 
-    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
-    div.style("max-height", Zoneheight * 0.45 + 'px');
+    Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
+    div.style("height", Zoneheight + 'px');
     div.style("overflow-y", "scroll");
 
+    resizeContainers()
 
     let sidepanel2 = d3.select(".DrawZone");
     let svg = sidepanel2.select("#side-svg");
     svg.selectAll("*").remove();
-    let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
-    let svg_height = Zoneheight * 0.50;
+    let svg_width = parseInt(d3.select("#side-panel").style("width")) - 30; //col padding is 2*15
+    let svg_height = getHeight("#main-viz")*0.6;
     svg.attr("width", svg_width).attr("height", svg_height);
     let margin = { top: 5, right: 5, bottom: 30, left: 50 };
     let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -305,7 +306,7 @@ function showMovieInfo(d) {
     addRow(table, "Budget", "" + d.Budget.toLocaleString() + "$");
     addRow(table, "Revenue", "" + d.revenue.toLocaleString() + "$");
 
-    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
+    Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
 
 
     textZone.style("max-height", Zoneheight * 0.35 + 'px');
@@ -322,7 +323,7 @@ function showMovieInfo(d) {
     let margin = { top: 20, right: 10, bottom: 20, left: 5 };
     //svg legerement plus petit que ce que pourrait car enlève deja marges
     let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
-    let height = Zoneheight * 0.6 - margin.top - margin.bottom;
+    let height = getHeight(".DrawZone") - margin.top - margin.bottom;
 
     let min_height = Math.max(crewIDs.length, moviesIDs.length) * 16; //text = 12, 4 margin
     if (height < min_height) {

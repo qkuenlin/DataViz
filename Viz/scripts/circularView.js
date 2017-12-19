@@ -36,6 +36,8 @@ function drawCircularViz(update) {
     document.getElementById('CircularVizOptions').style.display = "inline";
     document.getElementById('button-reset').style.display = "none";
 
+    // resize svg container
+    resizeContainers();
     //resize svg
     resizeSVG();
 
@@ -44,7 +46,8 @@ function drawCircularViz(update) {
     //if (update) return updateCircularViz();
 
     currentViz = 1;
-
+    console.log(width, height)
+    CircularVizLayer = svg.select('g#circular-g').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     CircularVizLayer.selectAll("*").remove();
     MovieVizLayer.selectAll("*").remove();
     UILayer.selectAll("*").remove();

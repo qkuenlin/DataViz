@@ -109,23 +109,6 @@
     font-family: sans-serif;
 }
 
-/*.side-panel {*/
-    /*width: 100%;*/
-    /*max-width: 100%;*/
-    /*height: 100%;*/
-    /*max-height: 100%;*/
-    /*vertical-align: top;*/
-    /*display: inline-block;*/
-    /*padding-right: 5px;*/
-    /*padding-left: 5px;*/
-/*}*/
-
-/*.side-svg{*/
-    /*width: 100%;*/
-    /*max-width: 100%;*/
-    /*height: 100%;*/
-    /*max-height: 100%;*/
-/*}*/
 
 .side-links {
     stroke-width: 1px;
@@ -178,19 +161,11 @@ div.tooltip {
 #on-click-toggle {
     margin-right: 20px;
 }
-/*table {*/
-    /*border-collapse: collapse;*/
-/*}*/
 
-/*.large {*/
-    /*width: 100%;*/
-/*}*/
-
-/*table, th, td {*/
-    /*border: 1px solid black;*/
-    /*padding: 5px;*/
-    /*vertical-align: top;*/
-/*}*/
+#circular-g {
+    width: 80%;
+    height: 80%;
+}
 
 .RangeSlider {
     flex-grow: 1;
