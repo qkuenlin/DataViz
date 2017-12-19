@@ -60,7 +60,10 @@ let searchedMovies = {
 
 let tooltipDiv = d3.select("body").append("div")
 .attr("class", "tooltip")
-.style("opacity", 0);
+.style("opacity", 0)
+.style("left", (0) + "px")
+.style("top", (0) + "px");
+
 
 let bb = document.querySelector('#year-filter')
 .getBoundingClientRect(),
@@ -195,7 +198,9 @@ function checkIfSearched(movie) {
 function showSearchResult() {
     let div = d3.select(".TextZone");
     div.selectAll("*").remove();
-    tooltipDiv.style("opacity", 0);
+    tooltipDiv.style("opacity", 0).style("opacity", 0)
+    .style("left", (0) + "px")
+    .style("top", (0) + "px");
     d3.select(".TitleZone").selectAll("*").remove()
     d3.select(".TitleZone")
     .append("h1").text("Search Result");
@@ -274,7 +279,10 @@ function showSearchResult() {
         cleanSearch();
         let movie = mapMovie.get(d.id_movie)
         console.log(movie)
-        tooltipDiv.style("opacity", 0);
+        ooltipDiv.style("opacity", 0).style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
+
         showMovieInfo(movie);
         drawMovieViz(new Set().add(movie), true);
     }
@@ -604,7 +612,9 @@ function displayDBInfo() {
     let stats = getDBStats();
     let div = d3.select(".TextZone");
     div.selectAll("*").remove();
-    tooltipDiv.style("opacity", 0);
+    tooltipDiv.style("opacity", 0)
+    .style("left", (0) + "px")
+    .style("top", (0) + "px");
     d3.select(".TitleZone").selectAll("*").remove()
     d3.select(".TitleZone")
     .append("h1").text("Welcome to the Ultimate Movie Data Viz");
@@ -912,10 +922,6 @@ function drawCircularViz(update) {
     .on("click", function () { resetView(); });
     */
 
-    let tooltipDiv = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
     let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
 
     cluster(root);
@@ -926,7 +932,6 @@ function drawCircularViz(update) {
     CircularLink = CircularLink
     .data(getLinks(root.leaves()))
     .enter().append("path")
-    //.transition().duration(2000)
     .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
     .attr("class", "link")
     .attr("d", line)
@@ -941,7 +946,6 @@ function drawCircularViz(update) {
     .on("click", function (d) { click(d); })
     .on("mouseover", mouseovered)
     .on("mouseout", mouseouted)
-    // .transition().duration(2000)
     .attr("dy", "0.31em")
     .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
     .attr("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
@@ -955,7 +959,6 @@ function drawCircularViz(update) {
         CircularLink = CircularLink
         .data(getLinks(root.leaves()))
         .enter().append("path")
-        .transition().duration(2000)
         .each(function (d) { d.source = d[0], d.target = d[d.length - 1] })
         .attr("class", "link")
         .attr("d", line)
@@ -968,15 +971,15 @@ function drawCircularViz(update) {
     }
 
     function click(n) {
-        tooltipDiv.style("opacity", 0);
+        tooltipDiv.style("opacity", 0).style("left", (0) + "px")
+        .style("top", (0) + "px");
         d = n.data;
         showMovieInfo(d);
         drawMovieViz(new Set().add(d), true);
     }
 
     function mouseovered(d) {
-        tooltipDiv.transition()
-        .duration(200)
+        tooltipDiv
         .style("opacity", .9);
         tooltipDiv.html(d.data.title)
         .style("left", (d3.event.pageX + 10) + "px")
@@ -1000,9 +1003,9 @@ function drawCircularViz(update) {
         CircularLink.classed("link--highlight", false).classed("link--fade", false);
         CircularNode.classed("node--highlight", false).classed("node--fade", false);
 
-        tooltipDiv.transition()
-        .duration(200)
-        .style("opacity", 0);
+        tooltipDiv
+        .style("opacity", 0).style("left", (0) + "px")
+        .style("top", (0) + "px");
         tooltipDiv.html(d.data.title)
     }
 
@@ -1331,6 +1334,12 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
     function mouseovered(d) {
+        tooltipDiv
+        .style("opacity", 9);
+        tooltipDiv.html(d.title)
+        .style("left", (d3.event.pageX + 10) + "px")
+        .style("top", (d3.event.pageY - 10) + "px");
+
         MovieNode.each(function (n) { n.target = n.source = false; });
 
         MovieLink.classed("link--highlight", function (l) {
@@ -1356,6 +1365,9 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
     function mouseouted(d) {
+        tooltipDiv.style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
         MovieNode.classed("node--highlight", false).classed("node--fade", false);
 
         if(document.getElementById("CustomAxisSwitch").checked){
@@ -1654,8 +1666,7 @@ function showMovieInfo(d) {
         MovieNode.classed("node--fade", function (l) {
             return !(l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id);
         });
-        tooltipDiv.transition()
-        .duration(200)
+        tooltipDiv
         .style("opacity", 9);
         tooltipDiv.html(d.value)
         .style("left", (d3.event.pageX + 10) + "px")
@@ -1704,8 +1715,7 @@ function showMovieInfo(d) {
     .attr("class", "text_default")
     .text(function (d) { return crewByID(d.id).name; })
     .on("mouseover", function(d) {
-        tooltipDiv.transition()
-        .duration(200)
+        tooltipDiv
         .style("opacity", 0);
         MovieLink.classed("link--fade", true);
         MovieNode.classed("node--fade", true);
@@ -1799,8 +1809,7 @@ function showMovieInfo(d) {
             return !(l.source.id_movie == d.id || l.target.id_movie == d.id);
         })
 
-        tooltipDiv.transition()
-        .duration(200)
+        tooltipDiv
         .style("opacity", 0);
         crewNames.classed("text_fade", true)
         drawnLinks.classed("side-links--highlight", function(l){
