@@ -383,7 +383,7 @@ function showMovieInfo(d) {
         })
         tooltipDiv
         .style("opacity", 9);
-        tooltipDiv.html(d.value)
+        tooltipDiv.text(d.value)
         .style("left", (d3.event.pageX + 10) + "px")
         .style("top", (d3.event.pageY - 10) + "px");
         drawnLinks.classed("side-links--highlight", function (l) {
