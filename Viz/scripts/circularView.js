@@ -122,8 +122,8 @@ function drawCircularViz(update) {
             return !(l.target === d || l.source === d);
         }).classed("link--fade", true);
 
-        CircularNode.classed("node--highlight", function (n) { return n.target || n.sources; })
-        .classed("node--fade", function (n) { return !(n.target || n.sources); });
+        CircularNode.classed("node--highlight", function (n) { return n.target || n.source; })
+        .classed("node--fade", function (n) { return !(n.target || n.source); });
     }
 
     function mouseouted(d) {

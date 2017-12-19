@@ -87,11 +87,10 @@ function showSearchResult() {
                     .append("a")
                     .attr("href", "#")
                     .attr("class", "listSearch")
-                    .text((d) => mapMovie.get(d.id_movie).title)
+                    .text((d) => (mapMovie.get(d.id_movie).title) + " (" + d.job +")")
                     .on("click", click)
                     .on("mouseover", mouseovered)
                     .on("mouseout", mouseouted)
-
     }
 
     Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
@@ -219,8 +218,27 @@ function searchCrew(all_token) {
         if (value.name.toLowerCase().includes(search)) {
             // get all the movies linked to this person and add them to the set
             let n = mapCrewMovie_filtered.get(value.id_person);
+
             if (n) {
-                newMap.set(value.id_person, n);
+                let map = new Map();
+
+                n.forEach(function (d) {
+                    let value = map.get(d.id_movie);
+                    if (value) {
+                        value += ", " + d.job;
+                    }
+                    else{
+                        value = d.job;
+                    }
+
+                    map.set(d.id_movie, value);
+                })
+                let x = new Set();
+                map.forEach(function (value, key) {
+                    x.add({ id_movie: key, job: value });
+                })
+
+                newMap.set(value.id_person, x);
                 n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
             }
         };

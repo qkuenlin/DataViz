@@ -146,8 +146,6 @@ function drawMovieViz(_movies, recalculate, adding) {
 
         }
 
-        MovieNode.append("title").text(function (d) { return d.title });
-
         simulation.nodes(graph.nodes).on("tick", ticked);
     }
 
@@ -202,7 +200,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         }
         else if (xAxisType == "Revenue") {
             let max = 0;
-            let min = 1000000000;
+            let min = 10000000000000;
             MovieNode.each(function (d) {
                 if (max < d.revenue) max = d.revenue;
                 else if (min > d.revenue) min = d.revenue;
@@ -373,11 +371,11 @@ function drawMovieViz(_movies, recalculate, adding) {
         .style("left", (d3.event.pageX + 10) + "px")
         .style("top", (d3.event.pageY - 10) + "px");
 
-        MovieNode.each(function (n) { n.target = n.source = false; });
+        MovieNode.each(function (n) { n.source = false; });
 
         MovieLink.classed("link--highlight", function (l) {
-            if (l.target.id_movie == d.id_movie) return l.source.source = true;
-            else if (l.source.id_movie == d.id_movie) return l.target.target = true;
+            if (l.target.id_movie == d.id_movie) return l.source.source = l.target.source = true;
+            else if (l.source.id_movie == d.id_movie) return l.target.source = l.source.source = true;
         })
 
         if (document.getElementById("CustomAxisSwitch").checked) {
@@ -390,6 +388,10 @@ function drawMovieViz(_movies, recalculate, adding) {
                 return !(l.target.id_movie == d.id_movie || l.source.id_movie == d.id_movie);
             });
         }
+
+        MovieNode.classed("node--highlight", function (n) { return n.source; })
+        .classed("node--fade", function (n) { return !(n.source); });
+
     }
 
     function mouseouted(d) {
