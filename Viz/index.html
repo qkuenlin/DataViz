@@ -17,7 +17,6 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
-    <script src="d3.min.js"></script>
     <!--<script src="linkedGraph.js"></script>-->
 </head>
 <body class="bg-dark text-white">
@@ -199,13 +198,21 @@
                         <!--<span onclick="removeCompanyFilter()" id="production-company-name" class=textWithLink>X.toto</span>-->
                     <!--</span>-->
                 <!--</div>-->
-                <svg id="main-svg" class="svg-content" width="960" height="700" viewbox="0 0 960 700" preserveAspectRatio="xMinYMin meet"></svg>
+                <svg id="main-svg" class="svg-content" width="960" height="700"></svg>
             </div>
         </div>
-        <script src="linkedGraph.js"></script>
+        <script src="scripts/d3.min.js"></script>
+        <script src="scripts/utilities.js"></script>
+        <script src="scripts/search.js"></script>
+        <script src="scripts/filter.js"></script>
+        <script src="scripts/movieViz.js"></script>
+        <script src="scripts/circularView.js"></script>
+        <script src="scripts/sidePanels.js"></script>
+        <script src="scripts/main.js"></script>
         <footer class="row">
         <div class="col-sm-12">
             <p>Data set from <a href="https://www.kaggle.com/tmdb/tmdb-movie-metadata">Kaggle</a></p>
+            <p>Version 0.9.1.0</p>
         </div>
     </footer>
     </div>
