@@ -256,3 +256,29 @@ function searchCrew(all_token) {
         showSearchResult();
     }
 }
+
+function searchCrewID(crew_id) {
+
+    let newSet = new Set();
+    let newMap = new Map();
+    // for each person
+    people.forEach(function (value) {
+        // if the search is in the name of the perso
+        if (value.id_person == crew_id) {
+            // get all the movies linked to this person and add them to the set
+            let n = mapCrewMovie_filtered.get(value.id_person);
+            if (n) {
+                newMap.set(value.id_person, n);
+                n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
+            }
+        };
+    })
+    searchedMovies.crew = newSet;
+    searchedMovies.crew_detail = newMap;
+    // if search all return, if not draw directly
+    searchedMovies.movies = new Set();
+    searchedMovies.keywords = new Set();
+    currentSearchSwitch = "Crew";
+    drawMovieViz(newSet, true);
+    showSearchResult();
+}
