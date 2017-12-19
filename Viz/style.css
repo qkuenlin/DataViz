@@ -30,6 +30,7 @@
     stroke: #ffffff;
     stroke-width: 1px;
     color: #ffffff;
+    cursor: pointer;
     font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -68,23 +69,19 @@
 
 .text_default {
     fill: #ffffff;
-    stroke: none;
     opacity: 0.8;
-    font-size: 12px;
+    font-size: 14px;
     font-family: sans-serif;
+    cursor: pointer;
 }
 .text_highlight {
     fill: #ffffff;
-    stroke: 1px;
     opacity: 1;
-    font-size: 12px;
     font-family: sans-serif;
 }
 .text_fade {
     fill: #ffffff;
     opacity: 0.2;
-    stroke: none;
-    font-size: 12px;
     font-family: sans-serif;
 }
 .axis path,
@@ -132,6 +129,7 @@
 .side-links {
     stroke-width: 1px;
     opacity: 0.6;
+    cursor: pointer;
 }
 
 .side-links--highlight {
