@@ -320,7 +320,7 @@ function showMovieInfo(d) {
 
 
     let margin = { top: 20, right: 10, bottom: 20, left: 5 };
-    //svg legerement plus petit que ce que pourrait car enl�ve deja marges
+    //svg legerement plus petit que ce que pourrait car enleve deja marges
     let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
     let height = Zoneheight * 0.6 - margin.top - margin.bottom;
 
@@ -351,15 +351,9 @@ function showMovieInfo(d) {
 
     let svgcontainer = div.select("#side-svg");
     svgcontainer.selectAll("*").remove()
-    svgcontainer//.attr("class", "background")
-    .attr("width", width + 100) // to see long names #TODO faire taille fonction du nom
+    svgcontainer
+    .attr("width", width + 100)
     .attr("height", height + margin.top + margin.bottom);
-
-    // let background = svgcontainer.append("g");
-    // background.append("rect")
-    // .attr("width", width )
-    // .attr("height", height)
-    // .attr("class", "background");
 
     let svg = svgcontainer.append("g")
     .attr("width", width)
@@ -384,16 +378,9 @@ function showMovieInfo(d) {
             return d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
             d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie;
         })
-        // MovieLink.classed("link--fade", function (l) {
-        //     return !(d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
-        //         d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie);
-        // });
         MovieNode.classed("node--highlight", function (l) {
             return l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id;
         })
-        // MovieNode.classed("node--fade", function (l) {
-        //     return !(l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id);
-        // });
         tooltipDiv
         .style("opacity", 9);
         tooltipDiv.html(d.value)
@@ -402,21 +389,9 @@ function showMovieInfo(d) {
         drawnLinks.classed("side-links--highlight", function (l) {
             return l.source.id == d.source.id && l.target.id == d.target.id;
         })
-        // drawnLinks.classed("side-links--fade", function (l) {
-        //     return !(l.source.id == d.source.id && l.target.id == d.target.id);
-        // })
         crewNames.classed("text_highlight", function (l) {
             return l.id == d.source.id
         })
-        // crewNames.classed("text_fade", function (l) {
-        //     return l.id != d.source.id
-        // })
-        // moviesName.classed("text_highlight", function (l) {
-        //     return l.id == d.target.id
-        // })
-        // moviesName.classed("text_fade", function (l) {
-        //     return l.id != d.target.id
-        // })
     })
         .on("mouseout", function (d) {
             MovieLink.classed("link--highlight", false).classed("link--fade", false);
