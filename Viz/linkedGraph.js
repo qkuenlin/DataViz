@@ -125,7 +125,7 @@ function UISetup() {
         .attr("offset", function(d,i){return i/(ReviewColor.range().length-1);})
         .attr("stop-color", function(d){return d;});
 
-    let xPos = width+250;
+    let xPos = width;
     let yPos = 10;
 
     UILayer2.append("rect")
@@ -133,6 +133,7 @@ function UISetup() {
         .attr("height", 200)
         .attr("x", xPos)
         .attr("y", yPos)
+        .attr("opacity", 0.8)
         .style("fill", "url(#linear-gradient)");
 
     let reviewScale = d3.scaleLinear().domain([10, 0]).range([0, 200]);
@@ -142,6 +143,7 @@ function UISetup() {
     UILayer2.append("g")
     .attr("class", "axis")
     .attr("transform", "translate("+ (xPos+20)+","+yPos+")")
+    .attr("opacity", 0.8)
     .call(ColorAxisSVG);
 
     UILayer2.append("text")
@@ -151,6 +153,7 @@ function UISetup() {
                         .attr("x", (yPos+100))
                         .attr("dy", "1em")
                         .style("text-anchor", "middle")
+                        .attr("opacity", 0.8)
                         .text("Reviews");
 }
 
