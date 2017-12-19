@@ -26,11 +26,14 @@
     fill: none;
 }
 
+.node {
+    cursor: pointer;
+}
+
 .node circle {
     stroke: #ffffff;
     stroke-width: 1px;
     color: #ffffff;
-    cursor: pointer;
     font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
