@@ -603,27 +603,75 @@ function getHeight(tag){
 }
 //display DB info inside side panel
 function displayDBInfo() {
-    let stats = getDBStats();
-    let div = d3.select(".TextZone");
-    div.selectAll("*").remove();
     tooltipDiv.style("opacity", 0)
     .style("left", (0) + "px")
     .style("top", (0) + "px");
+    let stats = getDBStats();
+    let div = d3.select(".TextZone");
+    div.selectAll("*").remove();
     d3.select(".TitleZone").selectAll("*").remove()
     d3.select(".TitleZone")
     .append("h1").text("Welcome to the Ultimate Movie Data Viz");
-    div.append("p").classed('justified', true).text("This DB contains information on " + all_movies.length.toString() + " movies.");
-    div.append("p").classed("justified", true).text("With a total of " + people.length.toString() + " people.")
-    div.append("p").classed("justified", true).text("The number of links between those movies and the crew is " + all_people_movies_links.length + ".")
-    div.append("p").classed("justified", true).text("The DB contains ranking based on " + stats.vote_count + " votes.");
-    div.append("p").classed("justified", true).text("The movie with the best score is " + stats.max_vote.title + " with a score of " + stats.max_vote.vote_average + "/10.")
-    div.append("p").classed("justified", true).text("The movie with the best revenue is " + stats.max_rev.title + " with a revenue of " + (stats.max_rev.revenue).toLocaleString() + "$.");
-    div.append("p").classed("justified", true).text("The movie with the highest budget is " + stats.max_budget.title + " with a budget of  " + (stats.max_budget.Budget).toLocaleString() + "$.");
-    div.append("p").classed("justified", true).text("The oldest movie is " + stats.oldest.title + ", released on " + DateParse(new Date(stats.oldest.release_date)) + ".");
-    div.append("p").classed("justified", true).text("The youngest movie is " + stats.youngest.title + ", released on " + DateParse(new Date(stats.youngest.release_date)) + ".");
-    div.append("p").classed("justified", true).text("The longuest movie is " + stats.longuest.title + ", with a runtime of " + stats.longuest.runtime + " minutes.");
-    div.append("p").classed("justified", true).text("The total revenue of the movies in the DB is of " + (stats.tot_rev).toLocaleString() + "$.");
-    div.append("p").classed("justified", true).text("The total length of the movies in the DB is " + (stats.tot_runtime).toLocaleString() + " minutes, which is " + minutes2String(stats.tot_runtime) + ".");
+    let list = div.append("ul").classed("justified", true);
+    let elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(all_movies.length.toString());
+    elem.append("span").text(" movies.");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(people.length.toString());
+    elem.append("span").text(" people.");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(all_people_movies_links.length.toString());
+    elem.append("span").text(" links between movies and crews.");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(stats.vote_count.toString());
+    elem.append("span").text(" votes.");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text("Best score " + stats.max_vote.vote_average + "/10 ");
+    elem.append("span").classed("textWithLink", true).text(stats.max_vote.title).on("click", function(d) {
+        showMovieInfo(stats.max_vote);
+        drawMovieViz(new Set().add(stats.max_vote), true);
+    });
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(""+ (stats.max_rev.revenue).toLocaleString()+"$ ");
+    elem.append("span").classed("textWithLink", true).text(stats.max_rev.title).on("click", function(d) {
+        showMovieInfo(stats.max_rev);
+        drawMovieViz(new Set().add(stats.max_rev), true);
+    });
+    elem.append("span").text(" : best revenues.")
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text("" + stats.max_budget.Budget.toLocaleString()+"$ ");
+    elem.append("span").classed("textWithLink", true).text(stats.max_budget.title).on("click", function(d) {
+        showMovieInfo(stats.max_budget);
+        drawMovieViz(new Set().add(stats.max_budget), true);
+    });
+    elem.append("span").text(" : highest budget.")
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(DateParse(new Date(stats.oldest.release_date))+" ");
+    elem.append("span").classed("textWithLink", true).text(stats.oldest.title ).on("click", function(d) {
+        showMovieInfo(stats.oldest);
+        drawMovieViz(new Set().add(stats.oldest), true);
+    });
+    elem.append("span").text(" : oldest movie");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(DateParse(new Date(stats.youngest.release_date))+" ");
+    elem.append("span").classed("textWithLink", true).text(stats.youngest.title ).on("click", function(d) {
+        showMovieInfo(stats.youngest);
+        drawMovieViz(new Set().add(stats.youngest), true);
+    });
+    elem.append("span").text(" : youngest movie");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(""+stats.longuest.runtime + " minutes.");
+    elem.append("span").classed("textWithLink", true).text(stats.longuest.title ).on("click", function(d) {
+        showMovieInfo(stats.longuest);
+        drawMovieViz(new Set().add(stats.longuest), true);
+    });
+    elem.append("span").text(" : longuest movie.");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text((stats.tot_rev).toLocaleString()+"$")
+    elem.append("span").text(" : the total revenue of the DB");
+    elem = list.append("li");
+    elem.append("span").classed("bigtext", true).text(minutes2String(stats.tot_runtime))
+    elem.append("span").text(" : total length of the DB");
 
     Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
     div.style("max-height", Zoneheight*0.45 + 'px');

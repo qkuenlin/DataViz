@@ -59,12 +59,13 @@
     max-height: 900px;
 }
 
-
 .bar {
     fill: steelblue;
 }
-.bar:hover {
-    fill: brown;
+
+.bigtext{
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .text_default {
