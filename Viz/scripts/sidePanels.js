@@ -419,7 +419,9 @@ function showMovieInfo(d) {
     .text(function (d) { return crewByID(d.id).name; })
     .on("mouseover", function (d) {
         tooltipDiv
-        .style("opacity", 0);
+        .style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
         MovieLink.classed("link--fade", true);
         MovieNode.classed("node--fade", true);
         moviesName.classed("text_fade", true);
@@ -473,13 +475,10 @@ function showMovieInfo(d) {
         })
         .on("click", function (d) {
             cleanSearch();
-            let movies = mapCrewMovie_filtered.get(d.id)
-            let movieSet = new Set();
-            movies.forEach(function (d) {
-                movieSet.add(mapMovie.get(d.id_movie))
-            })
-            drawMovieViz(movieSet, true);
-            tooltipDiv.style("opacity", 0);
+            searchCrewID(d.id)
+            tooltipDiv.style("opacity", 0)
+            .style("left", (0) + "px")
+            .style("top", (0) + "px");
         });
 
     moviesName = svg.append("g")
@@ -513,7 +512,9 @@ function showMovieInfo(d) {
         })
 
         tooltipDiv
-        .style("opacity", 0);
+        .style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
         crewNames.classed("text_fade", true)
         drawnLinks.classed("side-links--highlight", function (l) {
             if (l.target.id == d.id) {
