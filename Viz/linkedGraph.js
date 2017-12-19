@@ -111,12 +111,6 @@ function UISetup() {
         filterAll();}
     );
 
-    backgroundLayer.append("rect")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("class", "background")
-    .on("click", function () { Reset(); });
-
     let linearGradient = UILayer2.append("linearGradient").attr("id", "linear-gradient");
 
     linearGradient
@@ -888,7 +882,7 @@ function drawCircularViz(update) {
     document.getElementById('button-reset').style.display = "none";
 
     //resize svg
-    resizeSVG();
+    //resizeSVG();
 
     // if we go to this viz, we clean the search field
     cleanSearch();
@@ -1034,7 +1028,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     document.getElementById('button-reset').style.display = "inline";
 
     //change svg height
-    resizeSVG()
+    //resizeSVG()
 
     simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
 
