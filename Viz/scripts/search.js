@@ -87,11 +87,10 @@ function showSearchResult() {
                     .append("a")
                     .attr("href", "#")
                     .attr("class", "listSearch")
-                    .text((d) => mapMovie.get(d.id_movie).title)
+                    .text((d) => (mapMovie.get(d.id_movie).title) + " (" + d.job +")")
                     .on("click", click)
                     .on("mouseover", mouseovered)
                     .on("mouseout", mouseouted)
-
     }
 
     Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
@@ -220,8 +219,29 @@ function searchCrew(all_token) {
         if (value.name.toLowerCase().includes(search)) {
             // get all the movies linked to this person and add them to the set
             let n = mapCrewMovie_filtered.get(value.id_person);
+
             if (n) {
-                newMap.set(value.id_person, n);
+                let map = new Map();
+
+                n.forEach(function (d) {
+                    let value = map.get(d.id_movie);
+                    if (value) {
+                        value += ", " + d.job;
+                        if (d.role) value += ": " + d.role;
+                    }
+                    else{
+                        value = d.job;
+                        if (d.role) value += ": " + d.role;
+                    }
+
+                    map.set(d.id_movie, value);
+                })
+                let x = new Set();
+                map.forEach(function (value, key) {
+                    x.add({ id_movie: key, job: value });
+                })
+
+                newMap.set(value.id_person, x);
                 n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
             }
         };
@@ -238,4 +258,30 @@ function searchCrew(all_token) {
         drawMovieViz(newSet, true);
         showSearchResult();
     }
+}
+
+function searchCrewID(crew_id) {
+
+    let newSet = new Set();
+    let newMap = new Map();
+    // for each person
+    people.forEach(function (value) {
+        // if the search is in the name of the perso
+        if (value.id_person == crew_id) {
+            // get all the movies linked to this person and add them to the set
+            let n = mapCrewMovie_filtered.get(value.id_person);
+            if (n) {
+                newMap.set(value.id_person, n);
+                n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
+            }
+        };
+    })
+    searchedMovies.crew = newSet;
+    searchedMovies.crew_detail = newMap;
+    // if search all return, if not draw directly
+    searchedMovies.movies = new Set();
+    searchedMovies.keywords = new Set();
+    currentSearchSwitch = "Crew";
+    drawMovieViz(newSet, true);
+    showSearchResult();
 }

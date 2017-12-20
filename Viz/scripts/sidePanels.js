@@ -328,7 +328,7 @@ function showMovieInfo(d) {
 
 
     let margin = { top: 20, right: 10, bottom: 20, left: 5 };
-    //svg legerement plus petit que ce que pourrait car enlève deja marges
+    //svg legerement plus petit que ce que pourrait car enleve deja marges
     let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
     let height = getHeight("#side-panel") - margin.top - margin.bottom;
 
@@ -363,8 +363,6 @@ function showMovieInfo(d) {
     .attr("width", width + 200) // to see long names #TODO faire taille fonction du nom
     .attr("height", height + margin.top + margin.bottom);
 
-
-
     let svg = svgcontainer.append("g")
     .attr("width", width)
     .attr("height", height)
@@ -388,38 +386,19 @@ function showMovieInfo(d) {
             return d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
             d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie;
         })
-        MovieLink.classed("link--fade", function (l) {
-            return !(d.target.id == l.target.id_movie && l.source.id_movie == currentMovie.id_movie ||
-                d.target.id == l.source.id_movie && l.target.id_movie == currentMovie.id_movie);
-        });
         MovieNode.classed("node--highlight", function (l) {
             return l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id;
         })
-        MovieNode.classed("node--fade", function (l) {
-            return !(l.id_movie == currentMovie.id_movie || l.id_movie == d.target.id);
-        });
         tooltipDiv
         .style("opacity", 9);
-        tooltipDiv.html(d.value)
+        tooltipDiv.text(d.value)
         .style("left", (d3.event.pageX + 10) + "px")
         .style("top", (d3.event.pageY - 10) + "px");
         drawnLinks.classed("side-links--highlight", function (l) {
             return l.source.id == d.source.id && l.target.id == d.target.id;
         })
-        drawnLinks.classed("side-links--fade", function (l) {
-            return !(l.source.id == d.source.id && l.target.id == d.target.id);
-        })
         crewNames.classed("text_highlight", function (l) {
             return l.id == d.source.id
-        })
-        crewNames.classed("text_fade", function (l) {
-            return l.id != d.source.id
-        })
-        moviesName.classed("text_highlight", function (l) {
-            return l.id == d.target.id
-        })
-        moviesName.classed("text_fade", function (l) {
-            return l.id != d.target.id
         })
     })
         .on("mouseout", function (d) {
@@ -448,7 +427,9 @@ function showMovieInfo(d) {
     .text(function (d) { return crewByID(d.id).name; })
     .on("mouseover", function (d) {
         tooltipDiv
-        .style("opacity", 0);
+        .style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
         MovieLink.classed("link--fade", true);
         MovieNode.classed("node--fade", true);
         moviesName.classed("text_fade", true);
@@ -502,13 +483,10 @@ function showMovieInfo(d) {
         })
         .on("click", function (d) {
             cleanSearch();
-            let movies = mapCrewMovie_filtered.get(d.id)
-            let movieSet = new Set();
-            movies.forEach(function (d) {
-                movieSet.add(mapMovie.get(d.id_movie))
-            })
-            drawMovieViz(movieSet, true);
-            tooltipDiv.style("opacity", 0);
+            searchCrewID(d.id)
+            tooltipDiv.style("opacity", 0)
+            .style("left", (0) + "px")
+            .style("top", (0) + "px");
         });
 
     moviesName = svg.append("g")
@@ -542,7 +520,9 @@ function showMovieInfo(d) {
         })
 
         tooltipDiv
-        .style("opacity", 0);
+        .style("opacity", 0)
+        .style("left", (0) + "px")
+        .style("top", (0) + "px");
         crewNames.classed("text_fade", true)
         drawnLinks.classed("side-links--highlight", function (l) {
             if (l.target.id == d.id) {

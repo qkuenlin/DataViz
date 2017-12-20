@@ -1,5 +1,5 @@
 .link {
-    stroke: white;
+    stroke: #E9E9E9;
     stroke-opacity: 0.01;
     stroke-width: 1px;
     fill: none;
@@ -15,7 +15,7 @@
 }
 
 .link--movieViz {
-    stroke: white;
+    stroke: #E9E9E9;
     stroke-opacity: 0.05;
     fill: none;
 }
@@ -26,16 +26,19 @@
     fill: none;
 }
 
-.node circle {
-    stroke: #ffffff;
-    stroke-width: 1px;
-    color: #ffffff;
+.node {
     cursor: pointer;
+}
+
+.node circle {
+    stroke: #E9E9E9;
+    stroke-width: 1px;
+    color: #E9E9E9;
     font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .node:hover {
-    fill: white;
+    fill: #E9E9E9;
     opacity: 1;
 }
 
@@ -69,31 +72,31 @@
 }
 
 .text_default {
-    fill: #ffffff;
+    fill: #E9E9E9;
     opacity: 0.8;
     font-size: 14px;
     font-family: sans-serif;
     cursor: pointer;
 }
 .text_highlight {
-    fill: #ffffff;
+    fill: #E9E9E9;
     opacity: 1;
     font-family: sans-serif;
 }
 .text_fade {
-    fill: #ffffff;
+    fill: #E9E9E9;
     opacity: 0.2;
     font-family: sans-serif;
 }
 .axis path,
 .axis line {
     fill: none;
-    stroke: #ffffff;
+    stroke: #E9E9E9;
     shape-rendering: crispEdges;
 }
 
 .axis text {
-    fill: #ffffff;
+    fill: #E9E9E9;
     opacity: 1;
     stroke: 1px;
     font-size: 12px;
@@ -102,7 +105,7 @@
 
 
 .text_label {
-    fill: #ffffff;
+    fill: #E9E9E9;
     opacity: 0.9;
     stroke: 1px;
     font-size: 12px;
@@ -129,9 +132,10 @@
 div.tooltip {
     position: absolute;
     text-align: center;
-    padding: 2px;
+    padding: 4px;
     font: 14px sans-serif;
-    background: lightsteelblue;
+    background: #222930;
+    color: #E9E9E9;
     border: 0px;
     border-radius: 8px;
 }
@@ -201,7 +205,7 @@ footer {
 
 
 a.listSearch:visited{
-    color:white;
+    color: #E9E9E9;
 }
 
 .form-control {

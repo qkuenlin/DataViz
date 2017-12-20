@@ -111,7 +111,7 @@ function drawCircularViz(update) {
     function mouseovered(d) {
         tooltipDiv
         .style("opacity", .9);
-        tooltipDiv.html(d.data.title)
+        tooltipDiv.text(d.data.title)
         .style("left", (d3.event.pageX + 10) + "px")
         .style("top", (d3.event.pageY - 10) + "px");
 
@@ -125,8 +125,8 @@ function drawCircularViz(update) {
             return !(l.target === d || l.source === d);
         }).classed("link--fade", true);
 
-        CircularNode.classed("node--highlight", function (n) { return n.target || n.sources; })
-        .classed("node--fade", function (n) { return !(n.target || n.sources); });
+        CircularNode.classed("node--highlight", function (n) { return n.target || n.source; })
+        .classed("node--fade", function (n) { return !(n.target || n.source); });
     }
 
     function mouseouted(d) {
@@ -136,7 +136,7 @@ function drawCircularViz(update) {
         tooltipDiv
         .style("opacity", 0).style("left", (0) + "px")
         .style("top", (0) + "px");
-        tooltipDiv.html(d.data.title)
+        tooltipDiv.text(d.data.title)
     }
 
 
