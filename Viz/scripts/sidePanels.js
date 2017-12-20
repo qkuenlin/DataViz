@@ -150,6 +150,9 @@ function displayDBInfo() {
 
     resizeContainers()
 
+    // d3.select(".TitleZone2"),selectAll("*").remove();
+    d3.select(".TitleZone2").select("h3").text("Number of movies by year!")
+
     let sidepanel2 = d3.select(".DrawZone");
     let svg = sidepanel2.select("#side-svg");
     svg.selectAll("*").remove();
@@ -312,13 +315,13 @@ function showMovieInfo(d) {
     textZone.style("height", Zoneheight + 'px');
     textZone.style("overflow-y", "scroll");
 
-
+    d3.select(".TitleZone2").select("h3").text("Movies linked using crew members!")
 
     //resize draw zone
     resizeContainers();
-    console.log(getHeight("#filters"))
     div = d3.select(".DrawZone")
-        .style("height", getHeight("#main-viz")+"px");
+        .style("height", getHeight("#main-viz")-getHeight(".TitleZone2")+"px")
+
     let tmp = getLinksForMovie(d);
     let crewIDs = tmp.crew;
     let moviesIDs = tmp.movies;
