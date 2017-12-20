@@ -39,8 +39,6 @@
 }
 
 .node circle {
-    stroke: #E9E9E9;
-    stroke-width: 1px;
     color: #E9E9E9;
     font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -48,6 +46,11 @@
 .node:hover {
     fill: #E9E9E9;
     opacity: 1;
+}
+
+.node--selected {
+    stroke-width: 4px;
+    stroke: #E9E9E9;
 }
 
 .node:hover,
@@ -75,7 +78,7 @@
 }
 
 .bigtext{
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
 }
 

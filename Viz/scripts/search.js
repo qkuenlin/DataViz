@@ -30,7 +30,7 @@ function checkIfSearched(movie) {
     else return false;
 }
 
-function showSearchResult() {
+function showSearchResult(token=true) {
     let div = d3.select(".TextZone");
     div.selectAll("*").remove();
     tooltipDiv.style("opacity", 0).style("opacity", 0)
@@ -97,10 +97,17 @@ function showSearchResult() {
     div.style("max-height", Zoneheight + 'px');
     div.style("overflow-y", "scroll");
 
-
-    let sidepanel2 = d3.select(".DrawZone");
-    let svg = sidepanel2.select("#side-svg");
-    svg.selectAll("*").remove();
+    if (token){
+        let sidepanel2 = d3.select(".DrawZone");
+        let svg = sidepanel2.select("#side-svg");
+        svg.selectAll("*").remove();
+        // svg.attr("width", parseInt(d3.select(".DrawZone").style("width"))-40) //-40 for the margin (no overflow)
+        svg.attr("width",10);
+        svg.attr("height",10);
+        div.style("overflow-y", "auto");
+        div.style("overflow-x", "auto")
+        d3.select(".TitleZone2").select("h3").remove("*")
+    }
     // let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
     // let svg_height = Zoneheight * 0.01;
     // svg.attr("width", svg_width).attr("height", svg_height);
@@ -265,26 +272,4 @@ function searchCrewID(crew_id) {
     search.value = crew_id.toString(10);
     searchCrew(false, true);
     search.value = "";
-    // let newSet = new Set();
-    // let newMap = new Map();
-    // // for each person
-    // people.forEach(function (value) {
-    //     // if the search is in the name of the perso
-    //     if (value.id_person == crew_id) {
-    //         // get all the movies linked to this person and add them to the set
-    //         let n = mapCrewMovie_filtered.get(value.id_person);
-    //         if (n) {
-    //             newMap.set(value.id_person, n);
-    //             n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
-    //         }
-    //     };
-    // })
-    // searchedMovies.crew = newSet;
-    // searchedMovies.crew_detail = newMap;
-    // // if search all return, if not draw directly
-    // searchedMovies.movies = new Set();
-    // searchedMovies.keywords = new Set();
-    // currentSearchSwitch = "Crew";
-    // drawMovieViz(newSet, true);
-    // showSearchResult();
 }

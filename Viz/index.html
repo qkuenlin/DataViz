@@ -26,7 +26,7 @@
                 <h1 class="text-center">Ultimate Movie Data Viz</h1>
             </div>
         </header>
-        <div class="row wrapper"  style="min-height: 800px">
+        <div class="row wrapper"  style="min-height: 900px">
             <div id="info-panel" class="col-3">
                 <div class="row">
                     <div class="col-md-12 TitleZone">
@@ -41,7 +41,7 @@
                 <div id="filters" class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <div id="department-filter" class="col-md-3 form-group">
+                            <div id="department-filter" class="col-md-2 form-group">
                                     <label for="DepartementOptions">Select list:</label>
                                     <select class="form-control" id="DepartementOptions" onchange="filterAll()">
                                         <option value="All" selected="selected">All</option>
@@ -88,16 +88,31 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="button-reset" class="col-md-3  text-md-right">
-                                <!-- text-sm-center -->
-                                <label for="restButton">Marty!! We need to come back!!</label>
-                                <button id="restButton" type="button" onclick="Reset()" class="btn btn-info">Go Back to Circular View</button>
+                            <div class="col-md-4" id="SearchBar">
+                                <div class="form-group">
+                                    <label for="SearchValue">Search:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="SearchValue" aria-label="Text input with dropdown button">
+                                        <div class="input-group-btn">
+                                            <button type="button" id="SearchType" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Search By...
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" onclick="searchFilm()" href="#">Movie</a>
+                                                <a class="dropdown-item" onclick="searchKeywords()" href="#">Keyword</a>
+                                                <a class="dropdown-item" onclick="searchCrew()" href="#">Cast-Crew</a>
+                                                <div role="separator" class="dropdown-divider" style="border-top: 2px solid rgba(0,0,0,.12);"></div>
+                                                <a class="dropdown-item" onclick="searchAll()" href="#">All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-9">
                                 <div class="row">
-                                    <div class="col-md-4 form-group" id="CircularVizOptions">
+                                    <div class="col-md-3 form-group" id="CircularVizOptions">
                                         <label for="ClusterOptions">Group by:</label>
                                         <select class="form-control" id="ClusterOptions" onChange="ClusterChange()">
                                             <option value="Year" selected="selected">Release Year</option>
@@ -106,19 +121,19 @@
                                         </select>
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-2 form-check" id="MovieVizOptions">
-                                        <label for="CustomAxisSwitch">Viz Layout</label>
-                                        <div class="input-group">
-                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onChange="customAxisChange()" data-onstyle="warning" data-offstyle="info" data-toggle="toggle" data-on="Force layout" data-off="Custom Axis"/>
-                                        </div>
-                                    </div>
                                     <div class="col-md-2" id="on-click-toggle">
                                         <label for="on-click-toggle-switch">on mouse click:</label>
                                         <div class="input-group">
                                             <input id="on-click-toggle-switch" data-onstyle="warning" data-offstyle="info" data-toggle="toggle" type="checkbox" data-off="show info" data-on="close node">
                                         </div>
                                     </div>
-                                    <div class="col-md-7" id="CustomAxisSelector">
+                                    <div class="col-md-2 form-check" id="MovieVizOptions">
+                                        <label for="CustomAxisSwitch">Viz Layout</label>
+                                        <div class="input-group">
+                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onChange="customAxisChange()" data-onstyle="warning" data-offstyle="info" data-toggle="toggle" data-on="Force layout" data-off="Custom Axis"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" id="CustomAxisSelector">
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label for="XAxis">X Axis:</label>
@@ -142,29 +157,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <div class="col-md-12" id="SearchBar">
-                                        <div class="form-group">
-                                            <label for="SearchValue">Search:</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="SearchValue" aria-label="Text input with dropdown button">
-                                                <div class="input-group-btn">
-                                                    <button type="button" id="SearchType" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        Search By...
-                                                    </button>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" onclick="searchFilm()" href="#">Movie</a>
-                                                        <a class="dropdown-item" onclick="searchKeywords()" href="#">Keyword</a>
-                                                        <a class="dropdown-item" onclick="searchCrew()" href="#">Cast-Crew</a>
-                                                        <div role="separator" class="dropdown-divider" style="border-top: 2px solid rgba(0,0,0,.12);"></div>
-                                                        <a class="dropdown-item" onclick="searchAll()" href="#">All</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                            <div id="button-reset" class="col-3 text-right">
+                                <!-- text-sm-center -->
+                                <label for="restButton">Marty!! We need to come back!!</label>
+                                <button id="restButton" type="button" onclick="Reset()" class="btn btn-info">Go Back to Circular View</button>
                             </div>
                         </div>
                         <div class="row">
@@ -209,7 +206,7 @@
         <footer class="row">
         <div class="col-sm-12">
             <p>Data set from <a href="https://www.kaggle.com/tmdb/tmdb-movie-metadata">Kaggle</a></p>
-            <p>Version 0.9.3.0</p>
+            <p>Version 0.9.3.1</p>
         </div>
         <div class="TestDiv">
         </div>

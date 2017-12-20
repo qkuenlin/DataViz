@@ -7,9 +7,10 @@ let height = getHeight("#filter-Viz") - getHeight("#filters");
 // Setting up all svgs containers
 let svg = d3.select("#main-svg");
 let CircularVizLayer = svg.append('g').attr("id","circular-g")   //.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+let UILayer2 = svg.append('g');
 let MovieVizLayer = svg.append('g');
 let UILayer = svg.append('g');
-let UILayer2 = svg.append('g');
+
 
 svg.attr("width", width)
 
@@ -158,8 +159,8 @@ function UISetup() {
 
     linearGradient
         .attr("x1", "0%")
-        .attr("y1", "100%")
-        .attr("x2", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
         .attr("y2", "0%");
 
     linearGradient.selectAll("stop")
@@ -168,32 +169,31 @@ function UISetup() {
         .attr("offset", function (d, i) { return i / (ReviewColor.range().length - 1); })
         .attr("stop-color", function (d) { return d; });
 
-    let xPos = width - 75;
-    let yPos = 10;
+    let xPos = width - 212;
+    let yPos = height + 50;
 
     UILayer2.append("rect")
-        .attr("width", 20)
-        .attr("height", 200)
+        .attr("width", 200)
+        .attr("height", 20)
         .attr("x", xPos)
         .attr("y", yPos)
         .attr("opacity", 0.8)
         .style("fill", "url(#linear-gradient)");
 
-    let reviewScale = d3.scaleLinear().domain([10, 0]).range([0, 200]);
+    let reviewScale = d3.scaleLinear().domain([0, 10]).range([0, 200]);
 
-    let ColorAxisSVG = d3.axisLeft().scale(reviewScale).ticks(5).tickSize(20);
+    let ColorAxisSVG = d3.axisBottom().scale(reviewScale).ticks(5).tickSize(20);
 
     UILayer2.append("g")
     .attr("class", "axis")
-    .attr("transform", "translate(" + (xPos + 20) + "," + yPos + ")")
+    .attr("transform", "translate(" + (xPos) + "," + yPos + ")")
     .attr("opacity", 0.8)
     .call(ColorAxisSVG);
 
     UILayer2.append("text")
                         .classed("text_label", true)
-                        .attr("transform", "rotate(90)")
-                        .attr("y", -(xPos + 40))
-                        .attr("x", (yPos + 100))
+                        .attr("y", (yPos - 20))
+                        .attr("x", (xPos + 100))
                         .attr("dy", "1em")
                         .style("text-anchor", "middle")
                         .attr("opacity", 0.8)

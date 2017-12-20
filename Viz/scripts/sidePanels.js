@@ -82,7 +82,7 @@ function displayDBInfo() {
     div.selectAll("*").remove();
     d3.select(".TitleZone").selectAll("*").remove()
     d3.select(".TitleZone")
-    .append("h1").text("Welcome to the Ultimate Movie Data Viz");
+    .append("h2").text("A few numbers ...");
     let list = div.append("ul").classed("justified", true);
     let elem = list.append("li");
     elem.append("span").classed("bigtext", true).text(all_movies.length.toString());
@@ -293,6 +293,11 @@ function getLinksForMovie(movie) {
 
 function showMovieInfo(d) {
     currentMovie = d;
+
+    MovieNode.classed("node--selected", function (n) {
+        return n.id_movie == d.id_movie;
+    });
+
     let titleZone = d3.select(".TitleZone")
     titleZone.selectAll("*").remove()
     titleZone.append("h1").text(d.title)
