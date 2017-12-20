@@ -151,7 +151,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
     function switcForceMode() {
-        let maxWidth = width - 150;
+        let maxWidth = width - 50;
         let maxHeight = height - 50;
 
         let minWidth = 0;
@@ -355,16 +355,16 @@ function drawMovieViz(_movies, recalculate, adding) {
                     displayDBInfo();
                     return;
                 } else {
+                    drawMovieViz(movieVizSet, true);
                     if (d.id_movie == currentMovie.id_movie) {
                         showMovieInfo([...movieVizSet][0]);
                     }
-                    drawMovieViz(movieVizSet, true);
                 }
             }
         }
         else {
-            showMovieInfo(d);
             drawMovieViz(d, true, true);
+            showMovieInfo(d);
         }
     }
 

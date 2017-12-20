@@ -293,6 +293,11 @@ function getLinksForMovie(movie) {
 
 function showMovieInfo(d) {
     currentMovie = d;
+
+    MovieNode.classed("node--selected", function (n) {
+        return n.id_movie == d.id_movie;
+    });
+
     let titleZone = d3.select(".TitleZone")
     titleZone.selectAll("*").remove()
     titleZone.append("h1").text(d.title)
