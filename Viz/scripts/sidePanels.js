@@ -513,7 +513,7 @@ function showMovieInfo(d) {
         })
         .on("click", function (d) {
             cleanSearch();
-            searchCrewID(d.id)
+            searchCrewID(d.id);
             tooltipDiv.style("opacity", 0)
             .style("left", (0) + "px")
             .style("top", (0) + "px");
