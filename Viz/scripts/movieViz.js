@@ -154,7 +154,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         let maxWidth = width - 150;
         let maxHeight = height - 50;
 
-        let minWidth = 120;
+        let minWidth = 0;
         let minHeight = 60;
 
         let xAxisType = d3.select('#XAxis').property('value');
@@ -165,6 +165,55 @@ function drawMovieViz(_movies, recalculate, adding) {
 
         let strength = 10;
 
+        if (yAxisType == "Release Date") {
+            minWidth = 120;
+            let max = new Date("1900-1-1");
+            let min = new Date("2100-1-1");
+            MovieNode.each(function (d) {
+                if (new Date(d.release_date) > max) max = new Date(d.release_date);
+                else if (new Date(d.release_date) < min) min = new Date(d.release_date);
+            })
+
+            min = new Date(min.getFullYear(), 0, 1);
+            max = new Date(max.getFullYear(), 11, 31);
+
+            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
+            simulation.force("posY", d3.forceY(function (d) { return yAxis(new Date(d.release_date)); }).strength(strength))
+
+        }
+        else if (yAxisType == "Reviews") {
+            minWidth = 50;
+
+            yAxis = d3.scaleLinear().domain([0, 10]).range([maxHeight, minHeight]);
+            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.vote_average); }).strength(strength))
+
+        }
+        else if (yAxisType == "Budget") {
+            minWidth = 100;
+
+            let max = 0;
+            MovieNode.each(function (d) {
+                if (max < d.Budget) max = d.Budget;
+            })
+            let min = 0;
+            max = Math.ceil(max / 20000000) * 20000000;
+            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
+            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.Budget); }).strength(strength))
+
+        }
+        else if (yAxisType == "Revenue") {
+            minWidth = 115;
+
+            let max = 0;
+            MovieNode.each(function (d) {
+                if (max < d.revenue) max = d.revenue;
+            })
+            let min = 0;
+            max = Math.ceil(max / 50000000) * 50000000;
+            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
+            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.revenue); }).strength(strength))
+        }
+
         if (xAxisType == "Release Date") {
             let max = new Date("1900-1-1");
             let min = new Date("2100-1-1");
@@ -173,8 +222,8 @@ function drawMovieViz(_movies, recalculate, adding) {
                 else if (new Date(d.release_date) < min) min = new Date(d.release_date);
             })
 
-            min /= 1.01;
-            max *= 1.01;
+            min = new Date(min.getFullYear(), 0, 1);
+            max = new Date(max.getFullYear(), 11, 31);
 
             xAxis = d3.scaleLinear().domain([min, max]).range([minWidth, maxWidth]);
 
@@ -188,75 +237,24 @@ function drawMovieViz(_movies, recalculate, adding) {
         }
         else if (xAxisType == "Budget") {
             let max = 0;
-            let min = 1000000000000;
             MovieNode.each(function (d) {
                 if (max < d.Budget) max = d.Budget;
-                else if (min > d.Budget) min = d.Budget;
             })
-            min = 0.85 * min;
-            max = 1.1 * max;
+            let min = 0;
+            max = Math.ceil(max / 20000000) * 20000000;
             xAxis = d3.scaleLinear().domain([min, max]).range([minWidth, maxWidth]);
             simulation.force("posX", d3.forceX(function (d) { return xAxis(d.Budget); }).strength(strength))
 
         }
         else if (xAxisType == "Revenue") {
             let max = 0;
-            let min = 10000000000000;
             MovieNode.each(function (d) {
                 if (max < d.revenue) max = d.revenue;
-                else if (min > d.revenue) min = d.revenue;
             })
-            min = 0.85 * min;
-            max = 1.1 * max;
+            let min = 0;
+            max = Math.ceil(max / 20000000) * 20000000;
             xAxis = d3.scaleLinear().domain([min, max]).range([minWidth, maxWidth]);
             simulation.force("posX", d3.forceX(function (d) { return xAxis(d.revenue); }).strength(strength))
-
-        }
-
-        if (yAxisType == "Release Date") {
-            let max = new Date("1900-1-1");
-            let min = new Date("2100-1-1");
-            MovieNode.each(function (d) {
-                if (new Date(d.release_date) > max) max = new Date(d.release_date);
-                else if (new Date(d.release_date) < min) min = new Date(d.release_date);
-            })
-
-            min /= 1.01;
-            max *= 1.01;
-
-            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
-            simulation.force("posY", d3.forceY(function (d) { return yAxis(new Date(d.release_date)); }).strength(strength))
-
-        }
-        else if (yAxisType == "Reviews") {
-            yAxis = d3.scaleLinear().domain([0, 10]).range([maxHeight, minHeight]);
-            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.vote_average); }).strength(strength))
-
-        }
-        else if (yAxisType == "Budget") {
-            let max = 0;
-            let min = 1000000000;
-            MovieNode.each(function (d) {
-                if (max < d.Budget) max = d.Budget;
-                else if (min > d.Budget) min = d.Budget;
-            })
-            min = 0.85 * min;
-            max = 1.1 * max;
-            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
-            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.Budget); }).strength(strength))
-
-        }
-        else if (yAxisType == "Revenue") {
-            let max = 0;
-            let min = 1000000000;
-            MovieNode.each(function (d) {
-                if (max < d.revenue) max = d.revenue;
-                else if (min > d.revenue) min = d.revenue;
-            })
-            min = 0.85 * min;
-            max = 1.1 * max;
-            yAxis = d3.scaleLinear().domain([min, max]).range([maxHeight, minHeight]);
-            simulation.force("posY", d3.forceY(function (d) { return yAxis(d.revenue); }).strength(strength))
         }
 
         simulation.alphaTarget(0.01).restart();
@@ -265,7 +263,7 @@ function drawMovieViz(_movies, recalculate, adding) {
 
         UILayer.selectAll("*").remove();
 
-        let xAxisSVG = d3.axisTop().scale(xAxis);
+        let xAxisSVG = d3.axisTop().scale(xAxis).ticks(4);
 
 
         if (xAxisType == "Release Date") {

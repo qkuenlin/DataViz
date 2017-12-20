@@ -1,3 +1,11 @@
+.TestDiv {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+}
+
 .link {
     stroke: #E9E9E9;
     stroke-opacity: 0.01;

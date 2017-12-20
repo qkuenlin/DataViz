@@ -321,7 +321,6 @@ function showMovieInfo(d) {
     resizeContainers();
     div = d3.select(".DrawZone")
         .style("height", getHeight("#main-viz")-getHeight(".TitleZone2")+"px")
-    div.style("width",parseInt(div.style("width"))-50 + "px")
 
     let tmp = getLinksForMovie(d);
     let crewIDs = tmp.crew;
@@ -331,7 +330,7 @@ function showMovieInfo(d) {
 
     let margin = { top: 20, right: 10, bottom: 20, left: 5 };
     //svg legerement plus petit que ce que pourrait car enleve deja marges
-    let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
+    // let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
     let height = getHeight("#side-panel") - margin.top - margin.bottom;
 
     let min_height = Math.max(crewIDs.length, moviesIDs.length) * 16; //text = 12, 4 margin
@@ -339,10 +338,35 @@ function showMovieInfo(d) {
         height = min_height;
     }
 
+    let testDiv = d3.select(".TestDiv");
+    let linkWidth = 200;
+    let longuestCrewName = 0;
+    crewIDs.forEach(function(d) {
+        let crew = crewByID(d)
+        testDiv.html(crew.name);
+        let width = testDiv.node().getBoundingClientRect().width
+        if (width > longuestCrewName) {
+            longuestCrewName = width
+        }
+    })
+    longuestCrewName = longuestCrewName +10
+    console.log(longuestCrewName);
+
+    let longuestMovieName = 0;
+    moviesIDs.forEach(function(d) {
+        let movie = mapMovie.get(d)
+        testDiv.html(movie.title);
+        let width = testDiv.node().getBoundingClientRect().width
+        if (width > longuestMovieName) {
+            longuestMovieName = width
+        }
+    })
+    longuestMovieName = longuestMovieName +10
+    console.log(longuestMovieName);
 
     let crewScale = d3.scaleLinear().range([0, height]).domain([0, crewIDs.length]);
-    let crewX = width / 4;
-    let movieX = width * 3 / 4;
+    let crewX = longuestCrewName;
+    let movieX = longuestCrewName + linkWidth;
     let movieScale = d3.scaleLinear().range([0, height]).domain([0, moviesIDs.length]);
     let crew = [];
     let movies = [];
@@ -361,8 +385,9 @@ function showMovieInfo(d) {
 
     let svgcontainer = div.select("#side-svg");
     svgcontainer.selectAll("*").remove()
+    let width = longuestCrewName + linkWidth + longuestMovieName;
     svgcontainer//.attr("class", "background")
-    .attr("width", width + 200) // to see long names #TODO faire taille fonction du nom
+    .attr("width", width)
     .attr("height", height + margin.top + margin.bottom);
 
     let svg = svgcontainer.append("g")
