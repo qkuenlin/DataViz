@@ -94,17 +94,18 @@ function showSearchResult() {
 
     }
 
-    Zoneheight = getHeight("#side-panel") - getHeight(".TitleZone")
-    div.style("max-height", Zoneheight * 0.95 + 'px');
+    Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
+    div.style("max-height", Zoneheight + 'px');
     div.style("overflow-y", "scroll");
 
 
     let sidepanel2 = d3.select(".DrawZone");
     let svg = sidepanel2.select("#side-svg");
     svg.selectAll("*").remove();
-    let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
-    let svg_height = Zoneheight * 0.01;
-    svg.attr("width", svg_width).attr("height", svg_height);
+    // let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
+    // let svg_height = Zoneheight * 0.01;
+    // svg.attr("width", svg_width).attr("height", svg_height);
+
     // let margin = { top: 5, right: 5, bottom: 30, left: 50 };
     // let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     // let width = svg.attr("width") - margin.left - margin.right;

@@ -202,7 +202,6 @@ function UISetup() {
 
 function resizeSVG() {
     height = getHeight("#filter-Viz") - getHeight("#filters")
-    console.log("svg",height)
     d3.select(".svg-content").attr("height", height)
 }
 

@@ -46,7 +46,6 @@ function drawCircularViz(update) {
     //if (update) return updateCircularViz();
 
     currentViz = 1;
-    console.log(width, height)
     CircularVizLayer = svg.select('g#circular-g').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     CircularVizLayer.selectAll("*").remove();
     MovieVizLayer.selectAll("*").remove();
@@ -104,8 +103,9 @@ function drawCircularViz(update) {
         tooltipDiv.style("opacity", 0).style("left", (0) + "px")
         .style("top", (0) + "px");
         d = n.data;
-        showMovieInfo(d);
+
         drawMovieViz(new Set().add(d), true);
+        showMovieInfo(d);
     }
 
     function mouseovered(d) {

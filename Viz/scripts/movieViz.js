@@ -69,8 +69,9 @@ function drawMovieViz(_movies, recalculate, adding) {
     document.getElementById('MovieVizOptions').style.display = "inline";
     document.getElementById('button-reset').style.display = "inline";
 
+    resizeContainers();
     //change svg height
-    resizeSVG()
+    resizeSVG();
 
     simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
 
@@ -95,7 +96,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     else {
         currentViz = 2;
 
-        width = parseInt(d3.select(".wrapper").style("width")) - parseInt(d3.select(".side-panel").style("width"));
+        width = parseInt(d3.select("#main-panel").style("width"));
         CircularVizLayer.selectAll("*").remove();
         MovieVizLayer.selectAll("*").remove();
         UILayer.selectAll("*").remove();

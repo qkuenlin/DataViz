@@ -99,42 +99,42 @@ function displayDBInfo() {
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text("Best score " + stats.max_vote.vote_average + "/10 ");
     elem.append("span").classed("textWithLink", true).text(stats.max_vote.title).on("click", function (d) {
-        showMovieInfo(stats.max_vote);
         drawMovieViz(new Set().add(stats.max_vote), true);
+        showMovieInfo(stats.max_vote);
     });
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text("" + (stats.max_rev.revenue).toLocaleString() + "$ ");
     elem.append("span").classed("textWithLink", true).text(stats.max_rev.title).on("click", function (d) {
-        showMovieInfo(stats.max_rev);
         drawMovieViz(new Set().add(stats.max_rev), true);
+        showMovieInfo(stats.max_rev);
     });
     elem.append("span").text(" : best revenues.")
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text("" + stats.max_budget.Budget.toLocaleString() + "$ ");
     elem.append("span").classed("textWithLink", true).text(stats.max_budget.title).on("click", function (d) {
-        showMovieInfo(stats.max_budget);
         drawMovieViz(new Set().add(stats.max_budget), true);
+        showMovieInfo(stats.max_budget);
     });
     elem.append("span").text(" : highest budget.")
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text(DateParse(new Date(stats.oldest.release_date)) + " ");
     elem.append("span").classed("textWithLink", true).text(stats.oldest.title).on("click", function (d) {
-        showMovieInfo(stats.oldest);
         drawMovieViz(new Set().add(stats.oldest), true);
+        showMovieInfo(stats.oldest);
     });
     elem.append("span").text(" : oldest movie");
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text(DateParse(new Date(stats.youngest.release_date)) + " ");
     elem.append("span").classed("textWithLink", true).text(stats.youngest.title).on("click", function (d) {
-        showMovieInfo(stats.youngest);
         drawMovieViz(new Set().add(stats.youngest), true);
+        showMovieInfo(stats.youngest);
     });
     elem.append("span").text(" : youngest movie");
     elem = list.append("li");
     elem.append("span").classed("bigtext", true).text("" + stats.longuest.runtime + " minutes.");
     elem.append("span").classed("textWithLink", true).text(stats.longuest.title).on("click", function (d) {
-        showMovieInfo(stats.longuest);
         drawMovieViz(new Set().add(stats.longuest), true);
+        showMovieInfo(stats.longuest);
     });
     elem.append("span").text(" : longuest movie.");
     elem = list.append("li");
@@ -154,7 +154,7 @@ function displayDBInfo() {
     let svg = sidepanel2.select("#side-svg");
     svg.selectAll("*").remove();
     let svg_width = parseInt(d3.select("#side-panel").style("width")) - 30; //col padding is 2*15
-    let svg_height = getHeight("#main-viz")*0.6;
+    let svg_height = getHeight("#side-panel")*0.6;
     svg.attr("width", svg_width).attr("height", svg_height);
     let margin = { top: 5, right: 5, bottom: 30, left: 50 };
     let g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -309,10 +309,17 @@ function showMovieInfo(d) {
     Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
 
 
-    textZone.style("max-height", Zoneheight * 0.35 + 'px');
+    textZone.style("height", Zoneheight + 'px');
     textZone.style("overflow-y", "scroll");
 
-    div = d3.select(".DrawZone");
+
+
+    //resize draw zone
+    resizeContainers();
+    console.log(getHeight("#filters"))
+    div = d3.select(".DrawZone")
+        .style("height", getHeight("#main-viz")+"px")
+    div.style("width",parseInt(div.style("width"))-50 + "px")
 
     let tmp = getLinksForMovie(d);
     let crewIDs = tmp.crew;
@@ -323,7 +330,7 @@ function showMovieInfo(d) {
     let margin = { top: 20, right: 10, bottom: 20, left: 5 };
     //svg legerement plus petit que ce que pourrait car enlève deja marges
     let width = parseInt(div.style("width")) - 30 - margin.left - margin.right; //div.col has 2*15 of pad
-    let height = getHeight(".DrawZone") - margin.top - margin.bottom;
+    let height = getHeight("#side-panel") - margin.top - margin.bottom;
 
     let min_height = Math.max(crewIDs.length, moviesIDs.length) * 16; //text = 12, 4 margin
     if (height < min_height) {
@@ -353,14 +360,10 @@ function showMovieInfo(d) {
     let svgcontainer = div.select("#side-svg");
     svgcontainer.selectAll("*").remove()
     svgcontainer//.attr("class", "background")
-    .attr("width", width + 100) // to see long names #TODO faire taille fonction du nom
+    .attr("width", width + 200) // to see long names #TODO faire taille fonction du nom
     .attr("height", height + margin.top + margin.bottom);
 
-    // let background = svgcontainer.append("g");
-    // background.append("rect")
-    // .attr("width", width )
-    // .attr("height", height)
-    // .attr("class", "background");
+
 
     let svg = svgcontainer.append("g")
     .attr("width", width)
@@ -574,7 +577,7 @@ function showMovieInfo(d) {
         drawnLinks.classed("side-links--highlight", false).classed("side-links--fade", false);
     });
 
-    div.style("max-height", Zoneheight * 0.6 + 'px');
+    div.style("max-height", getHeight("#main-viz") + 'px');
     div.style("overflow-y", "scroll");
     div.style("overflow-x", "scroll")
 }
