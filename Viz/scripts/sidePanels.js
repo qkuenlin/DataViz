@@ -243,7 +243,7 @@ function getArrayFromString(str) {
 function addRow(table, row1, row2) {
     let newRow = table.append("tr");
     newRow.append("th").attr("scope", "row").text(row1);
-    newRow.append("td").text(row2);
+    newRow.append("td").classed("justified", true).text(row2);
 }
 function addRowArrWithOnClick(table, row, array, onclick) {
     let newRow = table.append("tr");
@@ -308,6 +308,9 @@ function showMovieInfo(d) {
     addRow(table, "Vote count", "" + d.vote_count);
     addRow(table, "Budget", "" + d.Budget.toLocaleString() + "$");
     addRow(table, "Revenue", "" + d.revenue.toLocaleString() + "$");
+    // addRow(table, "Overview", d.overview);
+    let newRow = table.append("tr");
+    newRow.append("td").classed("justified", true).attr("colspan", "2").text(d.overview);
 
     Zoneheight = getHeight("#info-panel") - getHeight(".TitleZone")
 
