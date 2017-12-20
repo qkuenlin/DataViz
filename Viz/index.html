@@ -26,7 +26,7 @@
                 <h1 class="text-center">Ultimate Movie Data Viz</h1>
             </div>
         </header>
-        <div class="row wrapper"  style="min-height: 1000px">
+        <div class="row wrapper"  style="min-height: 800px">
             <div id="info-panel" class="col-3">
                 <div class="row">
                     <div class="col-md-12 TitleZone">
@@ -106,13 +106,19 @@
                                         </select>
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-4 form-check" id="MovieVizOptions">
-                                        <label class="input-group">
-                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onChange="customAxisChange()" data-onstyle="info" data-offstyle="warning" data-toggle="toggle" data-on="Custom Axis" data-off="Graph"/>
-                                        </label>
+                                    <div class="col-md-2 form-check" id="MovieVizOptions">
+                                        <label for="CustomAxisSwitch">Viz Layout</label>
+                                        <div class="input-group">
+                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onChange="customAxisChange()" data-onstyle="warning" data-offstyle="info" data-toggle="toggle" data-on="Force layout" data-off="Custom Axis"/>
+                                        </div>
                                     </div>
-                                    <!--<div class="w-100"></div>-->
-                                    <div class="col-md-8" id="CustomAxisSelector">
+                                    <div class="col-md-2" id="on-click-toggle">
+                                        <label for="on-click-toggle-switch">on mouse click:</label>
+                                        <div class="input-group">
+                                            <input id="on-click-toggle-switch" data-onstyle="warning" data-offstyle="info" data-toggle="toggle" type="checkbox" data-off="show info" data-on="close node">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7" id="CustomAxisSelector">
                                         <div class="row">
                                             <div class="form-group col-md-6">
                                                 <label for="XAxis">X Axis:</label>
@@ -162,12 +168,6 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-2" id="on-click-toggle">
-                                <label for="on-click-toggle-switch">on mouse click:</label>
-                                <div class="input-group">
-                                    <input id="on-click-toggle-switch" checked data-onstyle="info" data-offstyle="warning" data-toggle="toggle" type="checkbox" data-off="close node" data-on="show info">
-                                </div>
-                            </div>
                             <div class="col-md-4" id="reset-company-filter">
                                 <span onclick="removeCompanyFilter()" id="production-company-name" class=textWithLink>X.toto</span>
                             </div>
@@ -209,7 +209,7 @@
         <footer class="row">
         <div class="col-sm-12">
             <p>Data set from <a href="https://www.kaggle.com/tmdb/tmdb-movie-metadata">Kaggle</a></p>
-            <p>Version 0.9.2.6</p>
+            <p>Version 0.9.3.0</p>
         </div>
         <div class="TestDiv">
         </div>
