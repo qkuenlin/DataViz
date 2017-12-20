@@ -355,16 +355,16 @@ function drawMovieViz(_movies, recalculate, adding) {
                     displayDBInfo();
                     return;
                 } else {
+                    drawMovieViz(movieVizSet, true);
                     if (d.id_movie == currentMovie.id_movie) {
                         showMovieInfo([...movieVizSet][0]);
                     }
-                    drawMovieViz(movieVizSet, true);
                 }
             }
         }
         else {
-            showMovieInfo(d);
             drawMovieViz(d, true, true);
+            showMovieInfo(d);
         }
     }
 
