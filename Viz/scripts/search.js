@@ -212,7 +212,7 @@ function searchKeywords(all_token) {
     }
 }
 
-function searchCrew(all_token) {
+function searchCrew(all_token, useid = false) {
     //change the switch
 
     // get the words the user want to search
@@ -223,7 +223,7 @@ function searchCrew(all_token) {
     // for each person
     people.forEach(function (value) {
         // if the search is in the name of the perso
-        if (value.name.toLowerCase().includes(search)) {
+        if ((useid && value.id_person == parseInt(search, 10)) || (!useid && value.name.toLowerCase().includes(search))) {
             // get all the movies linked to this person and add them to the set
             let n = mapCrewMovie_filtered.get(value.id_person);
 
@@ -267,28 +267,9 @@ function searchCrew(all_token) {
     }
 }
 
-function searchCrewID(crew_id, token=true) {
-
-    let newSet = new Set();
-    let newMap = new Map();
-    // for each person
-    people.forEach(function (value) {
-        // if the search is in the name of the perso
-        if (value.id_person == crew_id) {
-            // get all the movies linked to this person and add them to the set
-            let n = mapCrewMovie_filtered.get(value.id_person);
-            if (n) {
-                newMap.set(value.id_person, n);
-                n.forEach((d) => newSet.add(mapMovie.get(d.id_movie)))
-            }
-        };
-    })
-    searchedMovies.crew = newSet;
-    searchedMovies.crew_detail = newMap;
-    // if search all return, if not draw directly
-    searchedMovies.movies = new Set();
-    searchedMovies.keywords = new Set();
-    currentSearchSwitch = "Crew";
-    drawMovieViz(newSet, true);
-    showSearchResult(token);
+function searchCrewID(crew_id) {
+    let search = document.querySelector("#SearchValue");
+    search.value = crew_id.toString(10);
+    searchCrew(false, true);
+    search.value = "";
 }
