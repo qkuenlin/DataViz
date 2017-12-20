@@ -348,7 +348,7 @@ function drawMovieViz(_movies, recalculate, adding) {
             cleanSearch()
         }
         if (movieVizSet.has(d)) {
-            if (document.getElementById('on-click-toggle-switch').checked) {
+            if (!document.getElementById('on-click-toggle-switch').checked) {
                 showMovieInfo(d);
             } else {
                 movieVizSet.delete(d);
