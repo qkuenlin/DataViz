@@ -23,7 +23,7 @@ function createGraph(movies) {
     movies.forEach(function (movie) {
         movieSet.add(movie);
         let crewAndMovieLinks = getCrewAndMovieLinks(movie);
-
+        
         crewAndMovieLinks.links.forEach(function (m_id) {
             let m = mapMovie.get(m_id);
             let link = { source: movie, target: m, value: 1 };
@@ -121,7 +121,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         .selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
-        .attr("r", function (d) { if (movieVizSet.has(d)) return 15; else return 6 })
+        .attr("r", function (d) { if (movieVizSet.has(d)) return d.radius = 15; else return d.radius = 6 })
         .attr("fill", function (d) { return ReviewColor(d.vote_average); })
         .on("click", function (d) { click(d); })
         .on("mouseover", mouseovered)
@@ -313,6 +313,12 @@ function drawMovieViz(_movies, recalculate, adding) {
         .attr("x2", function (d) { return d.target.x; })
         .attr("y2", function (d) { return d.target.y; });
         MovieNode
+            .each(function (d) {
+                if (d.y < d.radius+1) d.y = d.radius+1;
+                else if (d.y > height - 15 - d.radius) d.y = height - 15 - d.radius;
+                if (d.x < d.radius+1) d.x = d.radius+1;
+                else if (d.x > width - 25 - d.radius) d.x = width - 25 - d.radius;
+            })
         .attr("cx", function (d) { return d.x; })
         .attr("cy", function (d) { return d.y; });
 
