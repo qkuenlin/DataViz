@@ -107,9 +107,8 @@
                                     </div>
                                     <div class="w-100"></div>
                                     <div class="col-md-4 form-check" id="MovieVizOptions">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onClick="customAxisChange()"/>
-                                            Custom Axis
+                                        <label class="input-group">
+                                            <input class="form-check-input" type="checkbox" id="CustomAxisSwitch" onChange="customAxisChange()" data-onstyle="info" data-offstyle="warning" data-toggle="toggle" data-on="Custom Axis" data-off="Graph"/>
                                         </label>
                                     </div>
                                     <!--<div class="w-100"></div>-->
@@ -185,8 +184,15 @@
                     <div id="main-panel" class="col-7" >
                         <svg id="main-svg" class="svg-content"></svg>
                     </div>
-                    <div id="side-panel" class="col-5 DrawZone">
-                        <svg id="side-svg" class="side-svg"></svg>
+                    <div id="side-panel" class="col-5">
+                        <div class="row">
+                            <div class="col-12 TitleZone2">
+                                <h3></h3>
+                            </div>
+                        </div>
+                        <div class="col-12 DrawZone">
+                            <svg id="side-svg" class="side-svg"></svg>
+                        </div>
                     </div>
                 </div>
             </div>
