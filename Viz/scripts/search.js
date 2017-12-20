@@ -30,7 +30,7 @@ function checkIfSearched(movie) {
     else return false;
 }
 
-function showSearchResult() {
+function showSearchResult(token=true) {
     let div = d3.select(".TextZone");
     div.selectAll("*").remove();
     tooltipDiv.style("opacity", 0).style("opacity", 0)
@@ -97,10 +97,17 @@ function showSearchResult() {
     div.style("max-height", Zoneheight + 'px');
     div.style("overflow-y", "scroll");
 
-
-    let sidepanel2 = d3.select(".DrawZone");
-    let svg = sidepanel2.select("#side-svg");
-    svg.selectAll("*").remove();
+    if (token){
+        let sidepanel2 = d3.select(".DrawZone");
+        let svg = sidepanel2.select("#side-svg");
+        svg.selectAll("*").remove();
+        // svg.attr("width", parseInt(d3.select(".DrawZone").style("width"))-40) //-40 for the margin (no overflow)
+        svg.attr("width",10);
+        svg.attr("height",10);
+        div.style("overflow-y", "auto");
+        div.style("overflow-x", "auto")
+        d3.select(".TitleZone2").select("h3").remove("*")
+    }
     // let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
     // let svg_height = Zoneheight * 0.01;
     // svg.attr("width", svg_width).attr("height", svg_height);
@@ -260,7 +267,7 @@ function searchCrew(all_token) {
     }
 }
 
-function searchCrewID(crew_id) {
+function searchCrewID(crew_id, token=true) {
 
     let newSet = new Set();
     let newMap = new Map();
@@ -283,5 +290,5 @@ function searchCrewID(crew_id) {
     searchedMovies.keywords = new Set();
     currentSearchSwitch = "Crew";
     drawMovieViz(newSet, true);
-    showSearchResult();
+    showSearchResult(token);
 }
