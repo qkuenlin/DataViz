@@ -151,7 +151,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
     function switcForceMode() {
-        let maxWidth = width - 150;
+        let maxWidth = width - 50;
         let maxHeight = height - 50;
 
         let minWidth = 0;
