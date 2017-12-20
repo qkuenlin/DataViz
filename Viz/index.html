@@ -9,18 +9,20 @@
     <link rel="stylesheet" type="text/css" href="slider/codebase/dhtmlxslider.css" />
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="scripts/introjs/introjs.css" />
+    <link rel="stylesheet" type="text/css" href="scripts/introjs/introjs-dark.css" />
 
     <script src="slider/codebase/dhtmlxslider.js"></script>
     <script src="bootstrap/js/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+    <script src="scripts/introjs/intro.js"></script>
 
     <!--<script src="linkedGraph.js"></script>-->
 </head>
-<body class="bg-dark text-white">
-    <div class="container-fluid">
+<body class="bg-dark">
+    <div class="container-fluid bg-dark text-white">
         <header class="row">
             <div class="col-12">
                 <h1 class="text-center">Ultimate Movie Data Viz</h1>
@@ -203,13 +205,13 @@
         <script src="scripts/circularView.js"></script>
         <script src="scripts/sidePanels.js"></script>
         <script src="scripts/main.js"></script>
+        <script src="scripts/help.js"></script>
         <footer class="row">
         <div class="col-sm-12">
             <p>Data set from <a href="https://www.kaggle.com/tmdb/tmdb-movie-metadata">Kaggle</a></p>
             <p>Version 0.9.3.1</p>
         </div>
-        <div class="TestDiv">
-        </div>
+        <button type="button" class="btn btn-danger" onclick="startHelp()">Danger</button>
         </footer>
     </div>
 </body>
