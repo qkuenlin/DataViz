@@ -82,7 +82,7 @@ function displayDBInfo() {
     div.selectAll("*").remove();
     d3.select(".TitleZone").selectAll("*").remove()
     d3.select(".TitleZone")
-    .append("h1").text("Welcome to the Ultimate Movie Data Viz");
+    .append("h2").text("A few numbers ...");
     let list = div.append("ul").classed("justified", true);
     let elem = list.append("li");
     elem.append("span").classed("bigtext", true).text(all_movies.length.toString());
