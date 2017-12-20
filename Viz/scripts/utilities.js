@@ -168,7 +168,7 @@ function UISetup() {
         .attr("offset", function (d, i) { return i / (ReviewColor.range().length - 1); })
         .attr("stop-color", function (d) { return d; });
 
-    let xPos = width - 75;
+    let xPos = width - 45;
     let yPos = 10;
 
     UILayer2.append("rect")

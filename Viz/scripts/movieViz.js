@@ -366,7 +366,6 @@ function drawMovieViz(_movies, recalculate, adding) {
             showMovieInfo(d);
             drawMovieViz(d, true, true);
         }
-
     }
 
     function mouseovered(d) {
