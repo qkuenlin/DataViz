@@ -242,8 +242,8 @@ function getArrayFromString(str) {
 }
 function addRow(table, row1, row2) {
     let newRow = table.append("tr");
-    newRow.append("th").attr("scope", "row").text(row1);
-    newRow.append("td").classed("justified", true).text(row2);
+    newRow.append("th").attr("scope", "row").html(row1);
+    newRow.append("td").classed("justified", true).html(row2);
 }
 function addRowArrWithOnClick(table, row, array, onclick) {
     let newRow = table.append("tr");
@@ -313,7 +313,7 @@ function showMovieInfo(d) {
     addRow(table, "Vote count", "" + d.vote_count);
     addRow(table, "Budget", "" + d.Budget.toLocaleString() + "$");
     addRow(table, "Revenue", "" + d.revenue.toLocaleString() + "$");
-    // addRow(table, "Overview", d.overview);
+    addRow(table, "URL", "<a href=\"https://www.themoviedb.org/movie/"+d.id_movie+"\"target=\"_blank\">"+d.title+" on tmdb</a>")
     let newRow = table.append("tr");
     newRow.append("td").classed("justified", true).attr("colspan", "2").text(d.overview);
 
@@ -358,7 +358,6 @@ function showMovieInfo(d) {
         }
     })
     longuestCrewName = longuestCrewName +10
-    console.log(longuestCrewName);
 
     let longuestMovieName = 0;
     moviesIDs.forEach(function(d) {
@@ -370,7 +369,6 @@ function showMovieInfo(d) {
         }
     })
     longuestMovieName = longuestMovieName +10
-    console.log(longuestMovieName);
 
     let crewScale = d3.scaleLinear().range([0, height]).domain([0, crewIDs.length]);
     let crewX = longuestCrewName;

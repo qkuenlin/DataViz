@@ -73,7 +73,7 @@ function drawCircularViz(update) {
     .attr("class", "node")
     .attr("r", 4)
     .attr("fill", function (d) { return ReviewColor(d.data.vote_average); })
-    .on("click", function (d) { hasClickedHelp = true ;console.log(d.data); click(d); })
+    .on("click", function (d) { hasClickedHelp = true ; click(d); })
     .on("mouseover", mouseovered)
     .on("mouseout", mouseouted)
     .attr("dy", "0.31em")
