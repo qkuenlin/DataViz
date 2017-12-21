@@ -17,12 +17,12 @@ function startHelp() {
             }
             hasClickedHelp = false;
         }
-        if(intro._currentStep == 13) { //click on node in bubble view
+        if(intro._currentStep == 13) { //click on axis switch view
             if(!document.getElementById("CustomAxisSwitch").checked) {
                 intro.goToStep(13);
             }
         }
-        if(intro._currentStep == 15) { //click on node in bubble view
+        if(intro._currentStep == 15) { //do search
             if(!searchDoneHelp) {
                 intro.goToStep(15);
             }
