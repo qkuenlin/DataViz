@@ -29,7 +29,9 @@ function startHelp() {
             }
         }
     })
-    intro.on
+    intro.oncomplete(function() {
+      Reset();
+    });
     intro.start()
 }
 
@@ -39,8 +41,8 @@ let helper ={
             hideprev: true,
             intro: "Welcome to our Movie Database visualisation.<br>"+
                 "This short interaction will show you how to use it.<br>"+
-                "You can navigate between the message with the buttons or using the keyboard arrows.<br>"+
-                "You can close it by clicking outside of the focused area or hitting the ESC key.<br>"+
+                "You can navigate between these messages with the buttons or using the keyboard arrows.<br>"+
+                "You can close the demo by clicking outside of the focused area, using the skip button or hitting the ESC key.<br>"+
                 "At any time you can restart it by clicking on the red Demo button on the top right of the window.<br>"+
                 "Enjoy :)"
         },
@@ -96,7 +98,7 @@ let helper ={
         {
             element: document.querySelector("#filters"),
             disableInteraction: true,
-            intro: "As you can see, the filters are slithly different."
+            intro: "As you can see, the filters are slightly different."
         },
         {
             element: document.querySelector("#on-click-toggle"),
