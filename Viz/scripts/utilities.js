@@ -87,6 +87,7 @@ d3.select(window).on("resize", function () {
 function Reset() {
     cleanSearch();
     currentViz = 1;
+    currentCompany = "";
     filterAll();
     displayDBInfo();
 }
