@@ -46,8 +46,8 @@ let helper ={
         {
             element: document.querySelector("#main-panel"),
             disableInteraction: true,
-            intro: "This is the main visualisation panel where you will be able to see the movies (nodes) and the link between them! Two movies are linked if they have cast member or crew member in common. " +
-            " For now, you can see a general overview of the movies and their link. To know the movies, put your mouse over a node." +
+            intro: "This is the main visualisation panel where you will be able to see the movies (nodes) and the link between them! Two movies are linked if they have cast member or crew member in common.<br>" +
+            " For now, you can see a general overview of the movies and their link. To know the movies, put your mouse over a node.<br>" +
             " Before we play with the viz... let's have a look at the filters!"
         },
         {
@@ -114,6 +114,10 @@ let helper ={
             element: document.querySelector("#info-panel"),
             intro: "The result are displayed here!<br>"+
             "If you see no result at all, try to change the filters and/or remove the company filter."
+        },
+        {
+            element: document.querySelector("#restButton"),
+            intro: "You can go back to the circular view at any time by clicking this button."
         },
         {
             intro: "I think you saw the features!! Now just enjoy the Viz :)"
