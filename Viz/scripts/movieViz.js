@@ -23,7 +23,7 @@ function createGraph(movies) {
     movies.forEach(function (movie) {
         movieSet.add(movie);
         let crewAndMovieLinks = getCrewAndMovieLinks(movie);
-        
+
         crewAndMovieLinks.links.forEach(function (m_id) {
             let m = mapMovie.get(m_id);
             let link = { source: movie, target: m, value: 1 };
@@ -124,7 +124,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         .enter().append("circle")
         .attr("r", function (d) { if (movieVizSet.has(d)) return d.radius = 15; else return d.radius = 6 })
         .attr("fill", function (d) { return ReviewColor(d.vote_average); })
-        .on("click", function (d) { click(d); })
+        .on("click", function (d) { hasClickedHelp = true; click(d); })
         .on("mouseover", mouseovered)
         .on("mouseout", mouseouted)
         .call(d3.drag()
@@ -414,4 +414,3 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
 }
-

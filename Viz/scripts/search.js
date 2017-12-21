@@ -1,4 +1,4 @@
-
+let searchDoneHelp = false
 // apply the search as a filter
 function switchSearch() {
     switch (currentSearchSwitch) {
@@ -31,6 +31,7 @@ function checkIfSearched(movie) {
 }
 
 function showSearchResult(token=true) {
+    searchDoneHelp = true;
     let div = d3.select(".TextZone");
     div.selectAll("*").remove();
     tooltipDiv.style("opacity", 0).style("opacity", 0)
