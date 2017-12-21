@@ -53,7 +53,7 @@ let helper ={
         {
             element: document.querySelector("#filters"),
             disableInteraction: true,
-            intro: "This is the filters - Movies that will be displayed through the viz are only the ones submitted to this filter"
+            intro: "These are the filters - They narrow down the set of displayed movies based on several criterias."
         },
         {
             element: document.querySelector("#department-filter"),
@@ -72,18 +72,20 @@ let helper ={
         {
             element: document.querySelector("#main-panel"),
             intro: "As you can see, the movie you selected is a bigger node and the movies linked to it are also shown.<br>" +
-            "<strong><big>Click on another node</big></strong> to add it to the selection and see his links too."
+            "<strong><big>Click on another (small) node</big></strong> to add it to the selection and see his links too."
         },
         {
             element: document.querySelector("#info-panel"),
-            intro: "When you select a movie, you can see his general info on the right. By clicking on a production company, you can filter the movies..."
+            intro: "When you select a movie, you can see his general info on the right.<br>"+
+            "By clicking on a production company, you can filter the movies. The currently selected company will appear bellow the filters, you can click it again to remove the filters.<br>"+
+            "Some companies have produced only a very small amount of movies, hence it can reduce the selection to only one movie."
         },
         {
             element: document.querySelector("#side-panel"),
             disableInteraction: true,
             intro: "Here you will see the cast and crew of the selected movie, and the other movies where they participated.<br>" +
-            "If you click on a movie, it will select it.<br>" +
-            "If you click on a person, it will select you all the movies he participated in!"
+            "You can click on a movie to select it.<br>" +
+            "You click on a person to search all the movies related to him."
         },
         {
             element: document.querySelector("#filters"),
@@ -110,7 +112,8 @@ let helper ={
         },
         {
             element: document.querySelector("#info-panel"),
-            intro: "The result are displayed here!"
+            intro: "The result are displayed here!<br>"+
+            "If you see no result at all, try to change the filters and/or remove the company filter."
         },
         {
             intro: "I think you saw the features!! Now just enjoy the Viz :)"
