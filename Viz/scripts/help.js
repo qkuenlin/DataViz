@@ -1,4 +1,5 @@
 function startHelp() {
+    Reset();
     let intro = introJs();
     intro.setOptions(helper);
     intro.setOption("tooltipPosition", "top");
@@ -36,7 +37,12 @@ let helper ={
     steps: [
         {
             hideprev: true,
-            intro: "hello world - ICI mettre la descrisptio generale avec peut être du html (voir doc)"
+            intro: "Welcome to our Movie Database visualisation.<br>"+
+                "This short interaction will show you how to use it.<br>"+
+                "You can navigate between the message with the buttons or using the keyboard arrows.<br>"+
+                "You can close it by clicking outside of the focused area or hitting the ESC key.<br>"+
+                "At any time you can restart it by clicking on the red Demo button on the top right of the window.<br>"+
+                "Enjoy :)"
         },
         {
             element: document.querySelector("#info-panel"),

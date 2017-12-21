@@ -18,6 +18,7 @@ d3.json("../movie.json", function (error, data) {
             ClusterType = d3.select('#ClusterOptions').property('value');
             document.getElementById('CustomAxisSelector').style.display = "none";
             filterAll();
+            document.getElementById('demoButton').click();
         })
     });
 });
