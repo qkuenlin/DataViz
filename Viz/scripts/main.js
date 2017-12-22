@@ -1,3 +1,5 @@
+
+//Load the data and setup the data structures
 d3.json("../movie.json", function (error, data) {
     if (error) throw error;
     all_movies = data;

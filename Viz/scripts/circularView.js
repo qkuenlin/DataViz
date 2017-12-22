@@ -1,12 +1,13 @@
 let CircularLink, CircularNode;
 let hasClickedHelp = false;
 
+// Called when the cluster list in changed
 function ClusterChange() {
     ClusterType = d3.select('#ClusterOptions').property('value');
     drawCircularViz(true);
 }
 
-
+//Prepare all links for circular viz
 function getLinks(nodes) {
     var map = [],
     imports = [];
@@ -24,11 +25,13 @@ function getLinks(nodes) {
     return imports;
 }
 
+//Draw the circular viz
 function drawCircularViz(update) {
     if (!loaded) {
         return;
     }
 
+	//Hide or show necessary UI element
     document.getElementById('on-click-toggle').style.display = "none";
     document.getElementById('reset-company-filter').style.display = "none";
     document.getElementById("CustomAxisSwitch").checked = false;
@@ -48,6 +51,8 @@ function drawCircularViz(update) {
 
     currentViz = 1;
     CircularVizLayer = svg.select('g#circular-g').attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+	
+	//Clean the svgs
     CircularVizLayer.selectAll("*").remove();
     MovieVizLayer.selectAll("*").remove();
     UILayer.selectAll("*").remove();
@@ -59,6 +64,7 @@ function drawCircularViz(update) {
     CircularLink = CircularVizLayer.append("g").selectAll("link"),
     CircularNode = CircularVizLayer.append("g").selectAll("nodes");
 
+	// Draw links
     CircularLink = CircularLink
     .data(getLinks(root.leaves()))
     .enter().append("path")
@@ -67,6 +73,7 @@ function drawCircularViz(update) {
     .attr("d", line)
     .on("mouseover", mouseoveredLink);
 
+	// Draw nodes
     CircularNode = CircularNode
     .data(root.leaves())
     .enter().append("circle")
@@ -81,6 +88,7 @@ function drawCircularViz(update) {
     .attr("text-anchor", function (d) { return d.x < 180 ? "start" : "end"; })
     .text(function (d) { return d.data.name; });
 
+	// Updating circular viz. Called when parameters like clustering, years or review sliders, or type of links change
     function updateCircularViz() {
         CircularLink.selectAll("*").remove();
         let root = packageHierarchy(filtered_movies).sum(function (d) { return d.size; });
@@ -100,6 +108,7 @@ function drawCircularViz(update) {
         .attr("transform", function (d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
     }
 
+	// Called when a nodes is clicked
     function click(n) {
         tooltipDiv.style("opacity", 0).style("left", (0) + "px")
         .style("top", (0) + "px");
@@ -109,6 +118,7 @@ function drawCircularViz(update) {
         showMovieInfo(d);
     }
 
+	// Called when the mouse is over a node
     function mouseovered(d) {
         tooltipDiv
         .style("opacity", .9);
@@ -130,6 +140,7 @@ function drawCircularViz(update) {
         .classed("node--fade", function (n) { return !(n.target || n.source); });
     }
 
+	// Called when the mouse is no longer over a node
     function mouseouted(d) {
         CircularLink.classed("link--highlight", false).classed("link--fade", false);
         CircularNode.classed("node--highlight", false).classed("node--fade", false);
@@ -141,7 +152,7 @@ function drawCircularViz(update) {
     }
 
 
-
+	// Called when the mouse is over a link
     function mouseoveredLink(d) {
         CircularNode.each(function (n) { n.target = n.source = false; });
 
@@ -152,7 +163,7 @@ function drawCircularViz(update) {
     }
 }
 
-
+// Create hierarchical layout
 function packageHierarchy(movies) {
     let map = {};
     let root = { name: "", children: [] };

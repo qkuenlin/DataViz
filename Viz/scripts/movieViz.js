@@ -3,10 +3,12 @@ let simulation = d3.forceSimulation();
 
 let MovieLink, MovieNode;
 
+// Called when the x or y axis are changed
 function AxisChange() {
     drawMovieViz(movieVizSet);
 }
 
+// Called when the axis button is toggled
 function customAxisChange() {
     if (document.getElementById("CustomAxisSwitch").checked) {
         document.getElementById('CustomAxisSelector').style.display = "inline";
@@ -17,6 +19,7 @@ function customAxisChange() {
     AxisChange()
 }
 
+// Create the graph from the movies set
 function createGraph(movies) {
     let links = [];
     let movieSet = new Set();
@@ -37,6 +40,7 @@ function createGraph(movies) {
     return { links: links, nodes: movieSet };
 }
 
+// add the movie and its relation to the graph
 function addingToGraph(movie) {
     let movieSet = new Set();
 
@@ -59,11 +63,13 @@ function addingToGraph(movie) {
     graph.nodes = movieSet;
 }
 
+// Draw the movie vizualisation
 function drawMovieViz(_movies, recalculate, adding) {
     if (!loaded) {
         return;
     }
 
+	// Hide or show UI elements
     document.getElementById('on-click-toggle').style.display = "inline-block";
     document.getElementById('CircularVizOptions').style.display = "none";
     document.getElementById('MovieVizOptions').style.display = "inline";
@@ -73,6 +79,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     //change svg height
     resizeSVG();
 
+	// Clean simulation forces
     simulation.force("center", null).force("link", null).force("charge", null).force("posX", null).force("posY", null);
 
     if (document.getElementById("CustomAxisSwitch").checked && !recalculate) {
@@ -97,6 +104,8 @@ function drawMovieViz(_movies, recalculate, adding) {
         currentViz = 2;
 
         width = parseInt(d3.select("#main-panel").style("width"));
+		
+		// Clean SVGs
         CircularVizLayer.selectAll("*").remove();
         MovieVizLayer.selectAll("*").remove();
         UILayer.selectAll("*").remove();
@@ -111,12 +120,14 @@ function drawMovieViz(_movies, recalculate, adding) {
             graph = createGraph(_movies);
         }
 
+		//Draw links
         MovieLink = MovieVizLayer.append("g")
         .attr("class", "link--movieViz")
         .selectAll("line")
         .data(graph.links)
         .enter().append("line");
 
+		//Draw nodes
         MovieNode = MovieVizLayer.append("g")
         .attr("class", "node")
         .selectAll("circle")
@@ -150,6 +161,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         simulation.nodes(graph.nodes).on("tick", ticked);
     }
 
+	//Switch the force layout to plot or axis changed
     function switcForceMode() {
         let maxWidth = width - 50;
         let maxHeight = height - 50;
@@ -305,6 +317,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         .text(yAxisType);
     }
 
+	// Function called by the simulation at each clock "tick"
     function ticked() {
         MovieLink
         .attr("x1", function (d) { return d.source.x; })
@@ -323,17 +336,20 @@ function drawMovieViz(_movies, recalculate, adding) {
 
     }
 
+	// When user start to drag a node
     function dragstarted(d) {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
     }
 
+	// When a user drag a node
     function dragged(d) {
         d.fx = d3.event.x;
         d.fy = d3.event.y;
     }
 
+	// When a user stopped draging a node
     function dragended(d) {
         if (!d3.event.active) simulation.alphaTarget(0);
         d.fx = null;
@@ -341,6 +357,7 @@ function drawMovieViz(_movies, recalculate, adding) {
     }
 
 
+	//When a user click on a node
     function click(d) {
         if (!checkIfSearched(d)) {
             cleanSearch()
@@ -368,6 +385,7 @@ function drawMovieViz(_movies, recalculate, adding) {
         }
     }
 
+	//When the mouse is overring a node
     function mouseovered(d) {
         tooltipDiv
         .style("opacity", 9);
@@ -398,6 +416,7 @@ function drawMovieViz(_movies, recalculate, adding) {
 
     }
 
+	//when the mouse is no longer overring a node
     function mouseouted(d) {
         tooltipDiv.style("opacity", 0)
         .style("left", (0) + "px")
