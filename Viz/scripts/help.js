@@ -84,7 +84,7 @@ let helper ={
         },
         {
             element: document.querySelector("#info-panel"),
-            intro: "When you select a movie, you can see his general info on the right.<br>"+
+            intro: "When you select a movie, you can see his general info on the left.<br>"+
             "By clicking on a production company, you can filter the movies. The currently selected company will appear bellow the filters, you can click it again to remove the filters.<br>"+
             "Some companies have produced only a very small amount of movies, hence it can reduce the selection to only one movie."
         },
