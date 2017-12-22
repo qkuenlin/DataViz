@@ -18,6 +18,7 @@ function filterAll() {
     else drawCircularViz();
 }
 
+// filter by years
 function filterYears(range, _map) {
     let newMap = new Map();
 
@@ -37,6 +38,7 @@ function filterYears(range, _map) {
     return newMap;
 }
 
+// filter by reviews
 function filterReviews(range, _map) {
     let newMap = new Map();
 
@@ -96,12 +98,14 @@ function filterLinksPerDepartement(dept, _map) {
     }
 }
 
+//remove the company filter
 function removeCompanyFilter() {
     currentCompany = "";
     document.getElementById('reset-company-filter').style.display = "none";
     filterAll();
 }
 
+//filter by a define company
 function filterCompany(company) {
     cleanSearch();
     currentCompany = company;
