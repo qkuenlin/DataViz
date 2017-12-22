@@ -107,7 +107,7 @@ function showSearchResult(token=true) {
         svg.attr("height",10);
         div.style("overflow-y", "auto");
         div.style("overflow-x", "auto")
-        d3.select(".TitleZone2").select("h3").remove("*")
+        d3.select(".TitleZone2").select("h3").text("")
     }
     // let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 30; //col padding is 2*15
     // let svg_height = Zoneheight * 0.01;
@@ -264,7 +264,7 @@ function searchCrew(all_token, useid = false) {
         searchedMovies.keywords = new Set();
         currentSearchSwitch = "Crew";
         drawMovieViz(newSet, true);
-        showSearchResult();
+        showSearchResult(!useid);
     }
 }
 

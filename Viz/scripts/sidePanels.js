@@ -156,7 +156,7 @@ function displayDBInfo() {
     let sidepanel2 = d3.select(".DrawZone");
     let svg = sidepanel2.select("#side-svg");
     svg.selectAll("*").remove();
-    let svg_width = parseInt(d3.select("#side-panel").style("width")) - 30; //col padding is 2*15
+    let svg_width = parseInt(d3.select(".DrawZone").style("width")) - 50; //col padding is 2*15
     let svg_height = getHeight("#side-panel")*0.6;
     svg.attr("width", svg_width).attr("height", svg_height);
     let margin = { top: 5, right: 5, bottom: 30, left: 50 };
